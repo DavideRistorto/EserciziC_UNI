@@ -13,6 +13,7 @@
 
 
 //array di tuple
+//ogni elemento dell' array e formatto da un sotto-array di due elementi
 int scale[8][2] = {{1,38}, {4,14}, {8,30}, {21,42}, {28,76}, {50,67}, {71,92}, {80,99}};
 int serpi[7][2] = {{32,10}, {36,6}, {48,26}, {62,18}, {88,24}, {95,56}, {97,78}};
 
@@ -25,6 +26,7 @@ bool muovi_giocatore(int dado, int* pos) {
             *pos = scale[i][1];
         }
     }
+    //controllo se dopo essersi mosso si concide con la btesta di una serpe
     for(int i=0;i<7;i++){
         if(*pos==serpi[i][0]){
             *pos = serpi[i][1];
