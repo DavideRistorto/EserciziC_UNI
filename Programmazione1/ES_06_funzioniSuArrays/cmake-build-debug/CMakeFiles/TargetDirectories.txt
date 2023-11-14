@@ -1,0 +1,3 @@
+C:/Users/davide.ristorto/CLionProjects/statisticheArray/cmake-build-debug/CMakeFiles/statisticheArray.dir
+C:/Users/davide.ristorto/CLionProjects/statisticheArray/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/davide.ristorto/CLionProjects/statisticheArray/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,3 +1,0 @@
-C:/Users/davide.ristorto/CLionProjects/sommaSelettiva/cmake-build-debug/CMakeFiles/sommaSelettiva.dir
-C:/Users/davide.ristorto/CLionProjects/sommaSelettiva/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/davide.ristorto/CLionProjects/sommaSelettiva/cmake-build-debug/CMakeFiles/rebuild_cache.dir
