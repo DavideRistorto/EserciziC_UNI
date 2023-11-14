@@ -32,6 +32,7 @@ int main() {
         //da errori su caratteri speciali
         //printf("%s %s ",stringa,capovolta);
         //stampo carattere per carattere
+
         for(int i=0;i<strlen(stringa);i++){
             printf("%c",stringa[i]);
         }
@@ -39,6 +40,7 @@ int main() {
         for(int i=0;i<strlen(capovolta);i++){
             printf("%c",capovolta[i]);
         }
+
     }
     return 0;
 }
