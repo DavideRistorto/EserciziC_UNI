@@ -31,6 +31,7 @@ int main(void) {
     char stringaNoVocali[MAX_SIZE] = "";
     scanf("%s",stringa);
     eliminaVocali(stringa,stringaNoVocali);
+    //stampare carattere per carattere evita, come prima, di stampare carattery/byte non desiderati
     for(int j=0;j<strlen(stringaNoVocali);j++){
         printf("%c",stringaNoVocali[j]);
     }
