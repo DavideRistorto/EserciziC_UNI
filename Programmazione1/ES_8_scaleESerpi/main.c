@@ -26,7 +26,7 @@ bool muovi_giocatore(int dado, int* pos) {
             *pos = scale[i][1];
         }
     }
-    //controllo se dopo essersi mosso si concide con la btesta di una serpe
+    //controllo se dopo essersi mosso si concide con la testa di una serpe
     for(int i=0;i<7;i++){
         if(*pos==serpi[i][0]){
             *pos = serpi[i][1];
