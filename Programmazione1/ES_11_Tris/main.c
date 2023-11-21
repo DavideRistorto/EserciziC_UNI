@@ -34,7 +34,7 @@ int main()
         printf("%c",campo[1][1]);
         vincitore = true;
     }
-    //simbolo di pareggio se non è stato troavato un vincitore;
+    //simbolo di pareggio se non e' stato troavato un vincitore;
     if(!vincitore){
         printf("-");
     }
