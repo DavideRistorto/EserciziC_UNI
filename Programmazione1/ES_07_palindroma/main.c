@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#define WORD_MAX 50
+#define WORD_MAX 51
 
 
 void capovolgi(char string[],char capovolta[]){
     for(int j=0;j<strlen(string);j++){
-        capovolta[j] = string[strlen(string)-1-j];
+        int i = strlen(string)-1-j;
+        capovolta[j] = string[i];
     }
 }
 
@@ -21,26 +22,14 @@ bool isPalindroma(char string[],char capovolta[]){
 }
 
 int main() {
-
-    char stringa[WORD_MAX];
-    char capovolta[WORD_MAX];
+    char stringa[WORD_MAX] = {0};
+    char capovolta[WORD_MAX] = {0};
     scanf("%s",stringa);
     capovolgi(stringa,capovolta);
     if(isPalindroma(stringa,capovolta)){
         printf("PALINDROMA");
     }else{
-        //da errori su caratteri speciali
-        //printf("%s %s ",stringa,capovolta);
-        //stampo carattere per carattere
-
-        for(int i=0;i<strlen(stringa);i++){
-            printf("%c",stringa[i]);
-        }
-        printf(" ");
-        for(int i=0;i<strlen(capovolta);i++){
-            printf("%c",capovolta[i]);
-        }
-
+        printf("%s %s",stringa,capovolta);
     }
     return 0;
 }
