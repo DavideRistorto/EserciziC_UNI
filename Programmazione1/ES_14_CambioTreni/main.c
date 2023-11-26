@@ -11,7 +11,7 @@ void leggi_matrice_irregolare(const size_t rows, const size_t cols,int mat[rows]
 }
 
 char trova_connessione(const size_t rows,const size_t cols , int mat[rows][cols], size_t rags[rows], size_t from, size_t to){
-    // X come valore di default se non ci sono collegamenti tra le citt‡
+    // X come valore di default se non ci sono collegamenti tra le citt√†
     char valore = 'X';
     // prima controllo se c'e' un l'incotro diretto
     for(int i=0; i < rags[from]; i++){
@@ -19,8 +19,8 @@ char trova_connessione(const size_t rows,const size_t cols , int mat[rows][cols]
             valore = 'D';
         }
     }
-    // se non c'e' controllo se c'Ë un valore in comune tra i due array
-    // corrispondenti alle citt‡
+    // se non c'e' controllo se c'√® un valore in comune tra i due array
+    // corrispondenti alle citt√†
     if (valore == 'X'){
         for(int i=0; i < rags[from]; i++){
             for(int j=0; j<rags[to]; j++){
@@ -35,14 +35,19 @@ char trova_connessione(const size_t rows,const size_t cols , int mat[rows][cols]
 
 int main(void) {
     size_t rows, cols;
+    //numero righe e colonne
     scanf("%zu %zu", &rows, &cols);
     int mat[rows][cols];
     size_t rags[rows];
+    // richiedo la matrice irregolare
     leggi_matrice_irregolare(rows, cols, mat, rags);
+    //q e' il numero di interrogazioni da fare
     size_t q, from, to;
     scanf("%zu", &q);
     for (size_t i = 0; i < q; i++) {
+        // richiedo le tue citt√† in input
         scanf("%zu %zu", &from, &to);
+        // calcolo la distanza
         char collegamento = trova_connessione(rows, cols, mat, rags, from, to);
         if (collegamento == 'D') {
             printf("DIRETTO\n");
@@ -53,6 +58,5 @@ int main(void) {
             printf("NO\n");
         }
     }
-
     return 0;
 }
