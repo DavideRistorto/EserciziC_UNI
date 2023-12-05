@@ -1,0 +1,3 @@
+C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/ES_15_DeselezioneBasi/cmake-build-debug/CMakeFiles/ES_15_DeselezioneBasi.dir
+C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/ES_15_DeselezioneBasi/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/ES_15_DeselezioneBasi/cmake-build-debug/CMakeFiles/rebuild_cache.dir
