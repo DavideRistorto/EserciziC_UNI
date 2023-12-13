@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ES_19_SommaDue",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ES_19_SommaDue::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ES_19_SommaDue-Debug-1eacff36395b81240a32.json",
+					"name" : "ES_19_SommaDue",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/ES_19_SommaDue/cmake-build-debug",
+		"source" : "C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/ES_19_SommaDue"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
