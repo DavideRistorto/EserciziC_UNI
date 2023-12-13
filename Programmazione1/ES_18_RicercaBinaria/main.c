@@ -8,7 +8,7 @@ bool ricerca_binaria(const int a[], const int val, size_t *pIndice,
         return false;
     } else {
         // trvovo l' indice a metà degli estremi sx e dx
-        size_t mid = left + (right - left) / 2;
+        size_t mid = (right + left) / 2;
         *pIndice = mid;
         if (a[mid] == val) {
             return true;
