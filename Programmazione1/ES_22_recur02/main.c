@@ -16,7 +16,6 @@ int e2R(const int a[], const int val, int left, int right) {
         // Chiamate ricorsive sui due sottoarray
         int sumLeft = e2R(a, val, left, mid - 1);
         int sumRight = e2R(a, val, mid + 1, right);
-
         // Ritorna la somma totale
         return somma + sumLeft + sumRight;
     }
