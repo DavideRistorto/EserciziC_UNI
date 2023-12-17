@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/temp/cmake-build-debug",
-		"source" : "C:/Users/davide.ristorto/Desktop/EserciziC_UNI/Programmazione1/temp"
+		"build" : "C:/Users/Davide/Desktop/Scuola/EserciziC_UNI/Programmazione1/temp/cmake-build-debug",
+		"source" : "C:/Users/Davide/Desktop/Scuola/EserciziC_UNI/Programmazione1/temp"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 5
+		"minor" : 6
 	}
 }

@@ -1,48 +1,51 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
-#define WORD_MAX 50
-
-
-void capovolgi(char string[],char capovolta[]){
-    for(int j=0;string[j]!='\0';j++){
-        capovolta[j] = string[strlen(string)-1-j];
-    }
-}
-
-bool isPalindroma(char string[],char capovolta[]){
-    bool palindroma=true;
-    for(int i=0;string[i]!='\0';i++){
-        if(string[i]!=capovolta[i]){
-            palindroma = false;
-        }
-    }
-    return palindroma;
-}
+#define NMAX 50
 
 int main() {
+    int subseq[NMAX];
+    int max_err;
+    int len;
+    int errors = 0;
 
-    char stringa[WORD_MAX] = {0};
-    char capovolta[WORD_MAX] = {0};
-    scanf("%s",stringa);
-    capovolgi(stringa,capovolta);
-    if(isPalindroma(stringa,capovolta)){
-        printf("PALINDROMA");
-    }else{
-        //da errori su caratteri speciali
-        printf("%zu %zu\n",strlen(stringa),strlen(capovolta));
-        printf("%s %s",stringa,capovolta);
-        //stampo carattere per carattere
-        /*
-        for(int i=0;stringa[j]!='\0';i++){
-            printf("%c",stringa[i]);
-        }
-        printf(" ");
-        for(int i=0;capovolta[i]!='\0';i++){
-            printf("%c",capovolta[i]);
-        }
-         */
-
+    // Leggi subseq
+    scanf("%d", &len);
+    for (int i = 0; i < len; i++) {
+        scanf("%d", &subseq[i]);
     }
+    scanf("%d", &max_err);
+    while (true) {
+        int seq[NMAX];
+        int seq_len;
+        // Leggi la sequenza corrente
+        scanf("%d", &seq_len);
+        if (seq_len == 0) {
+            break;
+        }
+        // Leggi seq
+        for (int i = 0; i < seq_len; i++) {
+            scanf("%d", &seq[i]);
+        }
+        // Cerca il match con massimo max_err errori
+        for (int i = 0; i <= seq_len - len; i++) {
+            errors = 0;
+            // Confronta gli elementi della sequenza corrente con quelli della subseq
+            for (int j = 0; j < len; j++) {
+                if (subseq[j] != seq[j+i]) {
+                    errors++;
+                }
+            }
+            // Se il numero di errori è inferiore o uguale a max_err, stampa l'intervallo e il numero di errori
+            if (errors <= max_err) {
+                printf("[%d, %d) errori=%d\n", i, i + len, errors);
+                break; // Esci dal loop interno, abbiamo trovato un match
+            }
+        }
+        // Se non è stato trovato alcun match con massimo max_err errori, stampa "NO"
+        if (errors > max_err) {
+            printf("NO\n");
+        }
+    }
+
     return 0;
 }
