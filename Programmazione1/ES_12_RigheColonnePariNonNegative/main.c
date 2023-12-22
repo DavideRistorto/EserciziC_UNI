@@ -26,13 +26,13 @@ int main(void) {
             bool rigaNonNegativaEPari = true;
             bool colonnaNonNegativaEPari = true;
 
-            //controllo se la riga è pari è positiva
+            //controllo se la riga Ã¨ pari Ã¨ positiva
             for(size_t i=0;i<cols;i++){
                 if(mat[r][i]<0 || mat[r][i]%2!=0){
                     rigaNonNegativaEPari = false;
                 }
             }
-            //controllo se la colonna è pari è positiva
+            //controllo se la colonna Ã¨ pari Ã¨ positiva
             for(size_t i=0;i<rows;i++){
                 if(mat[i][c]<0 || mat[i][c]%2!=0){
                     colonnaNonNegativaEPari = false;
@@ -43,6 +43,5 @@ int main(void) {
             }
         }
     }
-
     return 0;
 }
