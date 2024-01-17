@@ -24,6 +24,5 @@ int main()
     int array[DIM];
     scriviArray(array,0);
     leggiArray(array,0);
-
     return 0;
 }
