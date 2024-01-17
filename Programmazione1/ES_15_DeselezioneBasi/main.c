@@ -4,7 +4,7 @@
 
 bool prefixR( char *str,  char *prefix) {
     // se scorrendo tutto il prefisso non si è usciti prima dalla ricorsione
-    // quando il prefisso termina vuol dire che è valido
+    // quando il prefisso termina vuol dire che è valido come risulato
     if(*prefix == '\0'){
         return true;
     }
