@@ -40,7 +40,7 @@ void stampa_array(const int* pA, const size_t lenA)
     printf("]\n");
 }
 
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 // leggi da standard input un array, riempi il buffer pA
 // e ritorna il numero di elementi inseriti nel buffer
 size_t leggi_array(int* pA, const size_t nmaxA)
