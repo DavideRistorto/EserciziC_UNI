@@ -9,7 +9,7 @@ int e2R(const int a[], const int val, int left, int right) {
         return somma;
     } else {
         // Calcolo dell'indice medio
-        int mid = left + (right - left) / 2;
+        int mid = (right + left) / 2;
         if (a[mid] >= -val && a[mid] <= val) {
             somma += a[mid];
         }
