@@ -3,6 +3,7 @@
 #define DIM 5
 
 void scriviArray(int *array, int index){
+    //ricorsione covariante: right -> left
     if(index<DIM){
         printf("inserisci elemento di indice %d: ",index);
         scanf("%d",&array[index]);
