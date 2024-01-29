@@ -2,10 +2,8 @@
 #include "math.h"
 #define MAX_N 20 
 int main() {
-    
     int sequenza=-1;
     scanf("%d",&sequenza);
-    
     if(sequenza<0 || sequenza > MAX_N){
         printf("Errore: numero di elementi non valido.");
     }
@@ -26,7 +24,8 @@ int main() {
                 if(elementi[i] >= pow(minimo,2)){
                 somma+=elementi[i];
                 }
-            }printf("%d", somma);
+            }
+            printf("%d", somma);
         } 
         else {
             printf("Vuoto.");
