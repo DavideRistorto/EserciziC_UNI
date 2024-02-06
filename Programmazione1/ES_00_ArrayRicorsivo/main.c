@@ -20,8 +20,7 @@ void leggiArray(int *array, int index){
     }
 }
 
-int main()
-{
+int main() {
     int array[DIM];
     scriviArray(array,0);
     leggiArray(array,0);
