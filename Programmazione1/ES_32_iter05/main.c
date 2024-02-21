@@ -5,7 +5,7 @@ bool isElementInArray(int val, int array[], size_t dim){
     bool trovato = false;
     for(int i=0; i<dim && !trovato; i++){
         if(array[i] == val){
-            trovato = true;
+            trovato = true;         
         }
     }
     return trovato;
