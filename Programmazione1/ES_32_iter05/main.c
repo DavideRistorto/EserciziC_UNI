@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool isElementInArray(int val, int array[], size_t dim){
+bool isElementInArray(int val, int array[], size_t dim){              
     bool trovato = false;
     for(int i=0; i<dim && !trovato; i++){
         if(array[i] == val){
