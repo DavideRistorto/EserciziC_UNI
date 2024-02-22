@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #define DIM_MAX 20
 
-int leggiArray(int array[]){
+int leggiArray(int array[]){ 
     int n;
     scanf("%d",&n);
     for(int i=0;i<n;i++){
