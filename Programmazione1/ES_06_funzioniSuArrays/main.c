@@ -11,7 +11,7 @@ int leggiArray(int array[]){
     return n;
 }
 
-int contaUnivoci(int array[], int dim){
+int contaUnivoci(int array[], int dim){   
     int contaUnivoci = 0;
     for(int j=0;j<dim;j++){
         bool unico = true;
