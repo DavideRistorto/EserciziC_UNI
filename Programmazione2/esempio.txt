@@ -1,0 +1,128 @@
+/* scrivere qui la vostra suite di test */
+
+/* ad esempio: */
+tests[0].s = "0";
+tests[0].b = 10;
+tests[0].res = 1;
+tests[0].num = 0;
+
+// Test base: convertire un numero intero positivo
+tests[1].s = "101";
+tests[1].b = 2;
+tests[1].res = 1;
+tests[1].num = 5;
+
+// Test con spazi bianchi iniziali
+tests[2].s = "  101";
+tests[2].b = 2;
+tests[2].res = 1;
+tests[2].num = 5;
+
+// Test con segno negativo
+tests[3].s = "-101";
+tests[3].b = 2;
+tests[3].res = 1;
+tests[3].num = -5;
+
+// Test con stringa vuota
+tests[4].s = "";
+tests[4].b = 10;
+tests[4].res = 0;
+tests[4].num = 0;
+
+// Test con base oltre il range
+tests[5].s = "1000";
+tests[5].b = 40;
+tests[5].res = 0;
+tests[5].num = 0;
+
+// Test con base minore al range
+tests[6].s = "1000";
+tests[6].b = 1;
+tests[6].res = 0;
+tests[6].num = 0;
+
+// Test con base negativa
+tests[7].s = "1000";
+tests[7].b = -10;
+tests[7].res = 0;
+tests[7].num = 0;
+
+// Test con spazi bianchi finali
+tests[8].s = "101  ";
+tests[8].b = 2;
+tests[8].res = 1;
+tests[8].num = 5;
+
+// Test con valori letterali
+tests[11].s = "G";
+tests[11].b = 17;
+tests[11].res = 1;
+tests[11].num = 16;
+
+// Test con valori letterali
+tests[12].s = "Z";
+tests[12].b = 36;
+tests[12].res = 1;
+tests[12].num = 35;
+
+// Test con valori letterali
+tests[13].s = "0";
+tests[13].b = 0;
+tests[13].res = 0;
+tests[13].num = 0;
+
+// Test con valori letterali
+tests[14].s = "1";
+tests[14].b = 1;
+tests[14].res = 0;
+tests[14].num = 0;
+
+// Test con valori letterali
+tests[15].s = "10";
+tests[15].b = 36;
+tests[15].res = 1;
+tests[15].num = 36;
+
+// Test con numero in base 36
+tests[16].s = "XYZ";
+tests[16].b = 36;
+tests[16].res = 1;
+tests[16].num = 44027;
+
+// Test con numero in base 36
+tests[17].s = "ZZ";
+tests[17].b = 3;
+tests[17].res = 0;
+tests[17].num = 0;
+
+// Test con numero in base 36
+tests[18].s = "@)$(£";
+tests[18].b = 2;
+tests[18].res = 0;
+tests[18].num = 0;
+
+// Test con numero in base 36
+tests[19].s = "1";
+tests[19].b = 0;
+tests[19].res = 0;
+tests[19].num = 0;
+
+// Test con numero in base 36
+tests[20].s = "ZZ";
+tests[20].b = 35;
+tests[20].res = 0;
+tests[20].num = 0;
+
+// l' intero più grande rappresentabile in base 36
+tests[21].s = "ZIK0ZJ";
+tests[21].b = 36;
+tests[21].res = 1;
+tests[21].num = 2147483647;
+
+// Test con numero in base 36
+tests[22].s = "0";
+tests[22].b = 36;
+tests[22].res = 1;
+tests[22].num = 0;
+
