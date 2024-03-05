@@ -1,0 +1,68 @@
+/* scrivere qui la vostra suite di test */
+
+/* ad esempio: */
+//TEST VALIDI----------------------------START
+tests[0].s = "0";
+tests[0].b = 10;
+tests[0].res = 1;
+tests[0].num = 0;
+
+// Test base: convertire un numero intero positivo
+tests[1].s = "101";
+tests[1].b = 2;
+tests[1].res = 1;
+tests[1].num = 5;
+
+// Test con spazi bianchi iniziali
+tests[2].s = "  101";
+tests[2].b = 2;
+tests[2].res = 1;
+tests[2].num = 5;
+
+// Test con segno negativo
+tests[3].s = "-101";
+tests[3].b = 2;
+tests[3].res = 1;
+tests[3].num = -5;
+
+// Test con stringa vuota
+tests[4].s = "";
+tests[4].b = 10;
+tests[4].res = 0;
+tests[4].num = 0;
+
+// Test con base oltre il range
+tests[5].s = "1000";
+tests[5].b = 40;
+tests[5].res = 0;
+tests[5].num = 0;
+
+// Test con spazi bianchi finali
+tests[6].s = "101  ";
+tests[6].b = 2;
+tests[6].res = 1;
+tests[6].num = 5;
+
+// Test con valori letterali
+tests[7].s = "G";
+tests[7].b = 17;
+tests[7].res = 1;
+tests[7].num = 16;
+
+// Test con valori letterali
+tests[8].s = "Z";
+tests[8].b = 36;
+tests[8].res = 1;
+tests[8].num = 35;
+
+// Test con valori letterali
+tests[9].s = "10";
+tests[9].b = 36;
+tests[9].res = 1;
+tests[9].num = 36;
+
+tests[10].s = "+10";
+tests[10].b = 10;
+tests[10].res = 1;
+tests[10].num = 10;
+//TEST VALIDI----------------------------END
