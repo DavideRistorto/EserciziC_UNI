@@ -49,20 +49,27 @@ tests[7].b = 17;
 tests[7].res = 1;
 tests[7].num = 16;
 
-// Test con valori letterali
-tests[8].s = "Z";
-tests[8].b = 36;
-tests[8].res = 1;
-tests[8].num = 35;
-
-// Test con valori letterali
+// Test con base massima
 tests[9].s = "10";
 tests[9].b = 36;
 tests[9].res = 1;
 tests[9].num = 36;
 
+// Test col carattere +
 tests[10].s = "+10";
 tests[10].b = 10;
 tests[10].res = 1;
 tests[10].num = 10;
+
+// Test col carattere \n
+tests[11].s = "\n9";
+tests[11].b = 10;
+tests[11].res = 1;
+tests[11].num = 9;
+
+// Test con caratteri oltre il range della base
+tests[12].s = "1113";
+tests[12].b = 3;
+tests[12].res = 1;
+tests[12].num = 13;
 //TEST VALIDI----------------------------END
