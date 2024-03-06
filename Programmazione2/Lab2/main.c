@@ -1,6 +1,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "stdio.h"
 
 /**  Un tipo di dato per i contatti telefonici e cyberspaziali
 */
@@ -12,6 +13,7 @@ typedef struct contact {
 } Contact, *ContactPtr;
 
 bool equalStrings(char *str1, char *str2){
+    //date due stringhe confronto carattere per carattere che sianno uguali
     if(strlen(str1) != strlen(str2)){
         return 0;
     }
@@ -24,27 +26,25 @@ bool equalStrings(char *str1, char *str2){
 }
 
 int compareStrings(char *str1, char *str2) {
-    // Confronta le due stringhe carattere per carattere
-    while (*str1 && *str2) {
-        // Converte i caratteri in lettere minuscole prima del confronto
-        char c1 = tolower(*str1);
-        char c2 = tolower(*str2);
-
+    // Confronto le due stringhe carattere per carattere
+    int i=0;
+    while (i< strlen(str1) && i< strlen(str2)) {
+        // Convertoi caratteri in lettere minuscole prima del confronto
+        char c1 = tolower(str1[i]);
+        char c2 = tolower(str2[i]);
         if (c1 < c2)
             return -1; // str1 viene prima di str2
         else if (c1 > c2)
             return 1; // str1 viene dopo di str2
-        str1++;
-        str2++;
+        i++;
     }
-
     // Se entrambe le stringhe sono terminate, allora sono uguali
-    if (!*str1 && !*str2)
-        return 0; // stesse stringhe
-
-    // Se una delle due stringhe è terminata e l'altra no,
-    // la più corta viene considerata "minore"
-    return (*str1) ? 1 : -1;
+    if (i==strlen(str1) && i==strlen(str2)){
+        return 0;
+    } else if (strlen(str1)> strlen(str2)){
+        return 1;
+    }
+    return -1;
 }
 
 /**  @brief Controlla se due contatti hanno lo stesso nome e cognome
@@ -73,7 +73,11 @@ _Bool contactEqEff(const Contact *pc1, const Contact *pc2) {
       @return -1 se c1 minore di c2, 0 se c1 uguale a c2, 1 se c1 maggiore di c2
 */
 int contactCmp(Contact c1, Contact c2) {
-    return compareStrings(c1.surname, c2.surname);
+    int value = compareStrings(c1.surname, c2.surname);
+    if(value != 0){
+        return value;
+    }
+    return compareStrings(c1.name, c2.name);
 }
 
 
@@ -83,6 +87,9 @@ int contactCmp(Contact c1, Contact c2) {
       @return -1 se *pc1 minore di *pc2, 0 se *pc1 uguale a *pc2, 1 se *pc1 maggiore di *pc2
 */
 int contactCmpEff(const Contact *pc1, const Contact *pc2) {
-    return compareStrings(pc1->surname, pc2->surname);
-
+    int value = compareStrings(pc1->surname, pc2->surname);
+    if(value != 0){
+        return value;
+    }
+    return compareStrings(pc1->name, pc2->name);
 }
