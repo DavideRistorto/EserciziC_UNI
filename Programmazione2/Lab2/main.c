@@ -1,7 +1,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include "stdio.h"
+#include "stdio.h"  
 
 /**  Un tipo di dato per i contatti telefonici e cyberspaziali
 */
