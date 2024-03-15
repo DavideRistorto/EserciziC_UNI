@@ -24,45 +24,12 @@ ContactPtr mkContact(char* name, char* surname, char* mobile, char* url) {
     if (name == NULL || surname == NULL) {
         return NULL;
     }
-    ContactPtr newContact = (ContactPtr)malloc(sizeof(Contact));
-    if (newContact == NULL) {
-        return NULL;
-    }
-    newContact->name = (char*)malloc(strlen(name) + 1);
-    if (newContact->name == NULL) {
-        free(newContact);
-        return NULL;
-    }
-    strcpy(newContact->name, name);
-
-    newContact->surname = (char*)malloc(strlen(surname) + 1);
-    if (newContact->surname == NULL) {
-        free(newContact->name);
-        free(newContact);
-        return NULL;
-    }
-    strcpy(newContact->surname, surname);
-
-    newContact->mobile = (char*)malloc(strlen(mobile) + 1);
-    if (newContact->mobile == NULL) {
-        free(newContact->surname);
-        free(newContact->name);
-        free(newContact);
-        return NULL;
-    }
-    strcpy(newContact->mobile, mobile);
-
-    newContact->url = (char*)malloc(strlen(url) + 1);
-    if (newContact->url == NULL) {
-        free(newContact->mobile);
-        free(newContact->surname);
-        free(newContact->name);
-        free(newContact);
-        return NULL;
-    }
-    strcpy(newContact->url, url);
-
-    return newContact;
+    ContactPtr cnt = (ContactPtr) malloc(sizeof(struct contact));
+    cnt->name = name;
+    cnt->surname = surname;
+    cnt->mobile = mobile;
+    cnt->url = url;
+    return cnt;
 }
 
 /**
@@ -71,14 +38,8 @@ ContactPtr mkContact(char* name, char* surname, char* mobile, char* url) {
 * @param cntptr il puntatore al contatto (non può essere NULL). Nota: cntptr è un puntatore a puntatore a Contact
 */
 void dsContact(ContactPtr* cntptr) {
-    if(cntptr != NULL && *cntptr != NULL && ) {
-        free((cntptr)->name);
-        free((cntptr)->surname);
-        free((cntptr)->mobile);
-        free((cntptr)->url);
-        free(cntptr);
-        *cntptr = NULL;
-    }
+    free(*cntptr);
+    *cntptr = NULL;
 }
 
 /**
@@ -88,9 +49,7 @@ void dsContact(ContactPtr* cntptr) {
 * @param mobile La stringa che contiene il nuovo numero di cellulare  (può essere NULL)
 */
 void updateMobile(ContactPtr cnt, char* newMobile){
-    if( newMobile != NULL){
-        strcpy(cnt->mobile, newMobile);
-    }
+    cnt->mobile = newMobile;
 }
 
 /**
@@ -100,9 +59,7 @@ void updateMobile(ContactPtr cnt, char* newMobile){
 * @param url La stringa che contiene la nuova home page  (può essere NULL)
 */
 void updateUrl(ContactPtr cnt, char* newUrl){
-    if( newUrl != NULL){
-        strcpy(cnt->url, newUrl);
-    }
+    cnt->url = newUrl;
 }
 
 
@@ -154,11 +111,9 @@ char* getUrl(const ContactPtr cnt){
 * @return 1 se i due contatti hanno lo stesso cognome e lo stesso nome, 0 altrimenti
 */
 _Bool equalsContact(const ContactPtr cnt1, const ContactPtr cnt2) {
-    if (cnt1 == NULL || cnt2 == NULL) {
-        return 0; // Se uno dei contatti è NULL, non sono uguali
-    }
     return strcmp(cnt1->name, cnt2->name) == 0 && strcmp(cnt1->surname, cnt2->surname) == 0;
 }
+
 
 /**
 * @brief Confronta due contatti in ordine lessicografico in base al cognome e al nome
@@ -168,13 +123,12 @@ _Bool equalsContact(const ContactPtr cnt1, const ContactPtr cnt2) {
 * @return -1 se cnt1 minore cnt2, 0 se cnt1 uguale cnt2, 1 se cnt1 maggiore cnt2
 */
 int cmpContact(const ContactPtr cnt1, const ContactPtr cnt2) {
-    if (cnt1 == NULL || cnt2 == NULL) {
-        return 0; // Se uno dei contatti è NULL, non possono essere confrontati
+    int surnameCmp = strcmp(cnt1->surname, cnt2->surname);
+    int nameCmp = strcmp(cnt1->name, cnt2->name);
+    if(surnameCmp != 0) {
+        return surnameCmp>0 ? 1 : -1;
+    }else if(nameCmp != 0){
+        return nameCmp>0 ? 1 : -1;
     }
-    int surnameComparison = strcmp(cnt1->surname, cnt2->surname);
-    if (surnameComparison != 0) {
-        return surnameComparison; // Se i cognomi sono diversi, restituisci il risultato della comparazione dei cognomi
-    }
-
-    return strcmp(cnt1->name, cnt2->name); // Se i cognomi sono uguali, confronta i nomi
+    return 0;
 }
