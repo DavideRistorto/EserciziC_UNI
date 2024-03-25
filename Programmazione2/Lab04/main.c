@@ -4,119 +4,103 @@
 
 typedef struct listNode ListNode, *ListNodePtr;
 struct listNode {
-   char data;
-   ListNodePtr next;
+    char data;
+    ListNodePtr next;
 };
 
 struct charQueue {
-    ListNodePtr front; /* Punta al primo nodo della lista, che contiene l'elemento in testa alla coda, se la coda è vuota vale NULL */
-    ListNodePtr rear; /* Punta all'ultimo nodo della lista, che contiene l'elemento in fondo alla coda, se la coda è vuota vale NULL */
-    
-    /* aggiungere eventuali altre variabili per ottenere una implementazione più efficiente */
+    ListNodePtr front;
+    ListNodePtr rear;
+    // Come indicato da consegna, aggiungo come campo la dimensione della coda per non doverla calcolare ogni volta
+    int size;
 };
 
-
-void printQueue(CharQueueADT q) {
-    ListNodePtr temp = q->front;
-    while(temp != NULL){
-        printf("Element: '%c'\n", temp->data);
-        temp = temp->next;
-    }
-}
-
-
-/* @brief Restituisce una coda vuota, se non trova memoria restituisce NULL */
 CharQueueADT mkQueue() {
+    // Alloco la memoria per la coda e setto i valori iniziali
     CharQueueADT queue = (CharQueueADT)malloc(sizeof(struct charQueue));
     if(queue != NULL){
         queue->front = NULL;
         queue->rear = NULL;
+        queue->size = 0;
     }
     return queue;
 }
 
-/* @brief Distrugge la coda, recuperando la memoria */
 void dsQueue(CharQueueADT *pq) {
-    printf("FREE\n");
     free(*pq);
     *pq = NULL;
 }
 
-/* @brief Aggiunge un elemento in fondo alla coda */
 _Bool enqueue(CharQueueADT q, const char e) {
-    printf("ENQUEUE\n");
+    //creo un nuovo nodo temporaneo
     ListNodePtr newNode = (ListNodePtr)malloc(sizeof(struct listNode));
-    if(newNode == NULL){
-        return 0;
-    }
+    // setto i valori all' interno del nodo
     newNode->data = e;
     newNode->next = NULL;
+    // aggiorno la coda (la fine)
     if(q->rear != NULL){
         q->rear->next = newNode;
     }else{
+        // nel caso la coda sia vuota, il nuovo nodo è messo in testa
         q->front = newNode;
     }
+    // aggiorno la coda che è l'ultimo nodo appena inserito
     q->rear = newNode;
-    //printQueue(q);
+    q->size++;
     return 1;
 }
 
-
-/* @brief Toglie e restituisce l'elemento in testa alla coda */
 _Bool dequeue(CharQueueADT q, char* res) {
-    printf("DEQUEUE\n");
+    // se la coda è vuoto non posso fare la dequeue
     if(q->front == NULL){
-        printf("NULL\n");
-        res = NULL;
         return 0;
     }else{
-        printf("NON NULL\n");
+        // nodo temporaneo che punta al primo nodo della coda
         ListNodePtr newNode = q->front;
+        // estraggo il risultato
         *res = q->front->data;
+        // aggiorno la coda che partirà dal secondo nodo
         q->front = q->front->next;
+        // nel caso la coda fosse formata da un solo nodo,
+        // la coda sarà vuota e il reaa/front saranno nulli
         if(q->front == NULL){
             q->rear = NULL;
         }
         free(newNode);
-        newNode = NULL;
+        q->size--;
         return 1;
     }
 }
 
-
-
-/* @brief Controlla se la coda è vuota */
 _Bool isEmpty(CharQueueADT q) {
-    if(q != NULL && q->front != NULL && q->rear != NULL){
-        return 0;
-    }
-   return 1;
+    if(q == NULL || q->front == NULL){
+        return 1;
+    } return 0;
 }
 
-/* @brief Restituisce il numero degli elementi presenti nella coda */
 int size(CharQueueADT q) {
-    int counter = 0;
-    ListNodePtr node = q->front;
-    while(node != NULL){
-        counter++;
-        node = node->next;
+    if(q != NULL){
+        return q->size;
     }
-    return counter;
+    return 0;
 }
 
-/* @brief Restituisce l'elemento nella posizione data (senza toglierlo) */
-//--------------------TODO: Implementare peek
 _Bool peek(CharQueueADT q, int position, char *res) {
-    int counter = 0;
-    ListNodePtr node = q->front;
-    while(node->next != NULL && counter < position){
-        counter++;
-        node = node->next;
-        printf("Counter: %d  Letter:%c\n", counter, node->data);
-    }
-    if(node == NULL){
-        res = NULL;
+    // controllo se position > 0 e se la coda è vuota
+    if(q->front == NULL || position < 0){
         return 0;
     }
-    return 1;
+    int counter = 0;
+    ListNodePtr node = q->front;
+    // ciclo tutta la lista fino ad arrivare al nodo desiderato
+    while(node != NULL && counter < position){
+        counter++;
+        node = node->next;
+    }
+    // controllo se il nodo cercato esiste effettivamente nella lista
+    if(node != NULL){
+        *res = node->data;
+        return 1;
+    }
+    return 0;
 }
