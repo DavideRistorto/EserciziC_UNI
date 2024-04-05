@@ -6,7 +6,7 @@
     
 .text
 _start:
-    # TROVARE IL MAX ELEMENTO DELL' ARRAY
+# TROVARE IL MAX ELEMENTO DELL' ARRAY
 la t4, size     #carico indirizzo size
 lw t0, 0(t4)    # carico val size
 la t3, array    # indirizzo array
