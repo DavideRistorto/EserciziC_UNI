@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "intSetADT.h"
 
 typedef struct listNode ListNode, *ListNodePtr;
 
 struct listNode {
-    int data;
-    ListNodePtr next;
+   int data;
+   ListNodePtr next;
 };
 
 struct intSet {
@@ -36,7 +37,7 @@ _Bool set_add(IntSetADT set, const int elem) {
     //controllo se il set esiste
     if(set == NULL){
         return 0;
-        //controllo se il set è vuoto
+    //controllo se il set è vuoto
     } else if(set->size == 0){
         //creo un nuovo nodo è lo metto come front
         ListNodePtr node = (ListNodePtr)malloc(sizeof(struct listNode));
@@ -64,28 +65,79 @@ _Bool set_add(IntSetADT set, const int elem) {
         newNode->data = elem;
         newNode->next = NULL;
         node->next = newNode;
+        //incremento la size
         set->size += 1;
         return 1;
     }
 }
 
 _Bool set_remove(IntSetADT set, const int elem) {
-    return false;
+    //controllo l' esistenza del set
+    if(set == NULL || set->size == 0){
+        return 0;
+    }
+    //controllo se l' elemento da togliere esiste
+    bool present = false;
+    ListNodePtr node = set->front;
+    for (int i=0; i<set->size;i++){
+        if(node->data == elem){
+            present = true;
+            break;
+        }
+        node = node->next;
+    }
+    // se l'elemento non è presente ritorno zero
+    if(!present){
+        return 0;
+    }
+    // se arrivato a questo punto posso procedere con la rimozione
+    node = set->front;
+    if(set->size == 1){
+        set->size = 0;
+        set->front = NULL;
+        return 1;        
+    }
+    for(int i=0; i<set->size;i++){
+        if (node->data == elem){
+            set->size -= 1;
+            node = node->next;
+        }
+    }
+    return 1;
 }
 
 _Bool set_member(const IntSetADT set, const int elem) {
-    return false;
+    // se il set è vuoto non può contenere l' elemento cercato
+    if(set == NULL || set->size == 0){
+        return 0;
+    }
+    //scorro il set e quando trovo l' elemento ritorno 1
+    ListNodePtr node = set->front;
+    for(int i=0; i<set->size; i++){
+        if(node->data == elem){
+            return 1;
+        }
+        node = node->next;
+    }
+    //in caso non ho trovato l' elemento ritorno zero
+    return 0;
 }
 
 _Bool isEmptySet(const IntSetADT set) {
-    if (set == NULL || set->size == 0){
+    // se il set è nullo o ha dimensione > 0 non è vuoto
+    if (set == NULL || set->size != 0){
         return 0;
     }
-    return set->size;
+    return 1;
 }
 
 int set_size(const IntSetADT set) {
-    return -1;
+    // nel caso in cui il set NON è nullo, ne restituisco la size
+    if(set == NULL){
+        return -1;
+    } else{
+        return set->size;
+    }
 }
 
 _Bool set_extract(IntSetADT set, int *datap) {
@@ -101,7 +153,7 @@ _Bool subseteq(const IntSetADT set1, const IntSetADT set2) {
 }
 
 _Bool subset(const IntSetADT set1, const IntSetADT set2) {
-    return false;
+    return false;    
 }
 
 IntSetADT set_union(const IntSetADT set1, const IntSetADT set2) {
