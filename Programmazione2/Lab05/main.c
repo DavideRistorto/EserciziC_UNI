@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 #include "intSetADT.h"
 
@@ -132,7 +133,6 @@ _Bool isEmptySet(const IntSetADT set) {
 }
 
 int set_size(const IntSetADT set) {
-    // nel caso in cui il set NON è nullo, ne restituisco la size
     if(set == NULL){
         return -1;
     } else{
@@ -141,29 +141,169 @@ int set_size(const IntSetADT set) {
 }
 
 _Bool set_extract(IntSetADT set, int *datap) {
-    return false;
+    if(set == NULL || set->size == 0){
+        return 0;
+    }
+    // estraggo l' ultimo elemento
+    ListNodePtr node = set->front;
+    for(int i=0;i<set->size-1;i++){
+        node = node->next;
+    }
+    // setto il result e diminuisco la size
+    *datap = node->data;
+    set->size -= 1;
+    return 1;
 }
 
 _Bool set_equals(const IntSetADT set1, const IntSetADT set2) {
-    return false;
+    //se entrambi i set sono nulli allora sono uguali
+    if (set1 == NULL && set2 == NULL ){
+        return 1;
+    //se entrambi i set hanno size = 0 sono uguali
+    }else if(set1 != NULL && set2 != NULL && set1->size == 0 && set2->size == 0){
+        return 1;
+    }
+    //caso in cui entrambi i set sono valorizzati
+    if(set1 != NULL && set2 != NULL){
+        // se le size sono diverse non sono uguali
+        if(set1->size != set2->size){
+            return 0;
+        }
+        ListNodePtr node1 = set1->front;
+        ListNodePtr node2 = set2->front;
+        for(int i=0; i<set1->size; i++){
+            if(node1->data != node2->data){
+                return 0;
+            }
+            node1 = node1->next;
+            node2 = node2->next;
+        }
+        return 1;
+    }
+    return 0;
 }
 
 _Bool subseteq(const IntSetADT set1, const IntSetADT set2) {
-    return false;
+    // se set2  è nullo, set1 non può mai essere incluso
+    if (set1 == NULL || set2 == NULL){
+        return 0;
+    }
+    // se ilset1 è vuoto, esso è sempre incluso nel set2
+    if (isEmptySet(set1)){
+        return 1;
+    }
+    if(set1 != NULL){
+        ListNodePtr node1 = set1->front;
+        //controllo se ogni elemento del set1 è in set2
+        for(int i=0; i<set1->size; i++){
+            if(!set_member(set2, node1->data)){
+                return 0;
+            }
+            node1 = node1->next;
+        }
+    }
+    return 1;
 }
 
 _Bool subset(const IntSetADT set1, const IntSetADT set2) {
-    return false;    
+    // controllo che size2 > size 1 in tal caso restituisco true
+    if(!subseteq(set1, set2)){
+        return 0;
+    }else if(set1->size < set2->size){
+        return 1;
+    }
+    return 0;
+}
+
+IntSetADT set_reverse(IntSetADT set) {
+    if (set == NULL || set->size <= 1) {
+        // Se il set è vuoto o ha un solo elemento, non c'è bisogno di invertirlo
+        return set;
+    }
+
+    // Creazione di un nuovo set vuoto
+    IntSetADT reversedSet = mkSet();
+    if (reversedSet == NULL) {
+        // Se non è stato possibile allocare memoria per il nuovo set, restituisci NULL
+        return NULL;
+    }
+
+    // Iterazione attraverso il set originale e aggiunta degli elementi al nuovo set in testa
+    ListNodePtr node = set->front;
+    while (node != NULL) {
+        // Creazione di un nuovo nodo per il nuovo set
+        ListNodePtr newNode = (ListNodePtr)malloc(sizeof(struct listNode));
+        if (newNode == NULL) {
+            // Se non è stato possibile allocare memoria per il nuovo nodo, dealloca il nuovo set e restituisci NULL
+            dsSet(&reversedSet);
+            return NULL;
+        }
+        // Assegnazione del valore del nodo corrente al nuovo nodo
+        newNode->data = node->data;
+        // Collegamento del nuovo nodo alla lista invertita
+        newNode->next = reversedSet->front;
+        reversedSet->front = newNode;
+        // Passaggio al nodo successivo nel set originale
+        node = node->next;
+    }
+
+    return set_reverse(reversedSet);
 }
 
 IntSetADT set_union(const IntSetADT set1, const IntSetADT set2) {
-    return NULL;
+    //se gli insiemi sono entrami vuoti o nulli l' inserzione non si può fare
+    if((set1 == NULL && isEmptySet(set2)) || (set2 == NULL && isEmptySet(set1))){
+        return NULL;
+    }
+    IntSetADT unionSet = mkSet();
+    ListNodePtr node = set1->front;
+    //aggiungo tutti gli elem di set1
+    for(int i=0; i<set1->size; i++){
+        set_add(unionSet, node->data);
+        node = node->next;
+    }
+    //aggiungo tutti gli elem di set2
+    node = set2->front;
+    for(int i=0; i<set2->size; i++){
+        set_add(unionSet, node->data);
+        node = node->next;
+    }
+    return unionSet;
 }
 
 IntSetADT set_intersection(const IntSetADT set1, const IntSetADT set2) {
-    return NULL;
+    //se gli insiemi sono entrami vuoti o nulli l' inserzione non si può fare
+    if((set1 == NULL && isEmptySet(set2)) || (set2 == NULL && isEmptySet(set1))){
+        return NULL;
+    }
+    IntSetADT intersectionSet = mkSet();
+    //se uno degli insiemi è vuoto, l' inserzione è vuota
+    if(isEmptySet(set1) || isEmptySet(set2)){
+        return intersectionSet;
+    }
+    ListNodePtr node = set1->front;
+    for(int i=0; i<set1->size; i++){
+        if(set_member(set2, node->data)){
+            set_add(intersectionSet, node->data);
+        }
+        node = node->next;
+    }
+    return intersectionSet;
 }
 
 IntSetADT set_subtraction(const IntSetADT set1, const IntSetADT set2) {
-    return NULL;
+    if((set1 == NULL && isEmptySet(set2)) || (set2 == NULL && isEmptySet(set1))){
+        return NULL;
+    }
+    IntSetADT subtrSet = mkSet();
+    if(isEmptySet(set1) || isEmptySet(set2)){
+        return subtrSet;
+    }
+    printf("CHECK SET2 VUOTO");
+    if(isEmptySet(set2)){
+        return set1;
+    }
+    
+    return subtrSet;
+
 }
