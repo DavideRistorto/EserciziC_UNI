@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+ 
 void shiftArray(int array[], size_t* dim, int index) {
     if (index == *dim - 1) {
         *dim -= 1;
