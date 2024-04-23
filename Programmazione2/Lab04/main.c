@@ -97,9 +97,9 @@ _Bool peek(CharQueueADT q, int position, char *res) {
         counter++;
         node = node->next;
     }
-    // controllo se il nodo cercato esiste effettivamente nella lista
+    // controllo se il nodo cercato esiste effettivamente nella lista *
     if(node != NULL){
-        *res = node->data;
+        res = node->data;
         return 1;
     }
     return 0;
