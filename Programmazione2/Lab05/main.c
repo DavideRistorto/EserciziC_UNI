@@ -303,7 +303,5 @@ IntSetADT set_subtraction(const IntSetADT set1, const IntSetADT set2) {
     if(isEmptySet(set2)){
         return set1;
     }
-    
     return subtrSet;
-
 }
