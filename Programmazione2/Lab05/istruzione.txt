@@ -1,5 +1,0 @@
-# Install gcc (compiler) from powershell (in windows): (this installs chocolatey package manager and then gcc)
-Set-ExecutionPolicy Bypass -Scope Process -Force; iwr -useb https://chocolatey.org/install.ps1 | iex; choco install mingw -y
-
-# Example Manual Run: (VSCode has extensions to automate)
-g++ yourfile.cpp -o output_binary.exe && ./output_binary.exe
