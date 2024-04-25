@@ -1082,7 +1082,7 @@ int check_set_union3() {
     expset = mkSetv(3,7,5,3);
     if (!set_equals(uset, expset)) {
         printf("FAILED\n");
-        printf("EXPECTED: %s\n", "{3,5,7}");
+        printf("EXPECTED: %s\n", "{7,5,3}");
         passed=0;   
     } else {
         printf("OK\n");
@@ -1521,4 +1521,3 @@ int main(int argc, char *argv[]) {
   }
 
 }
-

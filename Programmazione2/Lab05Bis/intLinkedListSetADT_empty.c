@@ -17,24 +17,6 @@ struct intSet {
     int size; /* Numero di elementi presenti nell'insieme */
 };
 
-
-void print_set(const IntSetADT set) {
-    if(set == NULL){
-        printf("Il set è nullo.\n");
-        return;
-    }
-    if(set->size == 0){
-        printf("Il set è vuoto.\n");
-        return;
-    }
-    ListNodePtr node = set->front;
-    for(int i=0; i<set->size; i++){
-        printf("%d ", node->data);
-        node = node->next;
-    }
-    printf("\n");
-}
-
 IntSetADT mkSet() {
     IntSetADT set = (IntSetADT)malloc(sizeof(struct intSet));
     if (set){
@@ -69,15 +51,16 @@ _Bool set_add(IntSetADT set, const int elem) {
     } else {
         //controllo se l' elemento è gia presente
         ListNodePtr node = set->front;
-        for(int i=0; i<(set->size)-1; i++){
+        while(node != NULL){
             // se presente return 0
             if(node->data == elem){
                 return 0;
             }
+            node = node->next;
         }
         // arrivo fino all' ultimo nodo
         node = set->front;
-        for(int i=0; i<(set->size)-1; i++){
+        while( node->next != NULL){
             node = node->next;
         }
         // creo un nuovo nodo e lo metto in foto alla lista
@@ -322,7 +305,6 @@ IntSetADT set_subtraction(const IntSetADT set1, const IntSetADT set2) {
         return NULL;
     }
     IntSetADT subtrSet = mkSet();
-    printf("subtrSet->size: %d\n", subtrSet->size);
     ListNodePtr node = set1->front;
     //se il secondo set è vuoto, l' insieme di sottrazione è uguale al primo
     if(isEmptySet(set2)){
@@ -332,11 +314,11 @@ IntSetADT set_subtraction(const IntSetADT set1, const IntSetADT set2) {
         }
     }else{
         // se un elemento del primo set, non appartiene al secondo allora lo aggiungo a quello di sub.
-        for(int i=0; i<set1->size; i++){
+        while(node != NULL) {
             if(!set_member(set2, node->data)){
                 set_add(subtrSet, node->data);
-                node = node->next;
             }
+            node = node->next;
         }
     }
     return subtrSet;
