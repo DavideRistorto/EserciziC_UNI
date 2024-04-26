@@ -51,6 +51,9 @@ SortedSetADTptr mkSSet(int (*compare)(void*, void*)) {
 
 // distrugge l'insieme, recuperando la memoria
 _Bool dsSSet(SortedSetADTptr* ssptr) {
+  if(ssptr == NULL){
+    return 0;
+  }
   free(*ssptr);
   *ssptr = NULL;
   return 1;
