@@ -4,133 +4,144 @@
 #include "intSortedSetADT.h"
 #include "intLinkedListSortedSetADT.h"
 
-IntSortedSetADT mkSSet() {
+_Bool areSetsInvalid(const IntSortedSetADT* s1, const IntSortedSetADT* s2){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+    return 1;
+  }
+  return 0;
+}
 
-    IntSortedSetADT set = malloc(sizeof(struct intSortedSet));
-    if(set) {
-        set->first = NULL;
-        set->last = NULL;
-        set->size = 0;
-        return set;
-    }
-    return NULL;
+
+IntSortedSetADT mkSSet() {
+  IntSortedSetADT set = malloc(sizeof(struct intSortedSet));
+  if(set) {
+    set->first = NULL;
+    set->last = NULL;
+    set->size = 0;
+    return set;
+  }
+  return NULL;
 }
 
 _Bool dsSSet(IntSortedSetADT *ssptr) {
-    if( ssptr!= NULL){
-        free(*ssptr);
-        *ssptr = NULL;
-        return 1;
-    }
-    return 0;
+  if( ssptr!= NULL){
+    free(*ssptr);
+    *ssptr = NULL;
+    return 1;
+  }
+  return 0;
 }
 
 _Bool sset_add(IntSortedSetADT ss, const int elem) {
-    //controllo se il set esiste
-    if( ss == NULL){
-        return 0;
-    }
-    // se il set è vuoto, l'elemento nuovo è sia il primo che l'ultimo
-    if( ss->size == 0){
-        ListNodePtr node = malloc(sizeof(struct listNode));
-        node->elem = elem;
-        node->next = NULL;
-        ss->first = node;
-        ss->last = node;
-        ss->size++;
-        return 1;
-    }
-    //controllo se l'elemento è già presente
-    ListNodePtr current = ss->first;
-    while(current != NULL){
-        if(current->elem == elem){
-            return 0;
-        }
-        current = current->next;
-    }
-    //aggiungo l'elemento in coda in maniera ordinata
-    ListNodePtr node = malloc(sizeof(struct listNode));
-    node->elem = elem;
-    node->next = NULL;
-    // se l'emento è minore del primo, diventa il primo
-    if(elem < ss->first->elem){
-        node->next = ss->first;
-        ss->first = node;
-        ss->size++;
-        return 1;
-    }
-    // se l'elemento è maggiore dell'ultimo, diventa l'ultimo
-    if(elem > ss->last->elem){
-        ss->last->next = node;
-        ss->last = node;
-        ss->size++;
-        return 1;
-    }
-    // se l'elemento è compreso tra il primo e l'ultimo, lo inserisco in mezzo
-    ListNodePtr prev = ss->first;
-    ListNodePtr succ = ss->first->next;
-    while(succ != NULL){
-        if(prev->elem < elem && succ->elem > elem){
-            prev->next = node;
-            node->next = succ;
-            ss->size++;
-            return 1;
-        }
-        prev = succ;
-        succ = succ->next;
-    }
+  //controllo se il set esiste
+  if( ss == NULL){
     return 0;
-}
+  }
+  // se il set è vuoto, l'elemento nuovo è sia il primo che l'ultimo
+  if(ss->size == 0){
+    ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
+    new->elem = elem;
+    new->next = NULL;
+    // sia first che last puntano al nuovo nodo essendo l'unico presente
+    ss->first = ss->last = new;
+    ss->size++;
+    return 1;
+  }
+  //controllo se l'elemento è già presente, se si restituisco 0 e non lo inserisco
+  ListNodePtr cur = ss->first;
+  while(cur != NULL){
+    if(cur->elem == elem){
+      return 0;
+    }
+    cur = cur->next;
+  }
+  //caso di quando l'elemento è minore del primo e quindi va messo in testa
+  if(elem < ss->first->elem){
+    ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
+    new->elem = elem;
+    new->next = ss->first;
+    ss->first = new;
+    ss->size++;
+    return 1;
+  }
+  //caso in cui l'elemento è maggiore dell'ultimo e quindi va messo in coda
+  if (elem>ss->last->elem){
+    ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
+    new->elem = elem;
+    new->next = NULL;
+    ss->last->next = new;
+    ss->last = new;
+    ss->size++;
+    return 1;
+  }
+  //caso in cui l'elemento va messo in mezzo a due nodi
+  ListNodePtr prev = ss->first;
+  cur = ss->first->next;
+  while(cur != NULL){
+    if(elem < cur->elem && elem > prev->elem){
+      ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
+      new->elem = elem;
+      new->next = cur;
+      prev->next = new;
+      ss->size++;
+      return 1;
+    }
+    prev = cur;
+    cur = cur->next;
+  }
+}  
 
 _Bool sset_remove(const IntSortedSetADT ss, const int elem) {
-    //controllo l' esistenza del set
-    if(ss == NULL || ss->size == 0){
-        return 0;
-    }
-    //caso in cui il set ha un solo elemento
-    if(ss->size == 1){
-        if(ss->first->elem == elem){
-            free(ss->first);
-            ss->first = NULL;
-            ss->last = NULL;
-            ss->size--;
-            return 1;
+  if(ss == NULL || ss->size == 0){
+    return 0;
+  }
+  ListNodePtr cur = ss->first;
+  ListNodePtr prev = NULL;
+  while(cur != NULL){
+    if(cur->elem == elem){
+      // elemento trovato
+      if(prev == NULL){
+        ss->first = cur->next;
+        if(ss->first == NULL){
+          ss->last = NULL;
         }
-    }
-    //caso in cui l'elemento da eliminare è il primo
-    if(ss->first->elem == elem){
-        ListNodePtr temp = ss->first;
-        ss->first = ss->first->next;
-        free(temp);
-        ss->size--;
-        return 1;
-    }
-    //caso in cui l'elemento da eliminare è l' ultimo
-    ListNodePtr secondLastNode = ss->first;
-    while(secondLastNode->next != NULL){
-        if(secondLastNode->next->elem == elem){
-            free(secondLastNode->next);
-            secondLastNode->next = NULL;
-            //l 'ultimo nodo diventa il penultimo
-            ss->last = secondLastNode;
-            ss->size--;
-            return 1;
+      } else {
+        // L'elemento da rimuovere non è il primo elemento
+        prev->next = cur->next;
+        if(cur->next == NULL){
+          // L'elemento da rimuovere è l'ultimo elemento
+          ss->last = prev;
         }
-        secondLastNode = secondLastNode->next;
+      }
+      free(cur);
+      ss->size--;
+      return 1;
     }
-    // caso in cui l'elemento da eliminare è in mezzo a due nodi
+    prev = cur;
+    cur = cur->next;
+  }
+  // L'elemento non è stato trovato
+  return 0;
 }
 
 _Bool sset_member(const IntSortedSetADT ss, const int elem) {
-    return false;
+  ListNodePtr cur = ss->first;
+  //scorro tutti gli elementi alla ricerca di quello con valore uguale a elem
+  while (cur != NULL){
+    if(cur->elem == elem){
+      return 1;
+    }
+    cur = cur->next;
+  }
+  return 0;
 }
 
 _Bool isEmptySSet(const IntSortedSetADT ss) {
-    return false;
+  return (ss->size == 0) ? 1 : 0;
 }
 
 int sset_size(const IntSortedSetADT ss) {
-    return -1;
+  return(ss == NULL) ? -1 : ss->size;
 }
 
 _Bool sset_extract(IntSortedSetADT ss, int *ptr) {

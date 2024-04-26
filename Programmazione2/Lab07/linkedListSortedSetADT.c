@@ -176,9 +176,37 @@ int sset_size(const SortedSetADT* ss) {
 } 
 
 _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un elemento a caso dall'insieme
+  if(ss == NULL || ss->size == 0){
     return false;
-} 
-
+  }
+  int randomIndex = rand() % ss->size; 
+  ListNodePtr cur = ss->first;
+  ListNodePtr prev = NULL;
+  int count = 0;
+  while(cur != NULL){
+    if(count == randomIndex){
+      *ptr = cur->elem;
+      if(prev == NULL){
+        ss->first = cur->next;
+        if(ss->first == NULL){
+          ss->last = NULL;
+        }
+      } else {
+        prev->next = cur->next;
+        if(cur->next == NULL){
+          ss->last = prev;
+        }
+      }
+      free(cur);
+      ss->size--;
+      return true;
+    }
+    prev = cur;
+    cur = cur->next;
+    count++;
+  }
+  return false;
+}
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
   //controllo la validità di entrambi gli insiemi
