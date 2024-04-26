@@ -28,7 +28,14 @@ void stampaSet(SortedSetADTptr ss, void (*stampaelem)(void*)) {
     for(cur = ss->first; cur; cur=cur->next) (*stampaelem)(cur->elem);
       printf("\n");
   }
-}    
+} 
+
+_Bool areSetsInvalid(const SortedSetADT* s1, const SortedSetADT* s2){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+    return 1;
+  }
+  return 0;
+}
 
 // restituisce un insieme vuoto impostando funzione di confronto, NULL se errore
 SortedSetADTptr mkSSet(int (*compare)(void*, void*)) {
@@ -107,15 +114,6 @@ _Bool sset_add(SortedSetADTptr ss, void* elem) {
     prev = cur;
     cur = cur->next;
   }
-  //TODO: DA CANCELLARE
-  // Add the new element at the end of the set
-  ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
-  new->elem = elem;
-  new->next = NULL;
-  prev->next = new;
-  ss->last = new; // Update the last pointer
-  ss->size++;
-  return 1;
 }  
 
 // toglie un elemento all'insieme 
@@ -184,7 +182,7 @@ _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un e
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if(areSetsInvalid(s1, s2)){
     return 0;
   }
   //se gli insiemi hanno dim diverse allora non possono essere uguali
@@ -207,7 +205,7 @@ int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso nel secondo
 int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if(areSetsInvalid(s1, s2)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -230,7 +228,7 @@ int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso strettamente nel secondo
 int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if(areSetsInvalid(s1, s2)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -255,7 +253,7 @@ int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
 
 // restituisce la sottrazione primo insieme meno il secondo, NULL se errore
 SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2) {
-  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if(areSetsInvalid(s1, s2)){
     return 0;
   }
   SortedSetADTptr subtractionSet = mkSSet(s1->compare); 
@@ -264,19 +262,46 @@ SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2)
     if(!sset_member(s2, node->elem)){
       sset_add(subtractionSet, node->elem);
     }
-    node = node->elem;
+    node = node->next;
   }
   return subtractionSet;
 } 
 
 // restituisce l'unione di due insiemi, NULL se errore
 SortedSetADTptr sset_union(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return NULL; 
+  if(areSetsInvalid(s1, s2)){
+    return 0;
+  }
+  SortedSetADTptr unionSet = mkSSet(s1->compare); 
+  ListNodePtr node = s1->first;
+  //inserisco tutti gli elem del primo insieme
+  while (node != NULL){
+    sset_add(unionSet, node->elem);
+    node = node->next;
+  }
+  //inserisco gli elem del secondo insieme
+  node = s2->first;
+  while (node != NULL){
+    sset_add(unionSet, node->elem);
+    node = node->next;
+  }
+  return unionSet;
 } 
 
 // restituisce l'intersezione di due insiemi, NULL se errore
 SortedSetADTptr sset_intersection(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return NULL;
+  if(areSetsInvalid(s1, s2)){
+    return 0;
+  }
+  SortedSetADTptr interSet = mkSSet(s1->compare); 
+  ListNodePtr node = s1->first;
+  while(node != NULL){
+    if(sset_member(s2, node->elem)){
+      sset_add(interSet, node->elem);
+    }
+    node = node->next;
+  }
+  return interSet;
 }
 
 // restituisce il primo elemento 
