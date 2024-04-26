@@ -224,41 +224,6 @@ _Bool subset(const IntSetADT set1, const IntSetADT set2) {
     return 0;
 }
 
-IntSetADT set_reverse(IntSetADT set) {
-    if (set == NULL || set->size <= 1) {
-        // Se il set è vuoto o ha un solo elemento, non c'è bisogno di invertirlo
-        return set;
-    }
-
-    // Creazione di un nuovo set vuoto
-    IntSetADT reversedSet = mkSet();
-    if (reversedSet == NULL) {
-        // Se non è stato possibile allocare memoria per il nuovo set, restituisci NULL
-        return NULL;
-    }
-
-    // Iterazione attraverso il set originale e aggiunta degli elementi al nuovo set in testa
-    ListNodePtr node = set->front;
-    while (node != NULL) {
-        // Creazione di un nuovo nodo per il nuovo set
-        ListNodePtr newNode = (ListNodePtr)malloc(sizeof(struct listNode));
-        if (newNode == NULL) {
-            // Se non è stato possibile allocare memoria per il nuovo nodo, dealloca il nuovo set e restituisci NULL
-            dsSet(&reversedSet);
-            return NULL;
-        }
-        // Assegnazione del valore del nodo corrente al nuovo nodo
-        newNode->data = node->data;
-        // Collegamento del nuovo nodo alla lista invertita
-        newNode->next = reversedSet->front;
-        reversedSet->front = newNode;
-        // Passaggio al nodo successivo nel set originale
-        node = node->next;
-    }
-
-    return set_reverse(reversedSet);
-}
-
 IntSetADT set_union(const IntSetADT set1, const IntSetADT set2) {
     //se gli insiemi sono entrami vuoti o nulli l' inserzione non si può fare
     if((set1 == NULL && isEmptySet(set2)) || (set2 == NULL && isEmptySet(set1))){

@@ -184,7 +184,7 @@ _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un e
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se gli insiemi hanno dim diverse allora non possono essere uguali
@@ -207,7 +207,7 @@ int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso nel secondo
 int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -230,7 +230,7 @@ int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso strettamente nel secondo
 int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if((s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -255,7 +255,18 @@ int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
 
 // restituisce la sottrazione primo insieme meno il secondo, NULL se errore
 SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return NULL;   
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
+    return 0;
+  }
+  SortedSetADTptr subtractionSet = mkSSet(s1->compare); 
+  ListNodePtr node = s1->first;
+  while (node != NULL){
+    if(!sset_member(s2, node->elem)){
+      sset_add(subtractionSet, node->elem);
+    }
+    node = node->elem;
+  }
+  return subtractionSet;
 } 
 
 // restituisce l'unione di due insiemi, NULL se errore
