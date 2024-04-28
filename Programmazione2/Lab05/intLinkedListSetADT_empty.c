@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <time.h>
 #include <stdio.h>
-
 #include "intSetADT.h"
 
 typedef struct listNode ListNode, *ListNodePtr;
