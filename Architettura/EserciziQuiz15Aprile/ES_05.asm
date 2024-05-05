@@ -1,4 +1,4 @@
-mcm:
+mcm: 
     addi sp, sp, -16
     sd s1, 8(sp)
     sd ra, 0(sp)
