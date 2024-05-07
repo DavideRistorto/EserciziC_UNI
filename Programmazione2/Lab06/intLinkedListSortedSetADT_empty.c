@@ -24,13 +24,21 @@ IntSortedSetADT mkSSet() {
 }
 
 _Bool dsSSet(IntSortedSetADT *ssptr) {
-  if( ssptr!= NULL){
-    free(*ssptr);
-    *ssptr = NULL;
-    return 1;
+  if( ssptr == NULL){
+    return 0;
   }
-  return 0;
+  ListNodePtr current = (*ssptr)->first;
+  ListNodePtr nextNode;
+  while (current != NULL){
+    nextNode = current->next;
+    free(current);
+    current = nextNode;
+  }
+  free(*ssptr);
+  *ssptr = NULL;
+  return 1;
 }
+
 
 _Bool sset_add(IntSortedSetADT ss, const int elem) {
   //controllo se il set esiste

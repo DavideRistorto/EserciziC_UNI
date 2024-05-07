@@ -54,6 +54,13 @@ _Bool dsSSet(SortedSetADTptr* ssptr) {
   if(ssptr == NULL){
     return 0;
   }
+  ListNodePtr current = (*ssptr)->first;
+  ListNodePtr nextNode;
+  while (current != NULL){
+    nextNode = current->next;
+    free(current);
+    current = nextNode;
+  }
   free(*ssptr);
   *ssptr = NULL;
   return 1;
