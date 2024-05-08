@@ -44,12 +44,24 @@ void stampaSet(SortedSetADTptr ss, void (*stampaelem)(void*)) {
 
 // restituisce un insieme vuoto impostando funzione di confronto, NULL se errore
 SortedSetADTptr mkSSet(int (*compare)(void*, void*)) {
-    return NULL;
+    SortedSetADTptr set = (SortedSetADTptr)malloc(sizeof(struct sortedSetADT));
+    if(set == NULL){
+        return NULL;
+    }
+    set->compare = compare;
+    set->size = 0;
+    set->root = NULL;
+    return set;
 }
 
 // distrugge l'insieme, recuperando la memoria
 _Bool dsSSet(SortedSetADTptr* ssptr) {
-    return false;
+    if (ssptr == NULL){
+        return false;
+    }
+    //TODO: implementare la distruzione dell'albero
+    free(*ssptr);
+    return true;
 }
 
 // aggiunge un elemento all'insieme 
@@ -57,8 +69,12 @@ _Bool sset_add(SortedSetADTptr ss, void* elem) {
     return false;
 }  
 
-void sset_extractMin_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*));
-void sset_extractMax_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*));
+void sset_extractMin_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*)){
+    return;
+}
+void sset_extractMax_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*)){
+    return;
+}
 
 // funzione ausiliaria che toglie un elemento da un sottoalbero
 _Bool sset_remove_rec(TreeNodePtr* cur, void* elem, int (*compare)(void*, void*)) {
@@ -89,7 +105,9 @@ _Bool sset_remove(SortedSetADTptr ss, void* elem) {
 
 // controlla se un elemento appartiene all'insieme
 int sset_member(const SortedSetADT* ss, void* elem) {
-    return -1;
+    if(ss == NULL){
+        return -1;
+    }
 }
     
 // controlla se l'insieme e' vuoto    
