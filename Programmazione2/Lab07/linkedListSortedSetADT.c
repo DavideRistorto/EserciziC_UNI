@@ -30,7 +30,7 @@ void stampaSet(SortedSetADTptr ss, void (*stampaelem)(void*)) {
   }
 } 
 
-_Bool areSetsInvalid(const SortedSetADT* s1, const SortedSetADT* s2){
+_Bool areSetsInvalid2(const SortedSetADT* s1, const SortedSetADT* s2){
   if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 1;
   }
@@ -161,28 +161,29 @@ _Bool sset_remove(SortedSetADTptr ss, void* elem) {
 }
 // controlla se un elemento appartiene all'insieme
 int sset_member(const SortedSetADT* ss, void* elem) {
-    ListNodePtr cur = ss->first;
-    //scorro tutti gli elementi alla ricerca di quello con valore uguale a elem
-    while (cur != NULL){
-      if(ss->compare(elem, cur->elem) == 0){
-        return 1;
-      }
-      cur = cur->next;
-    }
+  //controllo validità set
+  if(ss == NULL || ss->first == NULL){
     return 0;
+  } 
+  ListNodePtr cur = ss->first;
+  //scorro tutti gli elementi alla ricerca di quello con valore uguale a elem
+  while (cur != NULL){
+    if(ss->compare(elem, cur->elem) == 0){
+      return 1;
+    }
+    cur = cur->next;
+  }
+  return 0;
 }
     
 // controlla se l'insieme e' vuoto    
 int isEmptySSet(const SortedSetADT* ss) {
-  if(ss->size == 0){
-    return 1;
-  }
-  return 0;
+  return (ss == NULL ||ss->size != 0) ? 0 : 1;
 } 
 
 // restituisce il numero di elementi presenti nell'insieme
 int sset_size(const SortedSetADT* ss) {
-  return ss->size;
+  return(ss == NULL) ? -1 : ss->size;
 } 
 
 _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un elemento a caso dall'insieme
@@ -220,7 +221,7 @@ _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un e
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se gli insiemi hanno dim diverse allora non possono essere uguali
@@ -243,7 +244,7 @@ int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso nel secondo
 int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -266,7 +267,7 @@ int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
 // controlla se il primo insieme e' incluso strettamente nel secondo
 int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -291,7 +292,7 @@ int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
 
 // restituisce la sottrazione primo insieme meno il secondo, NULL se errore
 SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   SortedSetADTptr subtractionSet = mkSSet(s1->compare); 
@@ -307,7 +308,7 @@ SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2)
 
 // restituisce l'unione di due insiemi, NULL se errore
 SortedSetADTptr sset_union(const SortedSetADT* s1, const SortedSetADT* s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   SortedSetADTptr unionSet = mkSSet(s1->compare); 
@@ -328,7 +329,7 @@ SortedSetADTptr sset_union(const SortedSetADT* s1, const SortedSetADT* s2) {
 
 // restituisce l'intersezione di due insiemi, NULL se errore
 SortedSetADTptr sset_intersection(const SortedSetADT* s1, const SortedSetADT* s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   SortedSetADTptr interSet = mkSSet(s1->compare); 
@@ -377,7 +378,16 @@ _Bool sset_extractMin(SortedSetADTptr ss, void**ptr) {
 _Bool sset_extractMax(SortedSetADTptr ss, void**ptr) {
   if( ss == NULL || ss->size == 0){
     return 0;
-  } 
+  }
+  if(ss->size == 1){
+    *ptr = ss->last->elem;
+    free(ss->last);
+    ss->first = NULL;
+    ss->last = NULL;
+    ss->size--;
+    return 1;
+  }
+
   ListNodePtr temp = ss->first;
   //scorro per arrivare al penultimo elemento
   while(temp->next != ss->last){

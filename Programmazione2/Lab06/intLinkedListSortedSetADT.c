@@ -4,14 +4,6 @@
 #include "intSortedSetADT.h"
 #include "intLinkedListSortedSetADT.h"
 
-_Bool areSetsInvalid(const IntSortedSetADT* s1, const IntSortedSetADT* s2){
-  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
-    return 1;
-  }
-  return 0;
-}
-
-
 IntSortedSetADT mkSSet() {
   IntSortedSetADT set = malloc(sizeof(struct intSortedSet));
   if(set) {
@@ -39,7 +31,6 @@ _Bool dsSSet(IntSortedSetADT *ssptr) {
   return 1;
 }
 
-
 _Bool sset_add(IntSortedSetADT ss, const int elem) {
   //controllo se il set esiste
   if( ss == NULL){
@@ -56,12 +47,8 @@ _Bool sset_add(IntSortedSetADT ss, const int elem) {
     return 1;
   }
   //controllo se l'elemento è già presente, se si restituisco 0 e non lo inserisco
-  ListNodePtr cur = ss->first;
-  while(cur != NULL){
-    if(cur->elem == elem){
-      return 0;
-    }
-    cur = cur->next;
+  if(sset_member(ss, elem)){
+    return 0;
   }
   //caso di quando l'elemento è minore del primo e quindi va messo in testa
   if(elem < ss->first->elem){
@@ -84,7 +71,7 @@ _Bool sset_add(IntSortedSetADT ss, const int elem) {
   }
   //caso in cui l'elemento va messo in mezzo a due nodi
   ListNodePtr prev = ss->first;
-  cur = ss->first->next;
+  ListNodePtr cur = ss->first->next;
   while(cur != NULL){
     if(elem < cur->elem && elem > prev->elem){
       ListNodePtr new = (ListNodePtr) malloc(sizeof(ListNode));
@@ -97,9 +84,11 @@ _Bool sset_add(IntSortedSetADT ss, const int elem) {
     prev = cur;
     cur = cur->next;
   }
-}  
+  return 0;
+} 
 
 _Bool sset_remove(const IntSortedSetADT ss, const int elem) {
+  //controllo validità set
   if(ss == NULL || ss->size == 0){
     return 0;
   }
@@ -133,6 +122,10 @@ _Bool sset_remove(const IntSortedSetADT ss, const int elem) {
 }
 
 _Bool sset_member(const IntSortedSetADT ss, const int elem) {
+  //controllo validità set
+  if(ss == NULL || ss->first == NULL){
+    return 0;
+  } 
   ListNodePtr cur = ss->first;
   //scorro tutti gli elementi alla ricerca di quello con valore uguale a elem
   while (cur != NULL){
@@ -145,7 +138,7 @@ _Bool sset_member(const IntSortedSetADT ss, const int elem) {
 }
 
 _Bool isEmptySSet(const IntSortedSetADT ss) {
-  return (ss->size == 0) ? 1 : 0;
+  return (ss == NULL ||ss->size != 0) ? 0 : 1;
 }
 
 int sset_size(const IntSortedSetADT ss) {
@@ -188,7 +181,7 @@ _Bool sset_extract(IntSortedSetADT ss, int *ptr)  {
 
 _Bool sset_equals(const IntSortedSetADT s1, const IntSortedSetADT s2) { 
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se gli insiemi hanno dim diverse allora non possono essere uguali
@@ -210,7 +203,7 @@ _Bool sset_equals(const IntSortedSetADT s1, const IntSortedSetADT s2) {
 
 _Bool sset_subseteq(const IntSortedSetADT s1, const IntSortedSetADT s2) {
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -232,7 +225,7 @@ _Bool sset_subseteq(const IntSortedSetADT s1, const IntSortedSetADT s2) {
 
 _Bool sset_subset(const IntSortedSetADT s1, const IntSortedSetADT s2) {
   //controllo la validità di entrambi gli insiemi
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   //se il primo insieme è vuoto allora è sottoinsieme del secondo per definizione
@@ -256,7 +249,7 @@ _Bool sset_subset(const IntSortedSetADT s1, const IntSortedSetADT s2) {
 } 
 
 IntSortedSetADT sset_union(const IntSortedSetADT s1, const IntSortedSetADT s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   IntSortedSetADT unionSet = mkSSet(); 
@@ -276,7 +269,7 @@ IntSortedSetADT sset_union(const IntSortedSetADT s1, const IntSortedSetADT s2) {
 } 
 
 IntSortedSetADT sset_intersection(const IntSortedSetADT s1, const IntSortedSetADT s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   IntSortedSetADT interSet = mkSSet(); 
@@ -291,7 +284,7 @@ IntSortedSetADT sset_intersection(const IntSortedSetADT s1, const IntSortedSetAD
 }
 
 IntSortedSetADT sset_subtraction(const IntSortedSetADT s1, const IntSortedSetADT s2) {
-  if(areSetsInvalid(s1, s2)){
+  if((s1 == NULL && s2 == NULL) || (s1 == NULL && s2 != NULL) || (s1 != NULL && s2 == NULL)){
     return 0;
   }
   IntSortedSetADT subtractionSet = mkSSet(); 
@@ -336,9 +329,18 @@ _Bool sset_extractMin(IntSortedSetADT ss, int *ptr) {
 }
 
 _Bool sset_extractMax(IntSortedSetADT ss, int *ptr) {
-  if( ss == NULL || ss->size == 0){
+  if( ss == NULL || ss->first == NULL ||  ss->last == NULL || ss->size == 0){
     return 0;
   } 
+  // caso in cui la lista ha un solo elemento
+  if(ss->first == ss->last) {
+    *ptr = ss->last->elem;
+    free(ss->last);
+    ss->first = NULL;
+    ss->last = NULL;
+    ss->size = 0;
+    return 1;
+  }
   ListNodePtr temp = ss->first;
   //scorro per arrivare al penultimo elemento
   while(temp->next != ss->last){
