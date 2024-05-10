@@ -44,36 +44,111 @@ void stampaSet(SortedSetADTptr ss, void (*stampaelem)(void*)) {
 
 // restituisce un insieme vuoto impostando funzione di confronto, NULL se errore
 SortedSetADTptr mkSSet(int (*compare)(void*, void*)) {
-    SortedSetADTptr set = (SortedSetADTptr)malloc(sizeof(struct sortedSetADT));
-    if(set == NULL){
-        return NULL;
-    }
-    set->compare = compare;
-    set->size = 0;
-    set->root = NULL;
-    return set;
+  SortedSetADTptr set = (SortedSetADTptr)malloc(sizeof(struct sortedSetADT));
+  if(set == NULL){
+      return NULL;
+  }
+  set->compare = compare;
+  set->size = 0;
+  set->root = NULL;
+  return set;
 }
 
 // distrugge l'insieme, recuperando la memoria
 _Bool dsSSet(SortedSetADTptr* ssptr) {
-    if (ssptr == NULL){
-        return false;
-    }
-    //TODO: implementare la distruzione dell'albero
-    free(*ssptr);
-    return true;
+  if (ssptr == NULL){
+    return false;
+  }
+  //TODO: implementare la distruzione dell'albero
+  free(*ssptr);
+  return true;
 }
 
 // aggiunge un elemento all'insieme 
 _Bool sset_add(SortedSetADTptr ss, void* elem) { 
-    return false;
+  if (ss == NULL){
+    return 0;
+  }
+  //caso in cui l' elemento è la radice
+  if(ss->root == NULL){
+    TreeNodePtr root = (TreeNodePtr)malloc(sizeof(struct  treeNode));
+    root->elem = elem;
+    root->left = NULL;
+    root->right = NULL;
+    ss->root = root;
+    ss->size++;
+    return 1;
+  }
+  if(sset_member(ss, elem)){
+    return 0;
+  }
+  //inserimento nell' albero
+  TreeNodePtr cur = ss->root;
+  while(cur != NULL){
+    //se l' elmento è maggiore dell' nodo attuale allora vado a destra
+    if(elem > cur->elem){
+      //se il nodo destro non esiste allora lo creo con l' elemento da inserire
+      if(cur->right == NULL){
+        TreeNodePtr new = (TreeNodePtr)malloc(sizeof(struct  treeNode));
+        new->elem = elem;
+        new->left = NULL;
+        new->right = NULL;
+        cur->right = new;
+        ss->size++;
+        return 1;
+      // passo al nodo successivo e ripeto
+      } else{
+        cur = cur->right;
+      }
+    //caso in cui devo andare a sinistra perchè l' elemento è minore della radice
+    } else {
+      if(cur->left == NULL){
+        TreeNodePtr new = (TreeNodePtr)malloc(sizeof(struct  treeNode));
+        new->elem = elem;
+        new->left = NULL;
+        new->right = NULL;
+        cur->left = new;
+        ss->size++;
+        return 1;
+      } else {
+          cur = cur->left;
+      }
+    }
+  }
 }  
 
 void sset_extractMin_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*)){
+  if( *cur == NULL){
     return;
+  }
+  // se il nodo ha un figlio sinistro, allora continuo la ricorsione
+  if((*cur)->left != NULL){
+    sset_extractMin_rec(&((*cur)->left), ptr, compare);
+  }//se non ha un figlio sinistro allora procedo con la rimozione 
+  else {
+    *ptr = (*cur)->elem;
+    // Remove the current node from the tree
+    TreeNodePtr oldNode = *cur;
+    *cur = (*cur)->right;
+    free(oldNode);
+  }
 }
+
 void sset_extractMax_rec(TreeNodePtr* cur, void**ptr, int (*compare)(void*, void*)){
+  if( *cur == NULL){
     return;
+  }
+  // se il nodo ha un figlio sinistro, allora continuo la ricorsione
+  if((*cur)->right != NULL){
+    sset_extractMax_rec(&((*cur)->right), ptr, compare);
+  }//se non ha un figlio sinistro allora procedo con la rimozione 
+  else {
+    *ptr = (*cur)->elem;
+    // Remove the current node from the tree
+    TreeNodePtr oldNode = *cur;
+    *cur = (*cur)->left;
+    free(oldNode);
+  }
 }
 
 // funzione ausiliaria che toglie un elemento da un sottoalbero
@@ -96,32 +171,74 @@ _Bool sset_remove_rec(TreeNodePtr* cur, void* elem, int (*compare)(void*, void*)
 
 // toglie un elemento all'insieme
 _Bool sset_remove(SortedSetADTptr ss, void* elem) {
-    if (ss && sset_remove_rec(&(ss->root), elem, ss->compare)) {
-        ss->size--;
-        return true;
-    }
-    return false;
+  if (ss && sset_remove_rec(&(ss->root), elem, ss->compare)) {
+      ss->size--;
+      return true;
+  }
+  return false;
 }
 
 // controlla se un elemento appartiene all'insieme
 int sset_member(const SortedSetADT* ss, void* elem) {
-    if(ss == NULL){
-        return -1;
+  //caso albero non esistente
+  if(ss == NULL){
+    return -1;
+  }
+  //caso albero vuoto
+  if(ss->root == NULL){
+    return 0;
+  }
+  TreeNodePtr cur = ss->root;
+  while (cur != NULL){
+    int compareResult = ss->compare(elem, cur->elem);
+    //caso elemento trovato
+    if(compareResult == 0){
+      return 1;
     }
+    //caso elemento minore di quello attuale
+    if(compareResult == -1){
+      //in caso dopo non ci fosse un elemento, allora quello ricercato non appartiene all' insieme
+      if(cur->left == NULL){
+        return 0;
+      }
+      cur = cur->left;
+    }
+    //caso elemento maggiore di quello attuale
+    else {
+      //in caso dopo non ci fosse un elemento, allora quello ricercato non appartiene all' insieme
+      if(cur->right == NULL){
+        return 0;
+      }
+      cur = cur->right;
+    }
+  }
 }
     
 // controlla se l'insieme e' vuoto    
 int isEmptySSet(const SortedSetADT* ss) {
+  //insieme invalido
+  if(ss == NULL){
     return -1;
+  }
+  //insieme vuoto -> true
+  if(ss->size == 0){
+    return 1;
+  }
+  //insieme non vuoto -> false
+  return 0;
 } 
 
 // restituisce il numero di elementi presenti nell'insieme
 int sset_size(const SortedSetADT* ss) {
+  //insieme invalido
+  if(ss == NULL){
     return -1;
+  }
+  return ss->size;
 } 
 
 _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un elemento a caso dall'insieme
-    return false;
+  return sset_extractMax(ss, ptr);
 } 
 
 // controlla se due insiemi sono uguali
@@ -156,20 +273,94 @@ SortedSetADTptr sset_intersection(const SortedSetADT* s1, const SortedSetADT* s2
 
 // restituisce il primo elemento 
 _Bool sset_min(const SortedSetADT* ss, void**ptr) {
-    return false;
+  if(ss == NULL){
+    return 0;
+  }
+  //per trovare l' elemento minore devo andare nel ramo più a sinistra di tutti
+  TreeNodePtr cur = ss->root;
+  while(cur!=NULL){
+    //se il nodo attuale, non ha uno sinistro, allora sono nel più piccolo
+    if(cur->left == NULL){
+      *ptr = cur->elem;
+      return 1;
+    }
+    //vado ulteriormente a sinistra
+    cur = cur->left;
+  }
+  return 0;
 }
 
 // restituisce l'ultimo elemento 
 _Bool sset_max(const SortedSetADT* ss, void**ptr) {
-    return false;
+  if(ss == NULL){
+    return 0;
+  }
+  //per trovare l' elemento maggiore devo andare nel ramo più a destra di tutti
+  TreeNodePtr cur = ss->root;
+  while(cur!=NULL){
+    //se il nodo attuale, non ha uno destro, allora sono nel più maggiore
+    if(cur->right == NULL){
+      *ptr = cur->elem;
+      return 1;
+    }
+    //vado ulteriormente a destra
+    cur = cur->right;
+  }
+  return 0;
 }
 
-// toglie e restituisce il primo elemento 
+// toglie e restituisce il primo elemento ovvero quello più a sinistra 
 _Bool sset_extractMin(SortedSetADTptr ss, void**ptr) {
-    return false;    
+  if(ss == NULL || ss->size==0){
+    return 0;
+  }
+  //per togliere l' elemento minore devo andare nel ramo più a sinistra di tutti
+  TreeNodePtr cur = ss->root;
+  TreeNodePtr prev = NULL;
+  while(cur!=NULL){
+    //se il nodo attuale, non ha uno sinistro, allora sono nel più piccolo
+    if(cur->left == NULL){
+      *ptr = cur->elem;
+      //caso in cui il nodo da eliminare è la radice
+      if(prev == NULL){
+        // il nodo a destra della radice diventa la nuova radice
+        ss->root = cur->right;
+      } else {
+        prev->left = cur->right;
+      }
+      free(cur);
+      ss->size--;
+      return 1;
+    }
+    //vado ulteriormente a sinistra
+    prev = cur;
+    cur = cur->left;
+  }
 }
 
 // toglie e restituisce l'ultimo elemento (0 se lista vuota, -1 se errore, 1 se restituisce elemento)
 _Bool sset_extractMax(SortedSetADTptr ss, void**ptr) {
-    return false;       
+  if(ss == NULL || ss->size==0){
+    return 0;
+  }       
+  //per togliere l' elemento maggiore devo andare nel ramo più a destra di tutti
+  TreeNodePtr cur = ss->root;
+  TreeNodePtr prev = NULL;
+  while(cur != NULL){
+    if(cur->right == NULL){
+      *ptr = cur->elem;
+      //caso in cui siamo nella radice
+      if(prev == NULL){
+        //il ramo a sinistra della radice, diventa la nuova radice
+        ss->root = cur->left;
+      } else {
+        prev->right = cur->left;
+      }
+      free(cur);
+      ss->size--;
+      return 1;
+    }
+    prev = cur;
+    cur = cur->right;
+  }
 }
