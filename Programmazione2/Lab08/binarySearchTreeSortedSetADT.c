@@ -61,6 +61,7 @@ _Bool dsSSet(SortedSetADTptr* ssptr) {
   }
   //TODO: implementare la distruzione dell'albero
   free(*ssptr);
+  *ssptr = NULL;
   return true;
 }
 
@@ -86,7 +87,7 @@ _Bool sset_add(SortedSetADTptr ss, void* elem) {
   TreeNodePtr cur = ss->root;
   while(cur != NULL){
     //se l' elmento è maggiore dell' nodo attuale allora vado a destra
-    if(elem > cur->elem){
+    if(ss->compare(elem, cur->elem) == 1){
       //se il nodo destro non esiste allora lo creo con l' elemento da inserire
       if(cur->right == NULL){
         TreeNodePtr new = (TreeNodePtr)malloc(sizeof(struct  treeNode));
@@ -243,32 +244,163 @@ _Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un e
 
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
+  if (s1 == NULL || s2 == NULL){
     return -1;
+  }
+  // se hanno due dimensioni diverse, allora non sono uguali
+  if (s1->size != s2->size) {
+    return 0;
+  }
+  // controllo se ogni elemento di s1 è presente in s2
+  TreeNodePtr cur = s1->root;
+  TreeNodePtr stack[s1->size];
+  int top = -1;
+  // in ordine simmetrico
+  while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // se l'elemento corrente non è presente in s2, allora i due insiemi non sono uguali
+    if (!sset_member(s2, cur->elem)) {
+      return 0;
+    }
+    cur = cur->right;
+  }
+  // se tutti gli elementi di s1 sono presenti in s2, allora i due insiemi sono uguali
+  return 1;
 }
 
 // controlla se il primo insieme e' incluso nel secondo
 int sset_subseteq(const SortedSetADT* s1, const SortedSetADT* s2) {
+  if (s1 == NULL || s2 == NULL){
     return -1;
+  }
+  if(sset_equals(s1, s2)){
+    return 1;
+  }
+  // controllo se ogni elemento di s1 è presente in s2
+  TreeNodePtr cur = s1->root;
+  TreeNodePtr stack[s1->size];
+  int top = -1;
+  // in ordine simmetrico
+  while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // se l'elemento corrente non è presente in s2, allora i due insiemi non sono uguali
+    if (!sset_member(s2, cur->elem)) {
+      return 0;
+    }
+    cur = cur->right;
+  }
 }
 
 // controlla se il primo insieme e' incluso strettamente nel secondo
 int sset_subset(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return -1;
+  if(sset_subseteq(s1, s2) && !sset_equals(s1, s2)){
+    return 1;
+  }
+  return 0;
 } 
 
 // restituisce la sottrazione primo insieme meno il secondo, NULL se errore
 SortedSetADTptr sset_subtraction(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return NULL;   
+  if (s1 == NULL || s2 == NULL){
+    return NULL;
+  }   
+  // se il seconodo insieme è vuoto, la sottrazione è uguale a s1
+  if(s2->size == 0){
+    return s1;
+  }
+  SortedSetADTptr subtractionSet = mkSSet(s1->compare);
+  // controllo se ogni elemento di s1 è presente in s2
+  TreeNodePtr cur = s1->root;
+  TreeNodePtr stack[s1->size];
+  int top = -1;
+  // in ordine simmetrico
+  while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // se l'elemento corrente non è presente in s2, allora i due insiemi non sono uguali
+    if (!sset_member(s2, cur->elem)) {
+      sset_add(subtractionSet, cur->elem);
+    }
+    cur = cur->right;
+  }
+  return subtractionSet;
 } 
 
 // restituisce l'unione di due insiemi, NULL se errore
 SortedSetADTptr sset_union(const SortedSetADT* s1, const SortedSetADT* s2) {
-    return NULL; 
+  if (s1 == NULL || s2 == NULL){
+    return NULL;
+  }   
+  SortedSetADTptr unionSet = mkSSet(s1->compare);
+  TreeNodePtr cur = s1->root;
+  TreeNodePtr stack[s1->size];
+  int top = -1;
+  // in ordine simmetrico
+  while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // aggiungo ogni elemento di s1 in unionSet
+    sset_add(unionSet, cur->elem);
+    cur = cur->right;
+  }
+  cur = s2->root;
+  TreeNodePtr stack2[s2->size];
+  top = -1;
+    while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // aggiungo ogni elemento di s2 in unionSet
+    sset_add(unionSet, cur->elem);
+    cur = cur->right;
+  }
+  return unionSet;
 } 
 
 // restituisce l'intersezione di due insiemi, NULL se errore
 SortedSetADTptr sset_intersection(const SortedSetADT* s1, const SortedSetADT* s2) {
+  if (s1 == NULL || s2 == NULL){
     return NULL;
+  }   
+  SortedSetADTptr intersectionSet = mkSSet(s1->compare);
+  // se il seconodo insieme è vuoto, l' intersezione è nulla
+  if(s1->size == 0 ||s2->size == 0){
+    return intersectionSet;
+  }
+  // controllo se ogni elemento di s1 è presente in s2
+  TreeNodePtr cur = s1->root;
+  TreeNodePtr stack[s1->size];
+  int top = -1;
+  // in ordine simmetrico
+  while (cur != NULL || top != -1) {
+    while (cur != NULL) {
+      stack[++top] = cur;
+      cur = cur->left;
+    }
+    cur = stack[top--];
+    // se l'elemento corrente non è presente in s2, allora i due insiemi non sono uguali
+    if (sset_member(s2, cur->elem)) {
+      sset_add(intersectionSet, cur->elem);
+    }
+    cur = cur->right;
+  }
+  return intersectionSet;
 }
 
 // restituisce il primo elemento 
