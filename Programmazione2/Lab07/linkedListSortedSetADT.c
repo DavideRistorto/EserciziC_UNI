@@ -387,7 +387,6 @@ _Bool sset_extractMax(SortedSetADTptr ss, void**ptr) {
     ss->size--;
     return 1;
   }
-
   ListNodePtr temp = ss->first;
   //scorro per arrivare al penultimo elemento
   while(temp->next != ss->last){
