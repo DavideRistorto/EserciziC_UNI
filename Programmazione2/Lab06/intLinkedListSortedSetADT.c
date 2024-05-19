@@ -16,7 +16,7 @@ IntSortedSetADT mkSSet() {
 }
 
 _Bool dsSSet(IntSortedSetADT *ssptr) {
-  if( ssptr == NULL){
+  if( ssptr == NULL || *ssptr == NULL){
     return 0;
   }
   ListNodePtr current = (*ssptr)->first;
