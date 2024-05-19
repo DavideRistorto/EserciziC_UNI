@@ -26,12 +26,18 @@ IntSetADT mkSet() {
 }
 
 _Bool dsSet(IntSetADT *sp) {
-    if(sp != NULL){
-        free(*sp);
-        *sp = NULL;
-        return 1;
+    if(sp == NULL || *sp == NULL){
+        return 0;
     }
-    return 0;
+    ListNodePtr node = (*sp)->front;
+    while(node != NULL){
+        ListNodePtr node2 = node;
+        node = node->next;
+        free(node2);
+    }
+    free(*sp);
+    *sp = NULL;
+    return 1;
 }
 
 _Bool set_add(IntSetADT set, const int elem) {
