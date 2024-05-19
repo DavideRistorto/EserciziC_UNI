@@ -27,8 +27,17 @@ CharQueueADT mkQueue() {
 }
 
 void dsQueue(CharQueueADT *pq) {
-    free(*pq);
-    *pq = NULL;
+    if(*pq==NULL){
+    return ;
+    }
+    ListNodePtr node = (*pq)->front;
+    while(node!=NULL){
+        ListNodePtr node2= node;
+        node=node->next;
+        free(node2);
+    }
+    free (*pq);
+    *pq=NULL;
 }
 
 _Bool enqueue(CharQueueADT q, const char e) {
