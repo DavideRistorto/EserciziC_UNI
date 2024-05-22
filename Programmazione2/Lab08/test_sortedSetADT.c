@@ -120,6 +120,24 @@ int main(int argc, char *argv[]) {
     check = sset_member(set, &n_[8]);
     printf("\nChecking member 8, check = %d\n",check);
 
+    int* found;
+    found = sset_search(set, &n_[5]);
+    printf("\nChecking search 5, ");
+    if (found) printf("found %d\n", *found);
+    else printf("not found\n");
+    found = sset_search(set, &n_[1]);
+    printf("\nChecking search 1, ");
+    if (found) printf("found %d\n", *found);
+    else printf("not found\n");
+    found = sset_search(set, &n_[7]);
+    printf("\nChecking search 7, ");
+    if (found) printf("found %d\n", *found);
+    else printf("not found\n");
+    found = sset_search(set, &n_[8]);
+    printf("\nChecking search 8, ");
+    if (found) printf("found %d\n", *found);
+    else printf("not found\n");
+
     check = sset_remove(set,&n_[8]);
     printf("\nRemoving 8, check = %d\n",check);
     stampaSet(set,&stampaint);
@@ -161,6 +179,7 @@ int main(int argc, char *argv[]) {
     printf("\nCreating s1\n");
     s1 = mkSSetvi(5, &n_[0], &n_[2], &n_[4], &n_[5], &n_[8]);
     stampaSet(s1,&stampaint);
+    sset_toArray(s1);
     
     printf("\nCreating s2\n");
     s2 = mkSSetvi(5, &n_[0], &n_[2], &n_[4], &n_[5], &n_[8]);
@@ -205,8 +224,14 @@ int main(int argc, char *argv[]) {
     set = sset_union(s1,s2);
     printf("\nunion s1 + s2\n");
     stampaSet(set,&stampaint);
-    dsSSet(&set);
 
+    int** arr = (int**)sset_toArray(set);
+    printf("\nAs array:");
+    for (int i=0; i<sset_size(set); ++i) printf(" %d", *arr[i]);
+    printf("\n");
+    free(arr);
+
+    dsSSet(&set);
     dsSSet(&s1);
     dsSSet(&s2);
 
