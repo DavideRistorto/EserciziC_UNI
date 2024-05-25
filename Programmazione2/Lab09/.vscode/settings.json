@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.embeddedhtml": "html",
+    "contactbook.h": "c",
+    "sortedsetadt.h": "c"
+  }
+}
