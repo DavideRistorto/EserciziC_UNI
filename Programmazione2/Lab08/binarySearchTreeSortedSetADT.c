@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include "sortedSetADT.h"
 #include "binarySearchTreeSortedSetADT.h"
 
@@ -183,12 +184,25 @@ int sset_size(const SortedSetADT* ss) {
   return (ss == NULL) ? -1 : ss->size;
 } 
 
-_Bool sset_extract(SortedSetADTptr ss, void**ptr) { // toglie e restituisce un elemento a caso dall'insieme
-   if(isEmptySSet(ss) != 0){
+// toglie e restituisce un elemento a caso dall'insieme
+_Bool sset_extract(SortedSetADTptr ss, void**ptr) { 
+    if(ss == NULL || ss->root == NULL){
+        return false;
+    }
+    // Genera un indice casuale nell'intervallo [0, size - 1]
+    srand(time(NULL)); // Inizializza il generatore di numeri casuali
+    int random_index = rand() % ss->size;
+    void ** array = sset_toArray(ss);
+    void* elem = array[random_index];
+    if(sset_remove(ss, elem) == 1){
+    *ptr = elem;
+    free(array);
+    return 1;
+    }
+    else{
         return 0;
     }
-    return sset_extractMax(ss, ptr);
-} 
+}
 
 // controlla se due insiemi sono uguali
 int sset_equals(const SortedSetADT* s1, const SortedSetADT* s2) { 
