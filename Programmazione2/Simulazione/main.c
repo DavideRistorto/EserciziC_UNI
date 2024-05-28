@@ -1,5 +1,3 @@
-//avvio: cls && gcc -o compare main.c && ./compare
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,10 +24,10 @@ int compare(char* fname1, char* fname2, long* line, long* charpos){
   int c1, c2;
   *line = 1;
   *charpos = 0;
-  printf("%d %d", *line, *charpos);
   while((c1 = fgetc(f1) != EOF) || (c2 = fgetc(f2) != EOF)){
     *charpos += 1;
     if(c1 != c2){
+      printf("%d %d\n", c1, c2);
       fclose(f1);
       fclose(f2);
       return 1;
@@ -56,16 +54,17 @@ int main(){
 
   char* file1Name = "file1.txt";
   char* file2Name = "file2.txt";
-  long *line, *charpos; 
-  int result = compare(file1Name, file2Name, line, charpos);
+  long line, charpos; 
+  int result = compare(file1Name, file2Name, &line, &charpos);
+  printf("result: %d\n", result);
   if(result == -1){
-    printf("Errore nella apertura di un file");
+    printf("Errore nella apertura di un file\n");
   }
   else if(result == 0){
-    printf("I file sono uguali");
+    printf("I file sono uguali\n");
   }
-  else{
-    ("I file sono diversi alla fine %d e alla posizione %d", *line, *charpos);
+  else if(result == 1){
+    printf("I file sono diversi alla riga %ld e alla posizione %ld\n", line, charpos);
   }
   return 0;
 }
