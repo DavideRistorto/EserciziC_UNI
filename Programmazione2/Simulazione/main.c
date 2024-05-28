@@ -24,10 +24,13 @@ int compare(char* fname1, char* fname2, long* line, long* charpos){
   int c1, c2;
   *line = 1;
   *charpos = 0;
-  while((c1 = fgetc(f1) != EOF) || (c2 = fgetc(f2) != EOF)){
+  //appena uno dei due file finisce esco dal ciclo
+  while(!feof(f1) && !feof(f2)){
     *charpos += 1;
+    c1 = fgetc(f1);
+    c2 = fgetc(f2);
+    //caso in cui i 2 caratteri letti sono diversi
     if(c1 != c2){
-      printf("%d %d\n", c1, c2);
       fclose(f1);
       fclose(f2);
       return 1;
@@ -38,12 +41,13 @@ int compare(char* fname1, char* fname2, long* line, long* charpos){
       *charpos = 0;
     }
   }
+  //caso in cui i file hanno lunghezza diversa
   if(c1 != c2){
     fclose(f1);
     fclose(f2);
     return 1;
   }
-
+  //caso in cui i file sono uguali e entrambi sono finiti
   fclose(f1);
   fclose(f2);
   return 0;
@@ -56,7 +60,7 @@ int main(){
   char* file2Name = "file2.txt";
   long line, charpos; 
   int result = compare(file1Name, file2Name, &line, &charpos);
-  printf("result: %d\n", result);
+  printf("Risultato confronto: %d\n", result);
   if(result == -1){
     printf("Errore nella apertura di un file\n");
   }
