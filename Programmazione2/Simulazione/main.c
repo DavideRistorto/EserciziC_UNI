@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /**
  * @brief la funzione controlla se due file sono uguali o no
@@ -14,43 +15,37 @@
 int compare(char* fname1, char* fname2, long* line, long* charpos){
   FILE* f1 = fopen(fname1, "r");
   FILE* f2 = fopen(fname2, "r");
-  //caso di errore nella apertura di file
+  //errore apertura file
   if(f1 == NULL || f2 == NULL){
     if(f1) fclose(f1);
     if(f2) fclose(f2);
     return -1;
   }
-  //caratteri
-  int c1, c2;
   *line = 1;
   *charpos = 0;
-  //appena uno dei due file finisce esco dal ciclo
-  while(!feof(f1) && !feof(f2)){
+  char c1, c2;
+  bool exit = false;
+  while((!feof(f1) && !feof(f2)) && !exit){
     *charpos += 1;
     c1 = fgetc(f1);
     c2 = fgetc(f2);
-    //caso in cui i 2 caratteri letti sono diversi
     if(c1 != c2){
-      fclose(f1);
-      fclose(f2);
-      return 1;
+      exit = true;
     }
-    //passo alla riga successiva
-    if (c1 == '\n'){
+    else if(c1 == '\n'){
       *line += 1;
       *charpos = 0;
     }
   }
-  //caso in cui i file hanno lunghezza diversa
-  if(c1 != c2){
-    fclose(f1);
-    fclose(f2);
-    return 1;
+  //se non sono uscito dal ciclo per una disuguaglianza, controllo se i file hanno stessa lunghezza
+  if(!exit){
+    if(feof(f1) != feof(f2)){
+      exit = true;
+    }
   }
-  //caso in cui i file sono uguali e entrambi sono finiti
   fclose(f1);
   fclose(f2);
-  return 0;
+  return exit;
 }
 
 
@@ -67,7 +62,7 @@ int main(){
   else if(result == 0){
     printf("I file sono uguali\n");
   }
-  else if(result == 1){
+  else{
     printf("I file sono diversi alla riga %ld e alla posizione %ld\n", line, charpos);
   }
   return 0;
