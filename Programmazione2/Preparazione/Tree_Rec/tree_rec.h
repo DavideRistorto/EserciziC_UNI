@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-enum Response { ADDED, OVERWRITTEN, OUT_OF_MEMORY };
+enum Response { ADDED, OVERWRITTEN, OUT_OF_MEMORY, ERROR};
 
 typedef enum response Response;
 
