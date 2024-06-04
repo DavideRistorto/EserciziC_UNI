@@ -9,7 +9,7 @@ int main(){
   //mettere == 3 permette di non leggere righe incomplete
   while(fscanf(fp,"%49[^,],%49[^,],%49[^\n]",cognome,nome,eta) == 3){
     printf("%s %s %s",cognome,nome,eta);
-    fprintf(fp2,"%s,%s,%s",cognome,nome,eta);
+    fprintf(fp2,"%s,%s,%s\n",cognome,nome,eta);
   }
   fclose(fp);
   fclose(fp2);
