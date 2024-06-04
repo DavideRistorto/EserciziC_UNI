@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdbool.h>
-
 #include "intSortedSetADT.h"
 #include "intLinkedListSortedSetADT.h"
 
