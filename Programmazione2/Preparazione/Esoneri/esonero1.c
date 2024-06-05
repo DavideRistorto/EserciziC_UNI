@@ -37,11 +37,11 @@ char* change(char* str){
 }
 
 int main(){
-	char* string = malloc(100*sizeof(char));
-	string = "c2iaab3294o";
+	// la stringa iniziale non posso alloracarla con la malloc perchè è una stringa costante
+	// e usare la malloc per una stringa costante è un errore e genera uno spreco di memoria
+	char* string = "c2iaab3294o";
 	char* conversion = change(string);
 	printf("%s   -   %s",string, conversion);
-	free(string);
 	free(conversion);
 	return 1;
 }

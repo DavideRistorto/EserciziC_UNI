@@ -36,8 +36,7 @@ char* change(char* str, int n){
 
 int main(){
 	char size = 10;
-	char* string = malloc(size*sizeof(char));
-	string = "ciao999cc";
+	char* string = "ciao999cc";
 	char* conversion = change(string,size);
 	printf("%s   -   %s",string, conversion);
 	free(string);
