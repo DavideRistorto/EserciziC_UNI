@@ -1,40 +1,37 @@
 .globl _start
 .data
-    size:  .word 8
-    array: .word 5,3,7,2,6,4,8,1
+    size:  .word 3
+    array: .word 1,2,3
     
 .text
 _start:
-    # chiama swap
+    # chiama is_sorted
     la   a0, array
     la   a1, size
     lw  a1, 0(a1)
-    jal  ra, min_array
+    jal  ra, is_sorted
     
     #exit
     li   a7, 10
     ecall
 
 #*************************************************************************************
-# completare la funzione min_array  nel campo di sotto (restituisce l' indice dell' elemento più piccolo)
-min_array:
-	li t0, 0  			# indice del minimo
-	lw t1, 0(a0)   	#valore minimo
-	li t2, 1  			# indice attuale dell' array
-	addi a0, a0, 4	#carico il secondo elemento
+# completare la funzione is_sorted  nel campo di sotto (1 se l' array è ordinato in ordine crescente, 0 altrimenti)
+is_sorted:
+	li t0, 1	#valore di return = 1
+	addi a1, a1, -1
 	
-for:
-	lw t3, 0(a0)    # carico l elemento successivo
-	beq t2, a1, end_for
-		bge t3, t1, skip
-			mv t1, t3    # aggiorno val minimo
-			mv t0, t2    # aggiorno indice minimo
-						
-skip:
-	addi a0, a0, 4     # scorro array
-	addi t2, t2, 1   # aggiorno indice corrente
-	j for
+loop:
+	beq a1, zero, end_loop	
+	lw t1, 0(a0)
+	lw t2, 4(a0)
+	bgt t1, t2, false
+	addi a0, a0, 4	#incremento riferimento array
+	addi a1, a1, -1	#decremento contatore
+	j loop
+	false:
+		li t0, 0	#return false
 	
-end_for:
+end_loop:
 	mv a0, t0
 	ret
