@@ -46,7 +46,6 @@ end_loop:
 	ret
 
 #***************************************************
-# completare la funzione swap nel campo di sotto
 swap:
 	li t0, 4			#4 d' appoggio
 	mul t1, t0, a1	#indice x
@@ -59,8 +58,3 @@ swap:
 	sw t3, 0(t2)		#array[y] = x
 	
 ret
-	
-	
-	
-
-
