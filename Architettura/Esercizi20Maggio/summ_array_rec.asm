@@ -27,7 +27,7 @@ summaray_rec:
 	sd ra, 0(sp)
 	sd s1, 8(sp)
 	
-	lw s1, 0(a0)			#s1 = salvo array[i]
+	lw s1, 0(a0)		#s1 = salvo array[i]
 	addi a0, a0, 4		#passo all' elemento successivo
 	addi a1, a1, -1		#decremento il contatore
 	jal ra, sumarray	#chiamata ricorsiva
