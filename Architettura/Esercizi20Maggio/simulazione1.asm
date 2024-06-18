@@ -18,22 +18,22 @@ _start:
 #****************************************************
 # completare la funzione issorted nel campo di sotto
 issorted:
-    li t0, 1        #result di default = 1
-    addi a1, a1, -1 #ciclo fatto n-1 volte
+    addi a1, a1, -1 #il ciclo deve essere eseguito n-1 volte
     
     loop:
-        beq a1, zero, end_loop
-        lw t1, 0(a0)    #carico elemento a[i]
-        lw t2, 4(a0)    #carico elemento a[i+1]
-        ble t1, t2, continue
-        li t0, 0        #result = 0
-        j end_loop      #uscita anticipata dal ciclo
-        continue:
-        addi a1, a1, -1 #decremento indice
-        addi a0, a0, 4  #incremento array
-        j loop          #inizio ciclo
-        
-    end_loop:
-    mv a0, t0
+    beq a1, zero, end_loop
+    lw t0, 0(a0)    #carico elemento i
+    lw t1, 4(a0)    #carico elemento i+1
+    ble t0, t1, continue    #if t0<=t1 continuo il ciclo
+    #caso di uscita 
+    li a0, 0
+    ret
+    #se l' array è ancora ordinato continuo il ciclo
+    continue:
+    addi a0, a0, 4
+    addi a1, a1, -1
+    j loop
+    end_loop:  
+    li a0, 1
     ret
     
