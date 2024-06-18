@@ -30,29 +30,28 @@ return_0:
 #****************************************************
 # completare la funzione isnumber nel campo di sotto
 isnumber:
-    addi sp,sp, -24
+    #preparo frame 
+    addi sp, sp, -16
     sd ra, 0(sp)
-    sd s1, 8(sp)
-    sd s2, 16(sp)
-    mv s1, a0
-    li s2, 1    #result = 1 di default
+    sd s0, 8(sp)
     
-loop:
-    lbu a0, 0(s1)   #carico carattere
-    beq a0, zero, end_loop  #se char[i] = '\0' exit
-    jal ra, digit
-    bne a0, zero, continue
-    #return = 0 -> exit
-    li s2, 0
-    j end_loop
-    continue:
-    addi s1, s1, 1
-    j loop
+    mv s0, a0  #salvo in s0 il riferimento all' array
+    
+    loop:
+        lbu a0, 0(s0)               #carico carattere
+        beq a0, zero, exit_true     #fine stringa quindi se arrivo qua è un numero
+        jal ra, digit               #chiamo digit con parametro il carattere appena caricato in a0
+        beq a0, zero, exit_false    #se digit mi da zero, esco è ritorno zero
+        addi s0, s0, 1              #aggiorno il riferimento per il prossimo carattere
+        j loop                      #ricomincio il ciclo
 
-end_loop:
-    mv a0, s2   #carico il risultato in a0
+exit_false:
+    li a0, 0
+    j exit
+exit_true:
+    li a0, 1
+exit:
     ld ra, 0(sp)
-    ld s1, 8(sp)
-    ld s2, 16(sp)
-    addi sp, sp, 24
+    ld s0, 8(sp)
+    addi sp, sp, 16
     ret
