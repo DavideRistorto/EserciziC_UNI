@@ -44,8 +44,8 @@ exit:
 
 atoi:
 	bne a1, zero, atoi_rec
-		li a0, 0
-		ret
+	li a0, 0
+	ret
 
 atoi_rec:
 	addi sp, sp, -16
@@ -68,7 +68,3 @@ atoi_rec:
 	ld s1, 8(sp)
 	addi sp, sp, 16
 	ret
-	
-	
-	
-
