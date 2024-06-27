@@ -9,29 +9,6 @@
 * riempire le rimanenti posizione libere col carattere '#'
 */
 char* change(char* str, int n){
-	if(str == NULL){
-		return NULL;
-	}
-	//alloco il nuovo array e assegno j che mi terra traccia del carattere attuale
-	char* newArray = malloc(n*sizeof(char));
-	int j=0;
-	for(int i=0; i<n && str[i] != '\0'; i++){
-		//aggiungo carattere al nuovo array solo se non si tratta di una cifra
-		if(!isdigit(str[i])){
-			//maiuscolo K/H
-			if(str[i] == 'k' || str[i] == 'h'){
-				newArray[j] = toupper(str[i]);
-			}else{
-				newArray[j] = str[i];
-			}
-			j++;
-		}
-	}
-	for(int i=j;i<n;i++){
-		newArray[i] = '#';
-	}
-	newArray[n-1] = '\0';
-	return newArray;
 }
 
 int main(){
