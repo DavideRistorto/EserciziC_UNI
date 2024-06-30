@@ -4,20 +4,20 @@
 #include <string.h>
 
 _Bool isPalindrome(const char *s, int first, int last){
-	bool pal = true;
-	//approccio di tipo while dato che abbiamo la prima e l' ultima lettera
-	while (first < last && pal){
+	if(s == NULL) return false;
+	
+	while(first < last){
 		if(s[first] != s[last]){
-			pal = false;
+			return false;
 		}
 		first++;
 		last--;
 	}
-	return pal;
+	return true;
 }
 
 int main(){
-	char* s = "kooook";
+	char* s = "koopok";
 	printf("%d", isPalindrome(s,0,strlen(s)-1));
 	return 0;
 }
