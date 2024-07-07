@@ -14,26 +14,25 @@
  */
  
  
-bool check_rec(const char *s1, int n1, const char *s2, int n2, int count){
-	if(count>n1){
-		return 1;
-	}
-	if(*s1 != *s2){
-		return 0;
-	}
-	return(s1+2, n1, s2+1, n2, count+2);
+_Bool check_ric(const char *s1, int n1, const char *s2, int n2, int count){
+if(count > n1) {
+	return 1;
 }
 
+if(*s1 != *s2){
+	return 0;
+}
+	return check_ric(s1+2, n1, s2+1, n2, count+2);
+
+}
+ 
 _Bool check(const char *s1, int n1, const char *s2, int n2) {
-	return check_rec(s1,n1,s2,n2,0);
+	return check_ric(s1,n1,s2,n2,0);
 }
-
-
-
 
 int main(){
-	char* str1 = "c";
-	char* str2 = "ca";
+	char* str1 = "pArEoBvUaT";
+	char* str2 = "prova";
 	int len1 = strlen(str1);
 	int len2 = strlen(str2);
 	
