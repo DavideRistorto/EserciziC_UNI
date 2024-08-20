@@ -1,7 +1,6 @@
 #ifndef contact_h
 #define contact_h
 
-
 typedef struct contact Contact, *ContactPtr;
 /**
 * Nota: useremo solo puntatori a Contact, e chiameremo per semplicità "contatto" un puntatore a Contact  
