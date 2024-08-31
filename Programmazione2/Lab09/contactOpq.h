@@ -15,7 +15,7 @@ typedef struct contact Contact, *ContactPtr;
 * @param url La stringa che contiene la home page  
 * @return Il puntatore alla struttura che rappresenta il contatto, NULL se ((name == NULL) || (surname == NULL))
 */
-ContactPtr mkContact(char* name, char* surname, char* mobile, char* url);
+ContactPtr mkContact(char* name, char* surname, char* mobile, char* url); 
 
 /**
 * @brief Dealloca una struttura Contact e mette il relativo puntatore (che dunque deve essere passato per riferimento) a NULL
