@@ -9,41 +9,35 @@
 *
 */
 char* change(char* str){
-	if(str == NULL) return NULL;
-	
-	int len = strlen(str)*2+1;
-	char* conv = malloc(len*sizeof(char));
-	//indice prima stringa
-	int i=0;
-	//indice seconda striga
-	int j=0;
-	while(str[i] != '\0'){
-		//caso in cui è un numero
-		if(isdigit(str[i])){
-			//sdoppio il carattere
-			conv[j] = str[i];
-			j++;
-			conv[j] = str[i];
-		}else{ //caso di non cifra, copio il carattere una volta
-			conv[j] = str[i];
-		}
-		//incremento entrambi gli indici
-		i++;
-		j++;
-	}
-	conv[j] = '\0';
-	return conv;
+  if(str == NULL) return NULL;
+
+  int len = (strlen(str)*2)+1;
+  //nel caso la stringa fosse solo numeri mi serve il doppio dello spazio, quindi dim * 2
+  //riservo lo spazio per il carattere '\0', quindi + 1
+  char* conversion = malloc(len*sizeof(char));
+  int i = 0; //indice str
+  int j = 0; // indice conversion
+  while(str[i] != '\0'){
+    if(isdigit(str[i])){
+      //ricopio per 2 volte la cifra
+      conversion[j] = str[i];
+      j++;
+      conversion[j] = str[i];
+    }else{
+      conversion[j] = str[i];
+    }
+    i++;
+    j++;
+  }
+  conversion[j] = '\0';
+  return conversion;
 }
 
-
-
-
 int main(){
-	// la stringa iniziale non posso alloracarla con la malloc perchè è una stringa costante
-	// e usare la malloc per una stringa costante è un errore e genera uno spreco di memoria
-	char* string = "1a2bb3";
-	char* conversion = change(string);
-	printf("%s   -   %s",string, conversion);
-	free(conversion);
-	return 1;
+  char* string = "1aa99aa1";
+  char* conversion = change(string);
+  printf("%s   -    %s", string, conversion);
+
+  free(conversion); //dealloco solo la memorio allocata con la maccol
+  return 0;
 }
