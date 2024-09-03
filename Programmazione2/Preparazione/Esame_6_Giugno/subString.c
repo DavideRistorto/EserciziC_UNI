@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdbool.h>
 
 /**
@@ -26,6 +25,7 @@ bool subString2(char* str1, char* str2){
 	//ciclo sull' intera stringa madre
 	for(int i=0; str2[i] != '\0'; i++){
 		bool corretta = true;
+		//controllo carattere per carattere se st1 sta in st2
 		for(int j=0; str1[j] != '\0' && corretta; j++){
 			if(str1[j] != str2[i+j]){
 				corretta = false;
