@@ -23,46 +23,24 @@ struct treeNode {
  *      I                 M
  * e gli interi -2 e 3 restituisce 7.
  */
-int count_ric(CharTree tree, int m, int n, int deep) {
-	if (tree == NULL) {
+int count_ric(CharTree tree, int m, int n, int depth){
+	//caso base ricorsivo
+	if(tree == NULL){
 		return 0;
 	}
-	if (m <= deep && deep <= n) {
-		return 1 + count_ric(tree->left, m, n, deep + 1) + count_ric(tree->right, m, n, deep + 1);
-	} else {
-		return count_ric(tree->left, m, n, deep + 1) + count_ric(tree->right, m, n, deep + 1);
+	int val = 0;
+	//caso in cui ci troviamo come profondità nell' intervallo (m,n)
+	if(m<=depth && depth<=n){
+		val = 1;
 	}
+	//chiamo la ricorsione per i diversi rami
+	return val + count_ric(tree->left, m, n, depth+1) + count_ric(tree->right, m, n, depth+1);
 }
 
 int count(CharTree tree, int m, int n) {
-	if (m < 0) m = 0;
-	if (m > n) return 0;  // Se m > n, non ci sono profondità valide da considerare
-	return count_ric(tree, m, n, 0);
-}
-
-// Funzione di utilità per creare un nuovo nodo dell'albero
-CharTree createNode(char data) {
-	CharTree newNode = (CharTree)malloc(sizeof(CharTreeNode));
-	if (newNode != NULL) {
-		newNode->data = data;
-		newNode->left = newNode->right = NULL;
+	//non serve cercare elementi a profondità negativa
+	if(m<0){
+		m = 0;
 	}
-	return newNode;
-}
-
-int main() {
-	// Costruzione dell'albero di esempio
-	CharTree root = createNode('R');
-	root->left = createNode('F');
-	root->right = createNode('Z');
-	root->left->left = createNode('D');
-	root->right->right = createNode('H');
-	root->left->left->left = createNode('G');
-	root->right->right->right = createNode('L');
-	root->left->left->left->left = createNode('I');
-	root->right->right->right->right = createNode('M');
-
-	int m = -2, n = 3;
-	printf("Number of nodes between depth %d and %d: %d\n", m, n, count(root, m, n));
-	return 0;
-}
+	return count_ric(tree, m, n, 0);
+} 
