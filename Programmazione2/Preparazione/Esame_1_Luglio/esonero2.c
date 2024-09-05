@@ -16,32 +16,28 @@
  */
  
 char *tailextract(char *s, int n, int m)  {
-	if(s == NULL) return NULL;
-	
-	int dim = 0;
-	if(n<m){
-		// se n<m dimensione della stringa pari a n poichè tiene già conto del carattere '\0'
-		dim = n;
-	}else{
-		//altrimenti m caratteri piu lo spazio per '\0'
-		dim = m+1;
+	//se m è maggiore di n lo riduciamo a n perchè non 
+	//possiamo prendere m caratteri se c'è ne sono solo n
+	if(m > n){
+		m = n;
 	}
-	char* str = (char*)malloc((dim+1)*sizeof(char));
-	int k = 0;
-	while(k<dim-1){
-		str[k] = s[n-1-k];
+	//lo spazio sono m caratteri +1 per lo spazio di '\0'
+	char* result = (char*)malloc((m+1)*sizeof(char));
+	int k = 0; //indice stringa result
+	while(k<m){
+		result[k] = s[n-1-k];
 		k++;
 	}
-	str[k] = '\0';
-	return str;
+	result[k] = '\0';
+	return result;
 }
-
+	
 int main() {
 	char *str = "eccocosafare";
 	int len  = 12;
 	int val  = 5;
-	char *str2 = tailextract(str,len,val);
-	printf ("%s - %s",str,str2);
-	free(str2);
-	return 0;
-}
+	char *result = tailextract(str,len,val);
+	printf ("result - '%s'", result);
+	free(result);
+	return 0;	
+} 
