@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*  INSERIRE QUI EVENTUALI FUNZIONI AUSILIARIE (CON UN COMMENTO SIGNIFICATIVO IN TESTA) */
+/*  INSERIRE QUI EVENTUALI FUNZIONI AUSILIARIE (CON UN COMMENTO SIGNIFICATIVO IN TESTA) */ 
 
 /**
  * @brief Date una stringa s e due indici i, j validi per s (cioè tali da fare riferimento
