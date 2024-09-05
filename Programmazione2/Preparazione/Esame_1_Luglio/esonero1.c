@@ -15,41 +15,29 @@
  * (1) dati "eccocosafare", 4, 7 restituisce “asoc”.
  * (2) dati "eccocosafare”, 8,3 restituisce “”.
  */
-char *extract(char *s, int i, int j)  {
-	if(s == NULL) return NULL;
-	
-	//caso stringa vuota
+char *extract(char *s, int i, int j){
 	if(i>j){
-		char* str = "\0";
-		return str;
+		return ""; //ritorno la stringa vuota
 	}
-	//+2 perchè 7-4 fa 3, ma devo prenere 4 caratteri più lo spazio per '\0'
-	int dim = j-i+2;
-	char *str = (char*)malloc(dim*sizeof(char));
-	int k = 0;
+	//differenza degli indice j e i + 2 per avere lo spazioe per il carattere \0
+	int len = j-i+2; 
+	char* newStr = malloc(len*sizeof(char));
+	int k = 0; //riferimento stringa newStr
 	while(j>=i){
-		str[k] = s[j];
+		newStr[k] = s[j];
 		k++;
 		j--;
 	}
-	str[k] = '\0';
-	return str;
-
+	newStr[k] = '\0';
+	return newStr;
 }
 
-/**
- * @brief Inizializza una stringa str e due indici first, last validi per str,
- * e scrive sullo schermo la stringa restituita da extract(str,first,last).
- */
-int main() {
-
-    char* str = "eccocosafare";
-    int first  = 4;
-    int last  = 7;
-
-    char* newStr = extract(str, first, last);
-    
-    printf("Test\n");
-    printf("extract(%s, %d, %d)\n", str, first, last);
-    printf("result: %s\n", newStr);
-}
+int main(){
+	
+	char* s = "eccocosafare";
+	char* conversion = extract(s, 4, 7);
+	
+	printf("result:  '%s'\n", conversion);
+	printf("result lenght:  %d\n", strlen(conversion));
+	free(conversion);
+} 
