@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct node IntNode, *IntList;
+struct node {
+	int data;
+	IntList next;
+};
+
+bool checkInList(int data, IntList list) {
+	while (list) {
+		if (list->data == data) {
+			return 1;
+		}
+		list = list->next;
+	}
+	return 0;
+}
+
+/** @brief Modifica *lsPtr1 togliendo da *lsPtr1 tutti i nodi che 
+ * occorrono in *lsPtr2, li resituisce in una nuova lista nello stesso ordine in cui 
+ * occorrono in *lsPtr1 (NON ALLOCARE NUOVA MEMORIA)
+ * ESEMPIO: [1,2,5,3,4,5,9,8] e [7,5,2,4] modifica la prima lista in [1,3,9,8] e 
+ * resituisce [2,5,4,5]
+*/
+IntList transfer(IntList *lsPtr1, IntList *lsPtr2) {
+	if (lsPtr1 == NULL || lsPtr2 == NULL) return NULL;
+	// lista per salvare i risultati
+	IntList result = NULL;
+	IntList *resultPtr = &result;  // puntatore al puntatore alla lista result
+	IntList ls1 = *lsPtr1;
+	IntList prev = NULL;
+	IntList ls2 = *lsPtr2;
+
+	while (ls1) {
+		// se l'elemento è stato trovato in ls2
+		if (checkInList(ls1->data, ls2)) {
+			// aggiungi ls1 alla lista result
+			*resultPtr = ls1;
+			resultPtr = &((*resultPtr)->next); // aggiorna il puntatore alla lista result
+			// rimuovi l'elemento dalla lista ls1
+			if (prev) {
+				prev->next = ls1->next;
+			} else {
+				prev = ls1->next;
+			}
+			// passa al prossimo nodo in ls1
+			IntList tmp = ls1->next;
+			ls1->next = NULL; // disconnetti il nodo trasferito
+			ls1 = tmp;
+		} else {
+			// avanza nella lista ls1 se non ho trovato l' elemento in ls2
+			prev = ls1;
+			ls1 = ls1->next;
+		}
+	}
+	return result;
+}
+
+// Funzione per creare un nuovo nodo
+IntList create_node(int data) {
+	IntList new_node = (IntList)malloc(sizeof(IntNode));
+	new_node->data = data;
+	new_node->next = NULL;
+	return new_node;
+}
+
+// Funzione per aggiungere un nodo alla fine della lista
+void append(IntList *head_ref, int new_data) {
+	IntList new_node = create_node(new_data);
+	IntList last = *head_ref;
+	if (*head_ref == NULL) {
+		*head_ref = new_node;
+		return;
+	}
+	while (last->next != NULL) {
+		last = last->next;
+	}
+	last->next = new_node;
+}
+
+// Funzione per stampare la lista
+void print_list(IntList node) {
+	while (node != NULL) {
+		printf("%d ", node->data);
+		node = node->next;
+	}
+	printf("\n");
+}
+
+int main() {
+	IntList list1 = NULL;
+	IntList list2 = NULL;
+
+	// Creazione della prima lista [1,2,5,3,4,5,9,8]
+	append(&list1, 1);
+	append(&list1, 2);
+	append(&list1, 5);
+	append(&list1, 3);
+	append(&list1, 4);
+	append(&list1, 5);
+	append(&list1, 9);
+	append(&list1, 8);
+
+	// Creazione della seconda lista [7,5,2,4]
+	append(&list2, 7);
+	append(&list2, 5);
+	append(&list2, 2);
+	append(&list2, 4);
+
+	printf("List 1: ");
+	print_list(list1);
+	printf("List 2: ");
+	print_list(list2);
+
+	// Unione delle liste in modo alternato
+	IntList merged_list = transfer(&list1, &list2);
+
+	printf("Transferred List: ");
+	print_list(merged_list);
+
+	// Verifica che le liste originali siano vuote
+	printf("List 1 after transfer: ");
+	print_list(list1);
+	printf("List 2 after transfer: ");
+	print_list(list2);
+
+	return 0;
+}
