@@ -8,6 +8,10 @@ struct node {
 	IntList next;
 };
 
+/**
+ *@brief Funzione ausiliaria per controllare se 
+ * un elemento è all' interno di una lista
+ */
 bool checkInList(int data, IntList list) {
 	while (list) {
 		if (list->data == data) {
@@ -26,35 +30,42 @@ bool checkInList(int data, IntList list) {
 */
 IntList transfer(IntList *lsPtr1, IntList *lsPtr2) {
 	if (lsPtr1 == NULL || lsPtr2 == NULL) return NULL;
-	// lista per salvare i risultati
-	IntList result = NULL;
-	IntList *resultPtr = &result;  // puntatore al puntatore alla lista result
-	IntList ls1 = *lsPtr1;
-	IntList prev = NULL;
-	IntList ls2 = *lsPtr2;
 
-	while (ls1) {
-		// se l'elemento è stato trovato in ls2
-		if (checkInList(ls1->data, ls2)) {
-			// aggiungi ls1 alla lista result
-			*resultPtr = ls1;
-			resultPtr = &((*resultPtr)->next); // aggiorna il puntatore alla lista result
-			// rimuovi l'elemento dalla lista ls1
-			if (prev) {
-				prev->next = ls1->next;
-			} else {
-				prev = ls1->next;
+	IntList result = NULL;
+	IntList *resultPtr = &result;
+	IntList current  = *lsPtr1;
+	IntList previous = NULL;
+	int counter = 0;
+	//scorro tutta la lista
+	while(current){
+		//controol se current appartiene in ls2
+		if(checkInList(current->data, *lsPtr2)){
+			counter++;
+			*resultPtr = current;  //attacco un nuovo elemento alla lista
+			resultPtr = &((*resultPtr)->next); //aggiorno il puntatore resultPtr
+			//se il nodo previous esiste vuol dire che non sono nel nodo padre
+			if(previous){
+				//scollego il nodo dalla lista
+				previous->next = current->next;
+				current = current->next;
+			}else{
+				//aggiorno il primo elemento della lista
+				*lsPtr1 = current;
 			}
-			// passa al prossimo nodo in ls1
-			IntList tmp = ls1->next;
-			ls1->next = NULL; // disconnetti il nodo trasferito
-			ls1 = tmp;
-		} else {
-			// avanza nella lista ls1 se non ho trovato l' elemento in ls2
-			prev = ls1;
-			ls1 = ls1->next;
+		}else{
+			//salto all' elemento successivo in caso
+			//non si trovi in ls2
+			previous = current;
+			current = current->next;
 		}
 	}
+	int i = 0;
+	IntList temp = result;
+	while(i<counter-1){
+		temp = temp->next;
+		i++;
+	}
+	temp->next = NULL;
 	return result;
 }
 
