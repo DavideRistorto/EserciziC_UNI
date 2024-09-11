@@ -13,28 +13,30 @@ struct node {
 * Ad es. date [1, 5, 9] e [0, 2, 4, 6, 8] restituisce [1, 0, 5, 2, 9, 4, 6, 8].
 */
 IntList mixAlternate(IntList *lsPtr1, IntList *lsPtr2){
-	if((lsPtr1 == NULL && lsPtr2 == NULL) || (*lsPtr1 == NULL && *lsPtr2 == NULL)){
-		return NULL;
-	}
+	if(lsPtr1 == NULL && lsPtr2 == NULL) return NULL;
+
 	IntList result = NULL;
-	IntList* resultNext = &result;
-	IntList ls1 = *lsPtr1;
-	IntList ls2 = *lsPtr2;
+	IntList* ptrResult = &result;
+	IntList currentLs1 = *lsPtr1;
+	IntList currentLs2 = *lsPtr2;
 
-	while(ls1 && ls2){
-		*resultNext = ls1;
-		resultNext = &((*resultNext)->next);
-		ls1 = ls1->next;
-
-		*resultNext = ls2;
-		resultNext = &((*resultNext)->next);
-		ls2 = ls2->next;
+	while(currentLs1 && currentLs2){
+		//collego il nodo della lista uno a result
+		*ptrResult = currentLs1;
+		ptrResult = &((*ptrResult)->next);
+		currentLs1 = currentLs1->next;
+		//coleggo il nodo della lista due a result
+		*ptrResult = currentLs2;
+		ptrResult = &((*ptrResult)->next);
+		currentLs2 = currentLs2->next;
 	}
-	if(ls1){
-		*resultNext = ls1;
+	//se la lista uno ha ancora elementi li collego a result
+	if(currentLs1){
+		*ptrResult = currentLs1;
 	}
-	if(ls2 != NULL){
-		*resultNext = ls2;
+	//se la lista due ha ancora elementi li collego a result
+	if(currentLs2){
+		*ptrResult = currentLs2;
 	}
 	*lsPtr1 = NULL;
 	*lsPtr2 = NULL;
