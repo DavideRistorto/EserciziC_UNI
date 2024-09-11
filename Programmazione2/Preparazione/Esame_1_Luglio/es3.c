@@ -13,8 +13,8 @@ struct node {
  * un elemento è all' interno di una lista
  */
 bool checkInList(int data, IntList list) {
-	while (list) {
-		if (list->data == data) {
+	while(list){
+		if(data == list->data){
 			return 1;
 		}
 		list = list->next;
@@ -29,43 +29,38 @@ bool checkInList(int data, IntList list) {
  * resituisce [2,5,4,5]
 */
 IntList transfer(IntList *lsPtr1, IntList *lsPtr2) {
-	if (lsPtr1 == NULL || lsPtr2 == NULL) return NULL;
+	if(lsPtr1 == NULL || lsPtr2 == NULL) return NULL;
 
 	IntList result = NULL;
-	IntList *resultPtr = &result;
-	IntList current  = *lsPtr1;
-	IntList previous = NULL;
-	int counter = 0;
-	//scorro tutta la lista
-	while(current){
-		//controol se current appartiene in ls2
-		if(checkInList(current->data, *lsPtr2)){
-			counter++;
-			*resultPtr = current;  //attacco un nuovo elemento alla lista
-			resultPtr = &((*resultPtr)->next); //aggiorno il puntatore resultPtr
-			//se il nodo previous esiste vuol dire che non sono nel nodo padre
-			if(previous){
-				//scollego il nodo dalla lista
-				previous->next = current->next;
-				current = current->next;
+	IntList *resultPtr = &result; 
+	IntList currentLs1 = *lsPtr1;
+	IntList prevLs1 = NULL;
+	
+	while(currentLs1){
+		if(checkInList(currentLs1->data, *lsPtr2)){
+			//caso in cui devo scollegare l'elemento e metterlo in result
+			*resultPtr = currentLs1;
+			resultPtr = &((*resultPtr)->next);
+			
+			//se prev è inizializzato faccio prev->(current)->next
+			if(prevLs1){
+				prevLs1->next = currentLs1->next;
+				currentLs1 = currentLs1->next;
 			}else{
-				//aggiorno il primo elemento della lista
-				*lsPtr1 = current;
+				//se prev non è inizializzato devo aggiornare la testa della lista
+				*lsPtr1 = currentLs1->next;
+				currentLs1 = currentLs1->next;
+
 			}
 		}else{
-			//salto all' elemento successivo in caso
-			//non si trovi in ls2
-			previous = current;
-			current = current->next;
+			//se l'elemento non è presente in ls2 aggiorno solamente
+			//i riferimenti a prev e current per mandarli in avanti
+			prevLs1 = currentLs1;
+			currentLs1 = currentLs1->next;
 		}
 	}
-	int i = 0;
-	IntList temp = result;
-	while(i<counter-1){
-		temp = temp->next;
-		i++;
-	}
-	temp->next = NULL;
+	//scollego gli elementi ti troppo in result
+	*resultPtr = NULL;
 	return result;
 }
 
