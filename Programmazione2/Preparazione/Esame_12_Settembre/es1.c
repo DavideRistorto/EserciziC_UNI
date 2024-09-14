@@ -11,7 +11,7 @@
 
 _Bool isPalindrome(const char *s, int first, int last){
     //caso di puntatore non valido
-    if(s == NULL) return false;
+    if(s == NULL) return 0;
     //caso base della ricorsione con ritorno 1
     if(first>last){
         return 1;
