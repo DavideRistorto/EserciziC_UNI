@@ -5,6 +5,10 @@
 *    P-IN(s,first,last): s è una stringa, first e last sono indici di caratteri in s
 *    P-OUT(s,first,last,result): result è il valore di verità di “la sequenza di caratteri contenuti in s[first…last] è palindroma” 
 */
+
+#include <stdlib.h>
+#include <stdio.h>
+
 _Bool isPalindrome(const char *s, int first, int last){
     //caso di puntatore non valido
     if(s == NULL) return false;
