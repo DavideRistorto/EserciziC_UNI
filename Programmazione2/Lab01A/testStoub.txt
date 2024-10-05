@@ -1,7 +1,7 @@
 /* scrivere qui la vostra suite di test */
 
 /* ad esempio: */
-//TEST VALIDI----------------------------START
+//TEST VALIDI----------------------------START      
 tests[0].s = "0";
 tests[0].b = 10;
 tests[0].res = 1;
