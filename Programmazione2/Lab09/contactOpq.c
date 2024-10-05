@@ -34,6 +34,7 @@ ContactPtr mkContact(char* name, char* surname, char* mobile, char* url) {
   // ciao
   // ciao
   int c = 0;
+  int b = 0;
   return cnt;
 }
 
