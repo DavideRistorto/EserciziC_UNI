@@ -5,7 +5,7 @@ int calcolaFattoriale(int numero){
     int ret=0;
     if(numero==0){
         ret =  1;
-    }else{
+    }else{  
         ret = numero*calcolaFattoriale(numero-1);
     }
     return ret;
