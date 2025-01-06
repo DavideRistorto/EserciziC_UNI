@@ -24,48 +24,40 @@
  *
  * AVVERTENZA: attenzione alla differenza tra array di caratteri e stringa.
  */
-char *maxpalin(char *A, int N, int i)
-{
+char* maxpalin(char* A, int N, int i) {
   int left = i - 1;
   int right = i + 1;
-  if (A[left] != A[right])
-  {
+
+  if (A[left] != A[right]) {
     return NULL;
   }
-
-  int palLeft = left;
-  int palRight = right;
+  int maxLeft = left;
+  int maxRight = right;
   left--;
   right++;
-  while (left >= 0 && right < N)
-  {
-    if (A[left] != A[right])
-    {
-      break;
-    }
-    palLeft = left;
-    palRight = right;
+  while (A[left] >= 0 && A[right] != '\0' && A[left] == A[right]) {
+    maxLeft = left;
+    maxRight = right;
     left--;
     right++;
   }
-  int len = (palRight - palLeft) + 1;
-  char *palinmax = malloc(len * sizeof(char));
+  int len = (maxRight - maxLeft) + 1;
+  char* newMaxString = malloc(len * sizeof(char));
   int j = 0;
-  while (j < len)
-  {
-    palinmax[j] = A[j + palLeft];
+  while (j < len) {
+    newMaxString[j] = A[maxLeft];
+    maxLeft++;
     j++;
   }
-  palinmax[j] = '\0';
-  return palinmax;
+  newMaxString[j] = '\0';
+  return newMaxString;
 }
 
-int main()
-{
-  char *S = "POSSESSO";
+int main() {
+  char* S = "POSSESSO";
   int len = 8;
   int index = 4;
-  char *newstring = maxpalin(S, len, index);
+  char* newstring = maxpalin(S, len, index);
   printf("  %s", newstring);
   free(newstring);
   return 0;
