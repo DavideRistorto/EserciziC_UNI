@@ -55,13 +55,13 @@ void printTree(Tree t, int depth) {
 int numNodes(Tree t) {
   if (t == NULL) return 0;
 
-  int sum = 0;
+  int cardinality = 1;
   Tree current = t->child;
   while (current) {
-    sum += numNodes(current);
+    cardinality += numNodes(current);
     current = current->sibling;
   }
-  return sum + 1;
+  return cardinality;
 }
 
 int main() {
