@@ -53,20 +53,14 @@ void printTree(Tree t, int depth) {
 // Pre: t è un albero k-ario
 // Post: ritorna l'altezza dell'albero t
 int treeHeight(Tree t) {
-  if (t == NULL) return -1;  // Albero vuoto
+  if (t == NULL) return 0;
 
-  int maxHeight = -1;
+  int maxHeight = 0;
   Tree current = t->child;
-
-  // Scorro tutti i figli e calcolo l'altezza massima
-  while (current != NULL) {
-    int childHeight = treeHeight(current);
-    if (childHeight > maxHeight) {
-      maxHeight = childHeight;
-    }
+  while (current) {
+    maxHeight = max(maxHeight, treeHeight(current));
     current = current->sibling;
   }
-
   return maxHeight + 1;
 }
 
@@ -80,7 +74,7 @@ int main() {
 
   // Calcolo dell'altezza
   int height = treeHeight(t1);
-  printf("Altezza dell'albero: %d\n", height);  // Output atteso: 4
+  printf("Altezza dell'albero: %d\n", height);  // Output atteso: 3
 
   return 0;
 }
