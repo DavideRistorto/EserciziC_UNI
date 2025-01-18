@@ -42,6 +42,14 @@ btree* rightAncestor(btree* nd) {
   return rightAncestor(nd->parent);
 }
 
+// post: ritorna il puntatore al predecessore di nd se esiste
+//       NULL altrimenti
+btree* successor(btree* nd) {
+  if (nd->right) return minInBtree(nd->right);
+
+  return rightAncestor(nd);
+}
+
 int main() {
   // Test 1
   btree* bt1 = insert(45, NULL, NULL);
@@ -57,6 +65,9 @@ int main() {
 
   btree* RXAncestor = rightAncestor(bt1->right->left);
   printf("RXAncestor of %d is %d\n", bt1->right->left->key, RXAncestor->key);
+
+  btree* success = successor(bt1->left->left);
+  printf("successor of %d is %d\n", bt1->left->left->key, success->key);
 
   return 0;
 }
