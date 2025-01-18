@@ -33,6 +33,15 @@ btree* minInBtree(btree* bt) {
   return minInBtree(bt->left);
 }
 
+// post: ritorna l'avo destro più prossimo a nd se esiste; NULL altrimenti
+btree* rightAncestor(btree* nd) {
+  if (nd->parent == NULL) return NULL;
+
+  if (nd == nd->parent->left) return nd->parent;
+
+  return rightAncestor(nd->parent);
+}
+
 int main() {
   // Test 1
   btree* bt1 = insert(45, NULL, NULL);
@@ -44,7 +53,10 @@ int main() {
   bt1 = insert(7, bt1, NULL);
 
   btree* min = minInBtree(bt1);
-  printf("min value: %d", min->key);
+  printf("min value: %d\n", min->key);
+
+  btree* RXAncestor = rightAncestor(bt1->right->left);
+  printf("RXAncestor of %d is %d\n", bt1->right->left->key, RXAncestor->key);
 
   return 0;
 }
