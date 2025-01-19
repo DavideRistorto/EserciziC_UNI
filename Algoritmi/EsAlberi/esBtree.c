@@ -68,6 +68,5 @@ int main() {
 
   btree* success = successor(bt1->left->left);
   printf("successor of %d is %d\n", bt1->left->left->key, success->key);
-
   return 0;
 }
