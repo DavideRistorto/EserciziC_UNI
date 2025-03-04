@@ -43,6 +43,8 @@ public class Stack {
 
   public void push(int x) {
     // lancio il messaggio di errore solo se la condizione e' falsa
+    // per abilitare le assert, bisogna lanciare il programma con l'opzione -ea
+    // ES: java -ea Stack
     assert !full() : "tentativo push in uno stack pieno di elementi: " + size;
     stack[size] = x;
     size++;
