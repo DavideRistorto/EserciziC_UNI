@@ -33,7 +33,6 @@ public class Stack {
   // È conveniente mettere a disposizione due operazioni per sapere
   // se lo stack e' vuoto o pieno. Cio' consente all'utilizzatore
   // dello stack di sapere quando un'operazione push/pop e' lecita
-
   public boolean empty() {
     return size == 0;
   }
@@ -43,6 +42,7 @@ public class Stack {
   }
 
   public void push(int x) {
+    // lancio il messaggio di errore solo se la condizione e' falsa
     assert !full() : "tentativo push in uno stack pieno di elementi: " + size;
     stack[size] = x;
     size++;
