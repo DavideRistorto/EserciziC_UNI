@@ -13,18 +13,13 @@ public class DynamicQueue {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    Node current = first;
-    sb.append("[");
-    while (current != null) {
-        sb.append(current.getElem());
-        if (current.getNext() != null) {
-            sb.append(", ");
-        }
-        current = current.getNext();
+    String s = "";
+    Node cur = first;
+    while(cur != null){
+      s = s+" " + cur.getElem();
+      cur = cur.getNext();
     }
-    sb.append("]");
-    return sb.toString();
+    return s;
   }
 
   public void enqueue(int x) {
