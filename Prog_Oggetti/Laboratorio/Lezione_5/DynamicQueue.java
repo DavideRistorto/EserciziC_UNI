@@ -11,6 +11,14 @@ public class DynamicQueue {
     last = null;
   }
 
+  public Node getFirst(){
+    return first;
+  }
+
+  public Node getLast(){
+    return last;
+  }
+
   @Override
   public String toString() {
     String s = "";
