@@ -19,7 +19,4 @@ public class Box <T>{
 	public boolean isEmpty(){
 		return item == null;
 	}
-	
-	
-  
 }
