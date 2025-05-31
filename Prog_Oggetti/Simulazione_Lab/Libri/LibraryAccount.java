@@ -29,12 +29,10 @@ public class LibraryAccount {
 		libriInPrestito++;
 	}
 	
-public void returnBook() throws Exception{
-    if (libriInPrestito == 0) {
-        throw new Exception("Non c'è nessun libro da restituire");
-    }
-    libriInPrestito--;
-}
+	public void returnBook(){
+		assert libriInPrestito == 0: "Non c'è nessun libro da restituire";
+		libriInPrestito--;
+	}
 	
 	@Override
 	public String toString(){
@@ -45,10 +43,10 @@ public void returnBook() throws Exception{
 	public boolean equals(Object obj){
 		if(!(obj instanceof LibraryAccount)) return false;
 		LibraryAccount temp = (LibraryAccount) obj;
-		return id == temp.getId();
+		return id == obj.getId() && nome.equals(obj.getNome()) && libriInPrestito == obj.getLibriInPrestito();
 	}
 	
-	public static int getTotalAccounts(){
+	public static int getTotalsAccounts(){
 		return accountCounter;
 	}
 	
