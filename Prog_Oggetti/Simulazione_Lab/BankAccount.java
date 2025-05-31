@@ -47,8 +47,8 @@ public class BankAccount {
 	}
 	
 	public void withdraw(double ritiro) throws Exception{
-		assert ritiro > liquidita : "Il valore del ritiro è maggiore alla liquidità";
-		assert ritiro <= 0 : "Il valore del ritiro deve essere positivo";
+		assert ritiro < liquidita : "Il valore del ritiro è maggiore alla liquidità";
+		assert ritiro > 0 : "Il valore del ritiro deve essere positivo";
     liquidita -= ritiro;
 	}
 	
