@@ -1,4 +1,4 @@
-package Simulazione_Lab;
+package Simulazione_Lab.Banca;
 
 public class BankAccount {
 
