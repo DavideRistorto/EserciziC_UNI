@@ -21,7 +21,7 @@ public class GenericSet <T> {
   public void addElem(T elem){
     //elem gia presente
     if(contains(elem)) return;
-    GenericNode<T> newNode = new GenericNode<>(elem);
+    GenericNode<T> newNode = new GenericNode<T>(elem);
     newNode.setNext(first);
     first = newNode;
     size++;
