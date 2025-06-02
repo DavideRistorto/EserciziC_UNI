@@ -15,9 +15,9 @@ public class BankAccountYoung extends BankAccount{
 	}
 	
 	@Override
-	public void withdraw(double ritiro) throws Exception{
+	public void withdraw(double ritiro){
 		if(ritiro > limit){
-			throw new Exception("Il valore del ritiro è maggiore rispetto al limite imposto dal conto");
+			throw new IllegalArgumentException("Il valore del ritiro è maggiore rispetto al limite imposto dal conto");
 		}
 		super.withdraw(ritiro);
 	}

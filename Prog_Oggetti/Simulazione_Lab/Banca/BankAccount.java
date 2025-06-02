@@ -2,7 +2,7 @@ package Simulazione_Lab.Banca;
 
 public class BankAccount {
 
-  private static int counter = 0;
+  private static int counter=0;
   private int id;
   private String nome;
   private double liquidita;
@@ -16,7 +16,7 @@ public class BankAccount {
 
   public BankAccount(String nome){
   this.nome = nome;
-  this.liquidita = 0.0;
+  this.liquidita = 0;
   this.id = ++counter;
 }
 
@@ -37,16 +37,16 @@ public class BankAccount {
     BankAccount other = (BankAccount) obj;
     return this.id == other.id &&
            this.nome.equals(other.nome) &&
-           this.liquidita == other.getLiquidita();
-}
+           this.liquidita == other.liquidita;
+  }
 
 
 	public void deposit(double deposito){
-		assert deposito > 0;
+		assert deposito > 0 :"";
 		liquidita += deposito;
 	}
 	
-	public void withdraw(double ritiro) throws Exception{
+	public void withdraw(double ritiro){
 		assert ritiro < liquidita : "Il valore del ritiro è maggiore alla liquidità";
 		assert ritiro > 0 : "Il valore del ritiro deve essere positivo";
     liquidita -= ritiro;
