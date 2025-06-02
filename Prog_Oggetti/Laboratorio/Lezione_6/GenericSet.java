@@ -1,100 +1,101 @@
 package Lezione_6;
 
 public class GenericSet <T> {
+	
+	private GenericNode<T> first;
+	private int size;
+	
+	public GenericSet(){
+		first = null;
+		size = 0;
+	}
+	
+	public int size(){
+		return size;
+	}
+	
+	public boolean empty(){
+		return size == 0;
+	}
+	
+		
+	public boolean contains(T elem){
+		GenericNode<T> cur = first;
+		while(cur != null){
+			if(cur.getElem().equals(elem)){
+				return true;
+			}
+			cur = cur.getNext();
+		}
+		return false;
+	}
+	
+	public void addElem(T elem){
+		//non aggiungo elemento perchè giò presente
+		if(contains(elem)) return;
+		
+		GenericNode <T> newNode = new GenericNode<>(elem, null);
+		if(first == null){
+			first = newNode;
+		}else{
+			//metto il nuovo nodo in cima
+			newNode.setNext(first);
+			first = newNode;
+		}
+		size++;
+	}
+	
+	public void remove(T elem){
+		//non rimuovo elemento perchè non presente
+		if(!contains(elem)) return;
+		// caso in cui il primo nodo contiene l'elemento
+		if(first != null && first.getElem().equals(elem)) {
+			first = first.getNext();
+			size--;
+			return;
+		}
+		// caso generale
+		GenericNode<T> prev = first;
+		GenericNode<T> cur = first != null ? first.getNext() : null;
+		while(cur != null){
+			if(cur.getElem().equals(elem)){
+				prev.setNext(cur.getNext());
+				size--;
+				return;
+			}
+			prev = cur;
+			cur = cur.getNext();
+		}
+	}
+	
+	public boolean equalsTo(GenericSet<T> set){
+		if(set.size != size) return false;
+		
+		GenericNode<T> cur = first;
+		while(cur != null){
+			if(!set.contains(cur.getElem())){
+				return false;
+			}
+			cur = cur.getNext();
+		}
+		return true;
+	}
 
-  private GenericNode<T> first;
-  private int size;
-
-  public GenericSet(){
-    first = null;
-    size = 0;
-  }
-
-  public int size(){
-    return size;
-  }
-
-  public boolean empty(){
-    return size == 0;
-  }
-
-  public void addElem(T elem){
-    //elem gia presente
-    if(contains(elem)) return;
-    GenericNode<T> newNode = new GenericNode<T>(elem);
-    newNode.setNext(first);
-    first = newNode;
-    size++;
-  }
-
-  public void remove(T elem){
-    // elem non presente
-    if (!contains(elem)) return;
-    // caso in cui l'elemento da rimuovere è il primo
-    if (first.getElem().equals(elem)) {
-        first = first.getNext();
-        size--;
-        return;
-    }
-    // caso in cui l'elemento da rimuovere è altrove nella lista
-    GenericNode<T> cur = first;
-    while (cur.getNext() != null) {
-        if (cur.getNext().getElem().equals(elem)) {
-            cur.setNext(cur.getNext().getNext());
-            size--;
-            return;
-        }
-        cur = cur.getNext();
-    }
-  }
-
-  public boolean contains(T elem){
-    GenericNode<T> cur = first;
-    while(cur != null){
-        if(cur.getElem().equals(elem)){
-            return true;
-        }
-        cur = cur.getNext(); // Avanza al nodo successivo
-    }
-    return false;
-  }
-
-  public boolean uguali(GenericSet<T> set){
-    if(set.size() != size) return false;
-
-    GenericNode<T> cur = first;
-    while(cur != null){
-      if(!set.contains(cur.getElem())){
-        return false;
-      }
-      cur = cur.getNext();
-    }
-    return true;
-  }
-
-  public GenericSet<T> intersection(GenericSet<T> set) {
-    GenericSet<T> result = new GenericSet<>();
-    //prendi i nodi in comune tra i 2 set
-    GenericNode<T> cur = first;
-    while (cur != null) {
-        if (set.contains(cur.getElem())) {
-            result.addElem(cur.getElem());
-        }
-        cur = cur.getNext();
-    }
-    return result;
-  }
-
-  @Override
-  public String toString(){
-    String s = "";
-    GenericNode<T> cur = first;
-    while(cur != null){
-      s = s+ " "+cur.getElem();
-      cur = cur.getNext();
-    }
-    return s;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		GenericNode<T> cur = first;
+		while (cur != null) {
+			sb.append(cur.getElem());
+			if (cur.getNext() != null) {
+				sb.append(", ");
+			}
+			cur = cur.getNext();
+		}
+		sb.append("}");
+		return sb.toString();
+	}
 
   public static void main(String[] args) {
     // Creazione di due set generici
@@ -121,11 +122,7 @@ public class GenericSet <T> {
     System.out.println("Set1 dopo aver rimosso 2: " + set1);
 
     // Test del metodo uguali
-    System.out.println("Set1 e Set2 sono uguali? " + set1.uguali(set2));
-
-    // Test del metodo intersection
-    GenericSet<Integer> intersection = set1.intersection(set2);
-    System.out.println("Intersezione di Set1 e Set2: " + intersection);
+    System.out.println("Set1 e Set2 sono uguali? " + set1.equalsTo(set2));
 
     // Test del metodo empty
     System.out.println("Set1 è vuoto? " + set1.empty());
