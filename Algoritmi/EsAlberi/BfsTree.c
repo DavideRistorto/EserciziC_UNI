@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+ 
 // Struttura per un nodo della coda
 typedef struct QueueNode {
   void* data;  // Puntatore generico per memorizzare qualsiasi tipo di dato
