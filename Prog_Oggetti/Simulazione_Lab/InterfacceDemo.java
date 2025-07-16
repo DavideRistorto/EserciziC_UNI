@@ -24,8 +24,9 @@ class D extends C implements J {
     }
 }
 
-public class Main {
+public static class Main {
     public static void main(String[] args) {
+      
         J obj3 = new D();
         C x = (C) obj3;
         x.m1(new D());

@@ -32,15 +32,16 @@ class Branch<T> extends Tree<T> {
         this.right = right;
     }
 
-    public Tree<T> detach(T x) {
-        if(elem != null && elem.equals(x)) {
-            // Se l'elemento da staccare è la radice, ritorna un Leaf
-            return new Leaf<>();
+    public Tree<T> detach(T x){ 
+        if ((x==null) && (elem==null) || (x != null) && x.equals(elem) )
+                return new Leaf<>();
+        else {
+            left=left.detach(x);
+            right=right.detach(x);
+            return this;
         }
-        left = left.detach(x);
-        right = right.detach(x);
-        return this;
     }
+
     public String toString() {
         return "Branch(" + elem + ", " + left + ", " + right + ")";
     }
