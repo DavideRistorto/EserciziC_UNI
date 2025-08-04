@@ -4,16 +4,15 @@ load("diametri.RData")
 str(dati)
 head(dati)
 
-nrow(dati) # numero righe totali
-table(dati$stabilimento)  #numero righe per stabilimento
-
-proportions(table(dati$stabilimento)) # proporzioni per stabilimento
-mean(dati$diametro[dati$stabilimento == "B"])
+table(dati$stabilimento ) # separo le frequenze per stabilimento
+proportions(table(dati$stabilimento)) # calcolo la % delle proporzioni suddivise per stabilimento
+mean(dati$diametro[dati$stabilimento == "B"]) # media dei diamentri provenienti solo dallo stabilimento B
 
 quantile(dati$diametro, 0.1)
 
-hist(dati$diametro[dati$stabilimento == "B"])
-
+hist(dati$diametro)
 boxplot(diametro ~ stabilimento, data = dati)
 
-t.test(dati$diametro[dati$stabilimento == "B"]) #p value
+#il diametro medio dei pezzi prodotti nello stabilimento B è pari a 26?
+t.test(dati$diametro[dati$stabilimento == "B"], mu = 26)
+  
