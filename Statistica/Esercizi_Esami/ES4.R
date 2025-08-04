@@ -103,7 +103,41 @@ pnorm(0, 3, 1) - pnorm(-1, 3, 1)
 
 
 
+pnorm(1.5, 0, 2)
+pnorm(3, 0, 2, lower.tail = FALSE)
+(pnorm(6, 0, 2) - pnorm(3, 0, 2)) / pnorm(6, 0, 2)
 
 
+pnorm(3, 2, 2, lower.tail = FALSE)
+pnorm(3, 2, 2, lower.tail = FALSE) * pnorm(3, 0, 1, lower.tail = FALSE)
+(pnorm(7, 2, 2) - pnorm(6, 2, 2)) / pnorm(6, 2, 2, lower.tail = FALSE)
+
+
+pnorm(1.5, 0, 2)
+pnorm(3, 0, 2, lower.tail = FALSE)
+pnorm(1, 0, 2) - pnorm(-2, 0, 2)
+(pnorm(6, 0, 2) - pnorm(3, 0, 2)) / pnorm(6, 0, 2)
+
+
+pnorm(13, 10, 4, lower.tail = FALSE)
+pnorm(12, 10, 4) - pnorm(8.5, 10, 4)
+(pnorm(8.5,10,4) - pnorm(8,10,4) + pnorm(12,10,4, lower.tail = FALSE)) / pnorm(8,10,4, lower.tail = FALSE)
+(pnorm(7, 10, 4) - pnorm(6, 10, 4)) / pnorm(6, 10, 4, lower.tail = FALSE)
+
+
+pnorm(3, 2, 2, lower.tail = FALSE)
+pnorm(3, 2, 2, lower.tail = FALSE) * pnorm(3, 0, 1, lower.tail = FALSE)
+pnorm(2, 2, 2) - pnorm(1.5, 2, 2)
+(pnorm(7, 2, 2) - pnorm(6, 2, 2)) / pnorm(6, 2, 2, lower.tail = FALSE)
   
 
+pnorm(3, 3, 1, lower.tail = FALSE) * pnorm(0, 0, 1)
+pnorm(0, 3, 1) - pnorm(-1, 3, 1)
+(pnorm(7, 3, 1) - pnorm(5, 3, 1)) / pnorm(5, 3, 1, lower.tail = FALSE)  
+
+  
+  
+  
+  
+  
+  
