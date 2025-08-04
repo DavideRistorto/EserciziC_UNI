@@ -134,10 +134,3 @@ pnorm(2, 2, 2) - pnorm(1.5, 2, 2)
 pnorm(3, 3, 1, lower.tail = FALSE) * pnorm(0, 0, 1)
 pnorm(0, 3, 1) - pnorm(-1, 3, 1)
 (pnorm(7, 3, 1) - pnorm(5, 3, 1)) / pnorm(5, 3, 1, lower.tail = FALSE)  
-
-  
-  
-  
-  
-  
-  
