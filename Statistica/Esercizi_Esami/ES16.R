@@ -78,8 +78,14 @@ punif(0.25, 0, 1)
 (punif(0.9, 0, 1) - punif(0.5, 0, 1)) / punif(0.9, 0, 1)  
 
 
+#Sia X una variabile aleatoria distribuita come una Esponenziale di parametro ('rate') pari a 0.2.
+#Sia Y una variabile aleatoria distribuita come una Esponenziale di parametro ('rate') pari a 0.5, indipendente da X
 
+#La probabilità che Y sia maggiore di 3
+pexp(3, 0.5, lower.tail = FALSE)
 
+#La probabilità che almeno una delle due variabili aleatorie sia maggiore di 2
+1 - (pexp(2, 0.2) * pexp(2, 0.5))
 
-
-
+#La probabilità che X sia minore di 1 sapendo che X è minore di 2
+(pexp(2, 0.2) - pexp(1, 0.2)) / pexp(2, 0.2)
