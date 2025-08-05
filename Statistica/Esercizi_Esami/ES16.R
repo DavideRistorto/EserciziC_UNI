@@ -40,4 +40,22 @@ punif(3, 2, 10) - punif(-2, 2, 10)
 (punif(6, 2, 10) - punif(3, 2, 10)) / punif(6, 2, 10)
 
 
+# Sia  Y una variabile aleatoria distribuita come una Normale di media −5 e varianza 1
+# Consideriamo X=Y+4. Quindi Y(-5, 1) e X(-1, 1)
+
+# La probabilità che X sia negativa
+pnorm(0, -1, 1)
+
+#La probabilità che −X sia compresa fra -2 e 1. Quindi con -X inverto il segno della media
+pnorm(1, 1, 1) - pnorm(-2, 1, 1)
+
+#La probabilità che X sia positiva sapendo che 2X è minore di 3
+(pnorm(1.5, -1, 1) - pnorm(0, -1, 1)) / pnorm(1.5, -1, 1)
+ 
+
+
+
+
+
+
 
