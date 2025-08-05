@@ -66,11 +66,16 @@ pexp(2, 2, lower.tail = FALSE) * pexp(2, 1, lower.tail = FALSE)
 (pexp(7, 2) - pexp(6, 2)) / pexp(6,2, lower.tail = FALSE)
 
 
+#Sia X una variabile aleatoria continua distribuita come una Uniforme sull'intervallo [0,1]
 
+#La probabilità che X sia minore della sua media
+punif(0.5, 0, 1)
 
+#La probabilità che −X sia maggiore di −0.25  -> -X > 0.25 -> X < 0.25
+punif(0.25, 0, 1)
 
-
-
+# La probabilità che X−0.5 sia positiva sapendo che X è minore di 0.9
+(punif(0.9, 0, 1) - punif(0.5, 0, 1)) / punif(0.9, 0, 1)  
 
 
 
