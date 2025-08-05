@@ -25,14 +25,19 @@ pnorm(2, 0.2, 1, lower.tail = FALSE)
 pnorm(0.7, 0.2, 1, lower.tail = FALSE)
 
 
+#Sia X una variabile aleatoria continua distribuita come una Uniforme sull'intervallo [2,10]
 
+# La probabilità che X sia minore della sua media
+punif(6, 2, 10) #La media è (10+2)/2 = 6
 
+#La probabilità che X sia maggiore di 3
+punif(3, 2, 10, lower.tail = FALSE)
 
+#La probabilità che X sia compresa fra -2 e 3
+punif(3, 2, 10) - punif(-2, 2, 10)
 
-
-
-
-
+#La probabilità che X sia maggiore di 3 sapendo che X è minore di 6
+(punif(6, 2, 10) - punif(3, 2, 10)) / punif(6, 2, 10)
 
 
 
