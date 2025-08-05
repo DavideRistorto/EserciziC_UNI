@@ -53,6 +53,25 @@ pnorm(1, 1, 1) - pnorm(-2, 1, 1)
 (pnorm(1.5, -1, 1) - pnorm(0, -1, 1)) / pnorm(1.5, -1, 1)
  
 
+#Sia X una variabile aleatoria distribuita come una Esponenziale di parametro ('rate') pari a 2.
+#Sia Y una variabile aleatoria distribuita come una Esponenziale di parametro ('rate') pari a 1, indipendente da  X
+
+#La probabilità che X sia maggiore di 3
+pexp(3, 2, lower.tail = FALSE)
+
+# La probabilità che entrambe le variabili aleatorie siano maggiori di 2
+pexp(2, 2, lower.tail = FALSE) * pexp(2, 1, lower.tail = FALSE)
+
+# La probabilità che X sia minore di 7 sapendo che X è maggiore di 6
+(pexp(7, 2) - pexp(6, 2)) / pexp(6,2, lower.tail = FALSE)
+
+
+
+
+
+
+
+
 
 
 
