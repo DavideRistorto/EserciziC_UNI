@@ -88,4 +88,28 @@ pexp(3, 0.5, lower.tail = FALSE)
 1 - (pexp(2, 0.2) * pexp(2, 0.5))
 
 #La probabilità che X sia minore di 1 sapendo che X è minore di 2
-(pexp(2, 0.2) - pexp(1, 0.2)) / pexp(2, 0.2)
+pexp(1, 0.2) / pexp(2, 0.2)
+
+
+#Sia Y una variabile aleatoria distribuita come una Normale di media 2 e varianza 4.
+#Consideriamo  X=2−Y
+
+#La probabilità che X sia negativa
+pnorm(0, 0, 2)
+
+#La probabilità che −X sia compresa fra -2 e 1: -2 < X < 1 -> 2 > X > -1
+pnorm(2, 0, 2) - pnorm(-1 , 0, 2)
+
+#La probabilità che X sia negativa sapendo che X è maggiore di -3
+(pnorm(0, 0, 2) - pnorm(-3, 0, 2)) / pnorm(-3, 0 , 2, lower.tail = FALSE)
+
+
+
+
+
+
+
+
+
+
+
