@@ -102,14 +102,3 @@ pnorm(2, 0, 2) - pnorm(-1 , 0, 2)
 
 #La probabilità che X sia negativa sapendo che X è maggiore di -3
 (pnorm(0, 0, 2) - pnorm(-3, 0, 2)) / pnorm(-3, 0 , 2, lower.tail = FALSE)
-
-
-
-
-
-
-
-
-
-
-
