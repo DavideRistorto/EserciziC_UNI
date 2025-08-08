@@ -53,23 +53,25 @@ dbinom(2,5,5/20)
 1/2 * 3/4 * 5/6
 
 #Se p=1/4, determinare la probabilità che si abbia Testa al secondo e al terzo lancio
-1/4 ^ 3 + 3/4 * 1/8 * 1/4
+1/4 ^ 3 + 3/4 * 1/8 * 1/4  # -> AAA oppure ABA
 
 
+#Si tira cinque volte una moneta non truccata
 
+# la probabilità dell'evento A="i primi tre risultati sono uguali"
+2*(1/2)^3  # TTT oppure CCC
 
+# la probabilità dell'evento  B="i primi tre o gli ultimi tre risultati sono uguali"
+#Numero sequenze coi primi 3 uguali sono TTTXX - CCCXX quindi
+2 * 2^2 #sequenze corrette
+# 8 sono anche le sequenze possibili per XXTTT oppure XXCCC
+#sequenze complessive 
+4 * 4 - 2 # -2 sono quelle ripetute
+#sequenze giuste/totali
+14/32
 
-
-
-
-
-
-
-
-
-
-
-
+#P(A|B) # probabilità che i primi 3 siano uguali, sapendo che o i primi o gli utlimi 3 sono uguali
+(8/32) / (14/32)
 
 
 
