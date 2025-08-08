@@ -74,6 +74,43 @@ dbinom(2,5,5/20)
 (8/32) / (14/32)
 
 
+#Una moneta sbilanciata viene lanciata ripetutamente. 
+#In ciascun lancio la probabilità che esca T è 0.4. Calcolare la probabilità degli eventi
+
+#A="la prima T esce al quarto lancio"
+#Combinazioni possibili sono CCCT
+0.6 * 0.6 * 0.6 * 0.4
+
+#B="la terza T esce al settimo lancio"
+choose(6,2) * 0.4^2 * (0.6)^4 *0.4  #prima calcolo con distribuzione binobiale la probabilità di avere 2 successi e poi la probablità che il settimo sia testa
+
+#Una moneta sbilanciata viene lanciata ripetutamente. In ciascun lancio la probabilità che esca T è 0.4. Calcolare la probabilità degli eventi:
+
+#C=A∩B
+#compinazioni possibili -> CCCTXXT dove una X deve essere una T quindi in totale solo 2 sequenze
+2 * 0.6^4 * 0.4^3
+
+
+#Ci sono quattro scatole in un armadio: la scatola A ha 4 palline numerate da 1 a 4, la scatola B ha sei palline numerate da 1 a 6), le scatole C e D 
+#hanno ambedue 8 palline numerate da 1 a 8. La tua amica prende segretamente e uniformemente a caso una scatola e ne estrae una pallina
+
+#Determinare la probabilità di ottenere un numero minore o uguale a 3 (≤3) oppure 5
+1/4 * 3/4 + 1/4 * 4/6 + 1/2 * 4/8
+
+# Sai che è uscito 4 oppure 5. Qual è la probabilità che la pallina sia stata estratta dalla scatola C o dalla D
+# Prima calcolo la probabilità che esco 4 o 5 
+1/4 * 1/4 + 1/4 * 2/6 + 1/2 * 2/8
+# Poi la probabilità usando bayes
+2/8 * 1/2 / (1/4 * 1/4 + 1/4 * 2/6 + 1/2 * 2/8)
+
+#Sai che è uscito 4 oppure 5. Qual è la probabilità che la pallina sia stata estratta dalla scatola D
+(2/8 * 1/2 / (1/4 * 1/4 + 1/4 * 2/6 + 1/2 * 2/8)) /2 
+
+
+
+
+
+
 
 
 
