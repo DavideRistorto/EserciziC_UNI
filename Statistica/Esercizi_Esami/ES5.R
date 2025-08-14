@@ -108,6 +108,20 @@ choose(6,2) * 0.4^2 * (0.6)^4 *0.4  #prima calcolo con distribuzione binobiale l
 
 
 
+#Si hanno a disposizione 3 scatole. La scatola A contiene 12 palline rosse e 12 palline nere. 
+#La scatola B contiene 10 palline rosse e 30 palline nere. La scatola C contiene 3 palline rosse e 15 palline nere.
+#- Prima estrazione: Si estrae una pallina dalla scatola A.
+#- Seconda estrazione: Se all'estrazione precedente si è estratta una pallina rossa allora si estrae una pallina dalla scatola A. Se invece si è estratta una pallina nera si estrae una pallina dalla scatola B.
+#- Terza estrazione: Se nell'estrazione precedente si è estratta una pallina rossa allora si estrae una pallina dalla scatola A. Se nella prima estrazione si è estratta una pallina rossa e nella seconda estrazione si è estratta una pallina nera, allora si estrae una pallina dalla scatola B. Infine, se nella prima e nella seconda estrazione si è estratta una pallina nera allora si estrae una pallina dalla scatola C
+
+#Determinare la probabilità della sequenza (Rossa, Rossa, Rossa) --> Sempre scatola A allora
+(1/2)^3
+
+#Determinare la probabilità della sequenza (Nera, Nera, Nera)
+1/2 * 3/4 * 5/6
+
+#Determinare la probabilità che si estragga una pallina rossa sia alla seconda sia alla terza estrazione
+(1/2)^3 + (1/2 * 1/4 * 1/2)
 
 
 
