@@ -125,9 +125,12 @@ choose(6,2) * 0.4^2 * (0.6)^4 *0.4  #prima calcolo con distribuzione binobiale l
 
 
 
+#L'urna U1 contiene una proporzione 0.3 di palline bianche e l'urna U2 una proporzione 0.5 di palline bianche.
+#Si estraggono con reimbussolamento 4 palline da U1 e 6 da U2
+#. Tutte le palline estratte vengono sistemate in una terza urna U3
+#. Sia X la proporzione di palline bianche nell'urna U3
+(4*0.3+6*0.5)/10
 
+(4*0.3*0.7 + 6*0.5*0.5) / 10^2
 
-
-
-
-
+0.0234 + 0.42^2
