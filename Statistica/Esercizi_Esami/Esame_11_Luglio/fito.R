@@ -42,12 +42,3 @@ barplot(table(escursioni$Preferenza))
 hist(escursioni$`Numero escursioni`)
 
 binom.test(91, 162, alternative = "greater", p = 0.5)
-
-
-
-
-
-
-
-
-
