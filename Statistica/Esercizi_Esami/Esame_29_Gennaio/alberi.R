@@ -7,38 +7,35 @@ head(dati)
 
 nrow(dati)
 sum(is.na(dati))
+
 dati <- na.omit(dati)
-
-mean(dati$diametro[dati$altezza >= 25 & dati$altezza <= 35])
-sd(dati$diametro[dati$altezza >= 25 & dati$altezza <= 35])
-
+mean(dati$diametro[dati$altezza>=25 & dati$altezza<=35])
+sd(dati$diametro[dati$altezza>=25 & dati$altezza<=35])
 quantile(dati$altezza, 0.9)
 
-boxplot(dati$altezza[dati$diametro < 40], dati$altezza[dati$diametro >= 40])
-
+boxplot(dati$altezza[dati$diametro<40],dati$altezza[dati$diametro>=40])
 cor.test(dati$altezza, dati$diametro)
-
-lm(altezza ~ diametro, data = dati)
+#Stimo la retta di regressione lineare considerando
+lm(altezza ~ diametro, data = dati)$coefficients #Il secondo numero è il coefficiente angolare
 
 ################################# ES2
-
 pexp(1.5, 2) + pexp(3, 2, lower.tail = FALSE)
 pexp(3, 2, lower.tail = FALSE)
-pexp(6,2) - pexp(3,2)
+pexp(6, 2) - pexp(3,2)
 
 ################################# ES3
-options(digits = 10)
+
 load("fertilizzante.RData")
 head(dati)
+
 table(dati$fertilizzante)
 mean(dati$altezza[dati$fertilizzante == "A"])
 sd(dati$altezza[dati$fertilizzante == "A"])
-
 quantile(dati$altezza[dati$fertilizzante == "A"], 0.9)
 
 boxplot(dati$altezza[dati$fertilizzante == "A"], dati$altezza[dati$fertilizzante == "B"])
-t.test(dati$altezza[dati$fertilizzante == "A"], dati$altezza[dati$fertilizzante == "B"], paired = FALSE, alternative = "two.sided")
 
+t.test(dati$altezza[dati$fertilizzante == "A"], dati$altezza[dati$fertilizzante == "B"], alternative = "two.sided")
 
 ################################# ES4
 
