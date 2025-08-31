@@ -8,7 +8,8 @@ pnorm(3, 2, 1, lower.tail = FALSE)
 ################################# ES2
 dpois(5, 1) + dpois(3, 1)
 ppois(7, 1) - ppois(0.5, 1)
-(ppois(4, 1) - ppois(0, 1)) / ppois(0,1, lower.tail = FALSE) #---------------------> DA CAPIRE
+(dpois(4,1) + dpois(3,1) + dpois(2,1) +  dpois(1,1)) / ppois(0,1, lower.tail = FALSE)
+
 ################################# ES3
 load("ristorante.RData")
 head(ristorante)
