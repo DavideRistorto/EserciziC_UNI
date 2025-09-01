@@ -49,3 +49,28 @@ t.test(dati$altezza[dati$fertilizzante == "A"], dati$altezza[dati$fertilizzante 
 
 # Sia A che B
 (2/3)^4 + (1/3)^4
+
+
+pnorm(1.5, 0, 2)
+pnorm(3, 0, 2, lower.tail = FALSE)
+(pnorm(6, 0, 2) - pnorm(3, 0, 2)) / pnorm(6, 0, 2)
+
+
+
+
+
+4*0.3
+pbinom(3, 4, 0.3)
+pbinom(3, 4, 0.3) - pbinom(1, 4, 0.3)
+(pbinom(3, 4, 0.3) - dbinom(0, 4, 0.3)) / (1 - dbinom(0, 4, 0.3))
+
+
+
+
+
+
+
+
+
+
+
