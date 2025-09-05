@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct node IntNode, *IntList;
+typedef struct node IntNode, * IntList;
 struct node {
   int data;
   IntList next;
@@ -10,7 +10,7 @@ struct node {
 
 // Funzione per creare un nuovo nodo
 IntList createNode(int data) {
-  IntList newNode = (IntList) malloc(sizeof(IntNode));
+  IntList newNode = (IntList)malloc(sizeof(IntNode));
   if (newNode) {
     newNode->data = data;
     newNode->next = NULL;
@@ -47,19 +47,19 @@ IntList createSampleList() {
 }
 
 // Funzione per spostare l'ultimo nodo in testa
-void moveLastToFront(IntList *list) {
+void moveLastToFront(IntList* list) {
   //caso lista vuota
-  if(list == NULL || *list == NULL) return;
+  if (list == NULL || *list == NULL) return;
 
   IntList ls = *list;
   IntList prec = NULL;
   //caso lista un solo elemento
   //non faccio nulla
-  if(ls != NULL && ls->next == NULL) return;
+  if (ls != NULL && ls->next == NULL) return;
   //salvo il primo elemento
   IntList firstElem = ls;
   //scorro la lista per arrivare all' ultimo nodo
-  while(ls->next){
+  while (ls->next) {
     prec = ls;
     ls = ls->next;
   }
