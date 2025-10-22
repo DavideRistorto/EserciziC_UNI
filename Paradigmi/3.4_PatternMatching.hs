@@ -82,6 +82,6 @@ inverti (x : xs) = inverti xs ++ [x]
 --    che calcoli la lista delle somme degli elementi corrispondenti di due liste,
 --    con lunghezza pari alla minore tra quelle di xs e ys.
 sommaCongiunta :: [Int] -> [Int] -> [Int]
-sommaCongiunta [] _ = []
+sommaCongiunta [] _ = [] -- casi base ricorsivi
 sommaCongiunta _ [] = []
-sommaCongiunta (x : xs) (y : ys) = (x+y) : sommaCongiunta xs ys
+sommaCongiunta (x : xs) (y : ys) = (x+y) : sommaCongiunta xs ys -- caso ricorsivo
