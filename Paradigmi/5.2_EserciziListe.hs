@@ -1,0 +1,2 @@
+--1) Definire una funzione ricorsiva che, applicata a una lista non vuota di numeri 
+--   restituisca True se l’ultimo elemento è uguale alla somma di quelli che lo precedono
