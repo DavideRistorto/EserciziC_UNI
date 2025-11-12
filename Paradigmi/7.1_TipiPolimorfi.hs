@@ -51,14 +51,23 @@ Cons 1 (Cons 2 (Cons 3 Nil))
 --    maybeLength :: Maybe a -> Int
 --    maybeMap :: (a -> b) -> Maybe a -> Maybe b
 --    maybeFilter :: (a -> Bool) -> Maybe a -> Maybe a
+maybeLength :: Maybe a -> Int
+maybeLength Nothing  = 0
+maybeLength (Just _) = 1
+
+maybeMap :: (a -> b) -> Maybe a -> Maybe b
+maybeMap _ Nothing  = Nothing
+maybeMap f (Just x) = Just (f x)
+
+maybeFilter :: (a -> Bool) -> Maybe a -> Maybe a
+maybeFilter p (Just x) | p x = Just x
+maybeFilter _ _              = Nothing
 
 -- 2) Il tipo Numero può essere rappresentato con Either Int Float.
 --    Ridefinire la funzione somma :: Either Int Float -> Either Int Float -> Either Int Float
 --    Sommando due numeri, il risultato deve essere floating-point solo se necessario.
-
--- 3) Definire la funzione length :: List a -> Int per calcolare la lunghezza di una lista ricorsiva.
-
--- 4) STREAM: Definire il tipo polimorfo Stream a degli stream (sequenze infinite) e le funzioni:
---    forever :: a -> Stream a
---    from :: Enum a => a -> Stream a
---    take :: Int -> Stream a -> [a]
+somma :: Either Int Float -> Either Int Float -> Either Int Float
+somma (Left m)  (Left n)  = Left (m + n)
+somma (Left m)  (Right n) = Right (fromIntegral m + n)
+somma (Right m) (Left n)  = Right (m + fromIntegral n)
+somma (Right m) (Right n) = Right (m + n)
