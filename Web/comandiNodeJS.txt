@@ -1,0 +1,17 @@
+Creare progetto
+npx express-generator --view=ejs --css=css
+
+Installa dipendeze
+npm install
+
+Installa auto realod ai cambiamenti
+npm install --save-dev nodemon
+
+Aggiungere questa riga in package.json
+"dev": "nodemon ./bin/www"
+
+Body parser estensione
+npm install body-parser
+
+Fix del powershell
+Remove-Item Alias:curl
