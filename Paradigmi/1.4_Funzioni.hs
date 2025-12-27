@@ -47,26 +47,27 @@ dispari = not . pari
 -- Esercizi di riepilogo capitolo
 
 successore :: Int -> Int
-successore n = n + 1
+successore x = x + 1
 
 pari :: Int -> Bool
-pari n = n `mod` 2 == 0
-
-dispari :: Int -> Bool
-dispari n = not (pari n)
+pari x = x `mod` 2 == 0
 
 -- 1) Ridefinire la funzione dispari senza usare l’operatore di composizione funzionale.
+dispari1 :: Int -> Bool
+dispari1 x = x `mod` 2 /= 1
+
 dispari2 :: Int -> Bool
-dispari2 n = n `mod` 2 == 1
+dispari2 x = not (pari x)
 
 -- 2) Un anno è bisestile se è multiplo di 4 ma non di 100, oppure se è multiplo di 400. Definire un predicato bisestile :: Int -> Bool che, applicato a n, stabilisca se n è bisestile.
 bisestile :: Int -> Bool
-bisestile n = n `mod` 4 == 0 && n `mod` 100 /= 0
+bisestile x = x `mod` 4 == 0 && x `mod` 100 /= 0 && x `mod` 400 == 0
 
 -- 3) La somma dei primi n numeri naturali è n(n+1)/2. Definire la funzione somma :: Int -> Int usando questa formula.
 somma :: Int -> Int
-somma n = n * (n+1) `div` 2
+somma n = n*(n+1) `div` 2
 
 -- 4) Definire una funzione area :: Float -> Float che calcoli l’area del cerchio dato il raggio n.
 area :: Float -> Float
-area n = n ^ 2 * pi 
+area n = n ^ 2 * pi
+
