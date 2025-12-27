@@ -2,7 +2,7 @@
 Funzioni
 ==================================
 
-Definizione e applicazione di funzioni
+Definizione e applicazione di funzioni 
 --------------------------------------
 Una funzione è una trasformazione dal dominio al codominio. 
 In Haskell, si dichiarano specificando il tipo, che ha la forma `T -> S`, dove T è il dominio e S il codominio.
