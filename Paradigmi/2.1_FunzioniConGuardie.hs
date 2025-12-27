@@ -47,3 +47,21 @@ bisestile x = x `mod` 4 == 0 && x `mod` 100 /= 0 && x `mod` 400 == 0
 
 giorni :: Int -> Int
 giorni n = if bisestile n then 366 else 365
+
+voto :: Int -> String
+voto x | x<60 = "Insufficiente"
+       | x<70 = "Sufficiente"
+       | x<85 = "Buono"
+       | otherwise = "Eccellente"
+
+tasse :: Float -> Float
+tasse reddito | reddito < 15000 = reddito
+              | reddito < 50000 = reddito * 20 / 100
+              |otherwise = reddito * 35 / 100
+
+calcolatrice :: Char -> Float -> Float -> Float
+calcolatrice operazione num1 num2 | operazione == '+' = num1 + num2
+                                  | operazione == '-' = num1 - num2
+                                  | operazione == '*' = num1 * num2
+                                  | operazione == '/' = num1 / num2
+                                  | otherwise = 0.0
