@@ -1,11 +1,15 @@
 public class ArrayRiempibile {
+  private int a;
   private int[] elementi;
   private boolean[] occupazione;
 
-  public ArrayRiempibile(int l) {
-    assert (l > 0):  "errore, lunghezza non positiva : " + l;
-    elementi = new int[l];
-    occupazione = new boolean[l];
+  public ArrayRiempibile(int lunghezza) {
+    assert (lunghezza > 0):  "errore, lunghezza non positiva : " + lunghezza;
+    if(lunghezza <= 0) {
+      throw new IllegalArgumentException("errore, lunghezza non positiva : " + lunghezza);
+    }
+    elementi = new int[lunghezza];
+    occupazione = new boolean[lunghezza];
   }
 
   public String toString() {
@@ -43,5 +47,15 @@ public class ArrayRiempibile {
       somma += elementi[i];
     return somma;
   }
+
+  public static void main(String[] args) {
+    ArrayRiempibile arr = new ArrayRiempibile(-3);
+    arr.equals(arr);
+    arr.inserire(0, 10);
+    arr.inserire(1, 20);
+    arr.inserire(2, 30);
+    System.out.println(arr);
+    System.out.println("Somma: " + arr.calcolareSomma());
+}
 
 }
