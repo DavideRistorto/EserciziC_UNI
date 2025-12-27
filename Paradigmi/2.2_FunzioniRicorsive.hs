@@ -40,27 +40,37 @@ fibonacci 10   -- restituisce 55
 
 -- Esercizi di riepilogo capitolo
 -- Ricorsione
-fattoriale_v1 :: Int -> Int
-fattoriale_v1 n | n == 0 = 1
-                | otherwise = n * fattoriale_v1 (n-1)
+fattoriale :: Int -> Int
+fattoriale n | n == 0 = 1
+             | otherwise = n * fattoriale (n-1)
+
 
 -- Ricorsione con patter matching
 fattoriale_v2 :: Int -> Int
 fattoriale_v2 0 = 1
 fattoriale_v2 n = n * fattoriale_v2 (n-1)
 
+
 --1) Definire ricorsivamente la funzione che calcola la somma dei primi n numeri naturali.
-sommaRicorsiva :: Int -> Int
-sommaRicorsiva n | n == 0 = 0
-                 | otherwise = n + sommaRicorsiva (n-1)
+somma :: Int -> Int
+somma n | n == 0 = 0
+        | otherwise = n + somma(n-1)
+
 
 --2) Definire una funzione pow2 :: Int -> Int che calcola 2^n (n>=0), senza usare gli operatori ^ e **.
 pow2 :: Int -> Int
 pow2 n | n == 0 = 1
        | otherwise = 2 * pow2(n-1)
 
+
 --3) Definire una funzione potenzaDi2 :: Int -> Bool che restituisce True se n è una potenza di 2, False altrimenti (n>=0).
 potenzaDi2 :: Int -> Bool
-potenzaDi2 n | n == 0 = False
-             | n == 1 = True
-             | otherwise = even n && potenzaDi2 (n `div` 2)
+potenzaDi2 n | n == 0 || n == 2 = True
+             | odd n = False
+             | otherwise = potenzaDi2(n `div` 2)
+
+
+--4)Definire una funzione mcd :: Int -> Int -> Int che calcoli il massimo comune divisore di due numeri usando
+mcd :: Int -> Int -> Int
+mcd a b | b == 0 = a
+        | otherwise =  mcd b (a `mod` b)
