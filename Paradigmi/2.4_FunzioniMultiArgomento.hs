@@ -58,3 +58,7 @@ minimo x y = min x y
 potenza :: Int -> Int -> Int
 potenza m n | n == 0 = 1
             | otherwise = m * potenza m (n-1)
+
+
+inRange :: Int -> Int -> Int -> Bool
+inRange sx dx n = sx <= n && n <= dx
