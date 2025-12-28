@@ -99,3 +99,36 @@ fattoriale x = product [2..x] -- creo lista da 2 fino a n e calcolo il prodotto 
 intervallo :: Int -> Int -> [Int]
 intervallo m n | m > n = []
                | otherwise = [m..n]
+
+-- Scrivi una funzione che costruisce una lista dai primi n numeri naturali usando solo (:) e []
+costruisciN :: Int -> [Int]
+costruisciN 0 = [0]
+costruisciN n = n : costruisciN (n-1)
+
+-- Scrivi una funzione che restituisce il secondo elemento di una lista (se esiste)
+secondo :: [a] -> Maybe a
+secondo [] = Nothing
+secondo [_] = Nothing
+secondo (x:y:xs) = Just y
+
+-- Scrivi una funzione che prende una lista di liste e restituisce solo quelle di lunghezza > n
+filtraLunghezza :: Int -> [[a]] -> [[a]]
+filtraLunghezza n (x:xs) = if length x > n then x : filtraLunghezza n xs else filtraLunghezza n xs
+
+-- Calcola la somma solo degli elementi maggiori di n
+sommaMaggioreN :: Int -> [Int] -> Int
+sommaMaggioreN n [] = 0
+sommaMaggioreN n (x:xs) = if x > n then x + sommaMaggioreN n xs else sommaMaggioreN n xs
+
+-- Calcola il prodotto dei primi n elementi di una lista
+prodottoParziale :: Int -> [Int] -> Int
+prodottoParziale n (x:xs) | n == 0 = 1
+                          | otherwise = x * prodottoParziale (n-1) xs
+
+
+-- Data una lista di numeri, crea una nuova lista dove ogni elemento 
+-- è sostituito dalla somma di tutti gli elementi precedenti (incluso se stesso)
+sommeProgressive :: [Int] -> [Int]
+sommeProgressive [] = []
+sommeProgressive [x] = [x]
+sommeProgressive (x:y:xs) = x + y : sommeProgressive xs
