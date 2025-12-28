@@ -42,6 +42,7 @@ somma (x, y) = x + y
 scambia :: (Int, Int) -> (Int, Int)
 scambia (x, y) = (y, x)
 
+
 -- 2) Definire una funzione ordina :: (Int, Int, Int) -> (Int, Int, Int) che ordina gli elementi in modo non decrescente
 ordina :: (Int, Int, Int) -> (Int, Int, Int)
 ordina (a, b, c) | a > b = ordina (b, a, c)
@@ -49,7 +50,7 @@ ordina (a, b, c) | b > c = ordina (a, c, b)
 ordina x = x
 
 -- 3) Operazioni sui numeri complessi rappresentati come coppie di Double:
--- alisa del tipo (Double, Double)
+-- alias del tipo (Double, Double)
 type Complesso = (Double, Double)
 -- Addizione
 addizione :: Complesso -> Complesso -> Complesso
