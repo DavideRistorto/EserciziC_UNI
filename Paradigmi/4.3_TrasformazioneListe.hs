@@ -1,4 +1,3 @@
-import Distribution.Simple.Glob (fileGlobMatches)
 {-
 Trasformazioni di liste e Quick Sort
 ====================================
