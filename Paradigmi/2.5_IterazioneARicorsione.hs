@@ -72,3 +72,50 @@ euclide m n
   | m == n           = n
   | m < n            = euclide m (n - m)
   | otherwise        = euclide (m - n) n
+
+
+--Scrivi una funzione sommaQuadratiPari :: [Int] -> Int che calcola la somma dei quadrati di tutti i numeri pari in una lista.
+sommaQuadratiPari :: [Int] -> Int
+sommaQuadratiPari xs = aux xs
+  where 
+    aux [] = 0
+    aux (y:ys)
+      | even y = y^2 + aux ys
+      | otherwise = aux ys
+
+-- Scrivi una funzione contaOccorrenze :: Int -> [Int] -> Int che conta quante volte un elemento appare in una lista.
+contaOccorrenze :: Int -> [Int] -> Int
+contaOccorrenze n xs = aux n xs
+  where 
+    aux n [] = 0
+    aux n (x:xs)
+      | n == x = 1 + aux n xs
+      | otherwise = aux n xs
+
+
+
+-- Scrivi una funzione listaCrescente :: [Int] -> Bool che verifica se una lista è ordinata in modo crescente.
+listaCrescente :: [Int] -> Bool
+listaCrescente [] = True
+listaCrescente [x] = True
+listaCrescente (x:y:xs) = if x > y then False else listaCrescente (y:xs)
+
+-- Scrivi una funzione rimuoviElemento :: Int -> [Int] -> [Int] che rimuove tutte le occorrenze di un elemento da una lista.
+rimuoviElemento :: Int -> [Int] -> [Int]
+rimuoviElemento n [] = []
+rimuoviElemento n (x:xs) = if n == x then rimuoviElemento n xs else x : rimuoviElemento n xs
+
+
+-- Scrivi una funzione filtraETrasforma :: [Int] -> [Int] che:
+-- Filtra solo i numeri maggiori di 10
+-- Trasforma ciascun numero filtrato moltiplicandolo per 3
+-- Restituisce la lista risultante
+
+filtraETrasforma :: [Int] -> [Int]
+filtraETrasforma [] = []
+filtraETrasforma x = aux x
+  where 
+    aux [] = []
+    aux (x:xs) = if x > 10 then x * 3 : aux xs else aux xs
+
+
