@@ -1,3 +1,4 @@
+import Data.Char
 {-
 Trasformazioni di liste e Quick Sort
 ====================================
@@ -47,18 +48,37 @@ Il parametro “r” in foldr indica “right”, differenziandola da foldl (“
 
 -- Esempio uso MAP
 -- Data una lista di numeri, ritornare tutti gli elementi moltiplicati per 3
-moltiplica3 :: Num a => [a] -> [a]
-moltiplica3 = map (* 3)
+per3 :: Num a => [a] -> [a]
+per3 xs = map (*3) xs
+
+
+-- Esercizio 2: Data una lista di stringhe, ritornare tutte le stringhe in maiuscolo
+maiuscole :: [String] -> [String]
+maiuscole = map (map toUpper)
+
+-- Esercizio 3: Data una lista di numeri, ritornare tutti gli elementi incrementati di 1
+incrementa :: Num a => [a] -> [a]
+incrementa xs = map (+1) xs
+
+-- Esercizio 4: Data una lista di numeri, ritornare tutti gli elementi con segno opposto
+negazione :: Num a => [a] -> [a]
+negazione xs = map negate xs
 
 -- Esempio uso FILTER
 -- Data una lista di numeri, ritornare solo gli elementi multipli di 3
-multipli3 :: Integral a => [a] -> [a]
-multipli3 = filter (\x -> x `mod` 3 == 0) -- per ogni elemento x della lista, controlla se il resto della divisione per 3 è 0
+multipli3 :: [Int] -> [Int]
+multipli3 xs = filter (\x -> x `mod` 3 == 0) xs 
+
+-- Filtrare numeri nell'intervallo [10, 50]
+intervallo10_50 :: [Int] -> [Int]
+intervallo10_50 xs = filter (\x -> x >= 10 && x<= 50) xs
+
+dispari :: [Int] -> [Int]
+dispari xs = filter odd xs
+
 
 -- Esempio uso FOLD
 -- Data una lista di numeri, ritornare la somma di tutti gli elementi
-sum :: Num a => [a] -> a
-sum = foldr (+) 0  --foldr (+) 0 [1,2,3,4] Usa un operatore e per ogni valore della lista lo combina con l'elemento specificato (Di solito l' elemento neutro dell' operatore)
 
 
 -- 2) Che funzioni sono le seguenti?
@@ -83,7 +103,7 @@ all f xs =  length (filter f xs) == length xs
 -- 4) Definire le seguenti funzioni senza usare esplicitamente la ricorsione:
 -- 4.1) massimo :: Ord a => [a] -> a -- massimo di una lista non vuota
 massimo :: Ord a => [a] -> a
-massimo (x : xs) = foldr max x xs 
+massimo (x : xs) = foldr max x xs
 
 -- 4.2) occorrenze :: Eq a => a -> [a] -> Int -- numero di occorrenze di un elemento
 occorrenze :: Eq a => a -> [a] -> Int
