@@ -51,23 +51,26 @@ Cons 1 (Cons 2 (Cons 3 Nil))
 --    maybeLength :: Maybe a -> Int
 --    maybeMap :: (a -> b) -> Maybe a -> Maybe b
 --    maybeFilter :: (a -> Bool) -> Maybe a -> Maybe a
+
+-- Funzione polimorfa: restituisce 1 se c'è un valore, 0 se Nothing
 maybeLength :: Maybe a -> Int
 maybeLength Nothing  = 0
 maybeLength (Just _) = 1
 
 maybeMap :: (a -> b) -> Maybe a -> Maybe b
-maybeMap _ Nothing  = Nothing
+maybeMap f Nothing = Nothing
 maybeMap f (Just x) = Just (f x)
 
-maybeFilter :: (a -> Bool) -> Maybe a -> Maybe a
-maybeFilter p (Just x) | p x = Just x
-maybeFilter _ _              = Nothing
 
--- 2) Il tipo Numero può essere rappresentato con Either Int Float.
---    Ridefinire la funzione somma :: Either Int Float -> Either Int Float -> Either Int Float
---    Sommando due numeri, il risultato deve essere floating-point solo se necessario.
-somma :: Either Int Float -> Either Int Float -> Either Int Float
-somma (Left m)  (Left n)  = Left (m + n)
-somma (Left m)  (Right n) = Right (fromIntegral m + n)
-somma (Right m) (Left n)  = Right (m + fromIntegral n)
-somma (Right m) (Right n) = Right (m + n)
+data List a = Nil | Cons a (List a)
+lengthList :: List a -> Int
+lengthList Nil = 0
+lengthList (Cons _ xs) = 1 + lengthList xs
+
+sumList :: List Int -> Int
+sumList Nil = 0
+sumList (Cons x xs) = x + sumList xs
+
+countGreater :: Int -> List Int -> Int
+countGreater _ Nil = 0
+countGreater val (Cons x xs) = if x > val then 1 + countGreater val xs else countGreater val xs

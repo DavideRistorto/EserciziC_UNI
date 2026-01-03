@@ -57,16 +57,31 @@ Esempi:
 
 -- Esercizi di riepilogo capitolo
 
--- 1) Realizzare una funzione totale testa :: [Int] -> ForseInt
--- che ritorni la testa di xs se non vuota, Niente altrimenti.
+-- 1) Realizzare una funzione totale testa :: [Int] -> ForseInt che ritorni la testa di xs se non vuota, Niente altrimenti.
+data ForseInt = Niente | Proprio Int deriving Show
+
+testa :: [Int] -> ForseInt
+testa [] = Niente
+testa (x:_) = Proprio x
+
+
 
 -- 2) Definire un tipo di dato Numero
 -- data Numero = I Int | F Float
 -- e una funzione somma :: Numero -> Numero -> Numero
 -- che somma due numeri rispettando i tipi (float solo se necessario).
 
+data Numero = I Int | F Float
+somma :: Numero -> Numero -> Numero
+somma (I x) (I y) = I (x+y)
+somma (I x) (F y) = F (fromIntegral x + y)
+somma (F x) (I y) = F (fromIntegral y + x)
+somma (F x) (F y) = F (x + y)
+
 -- 3) Definire sommatoria :: [Numero] -> Numero
 -- che somma una lista di Numero senza ricorsione esplicita.
+sommatoria :: [Numero] -> Numero
+sommatoria xs = foldr somma ( I 0) xs
 
 -- 4) Definire proprio :: [ForseInt] -> [Int]
 -- che estrae la lista dei valori n tali che Proprio n appare in xs.
