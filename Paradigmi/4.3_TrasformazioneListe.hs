@@ -79,13 +79,13 @@ dispari xs = filter odd xs
 
 -- Esempio uso FOLD
 -- Data una lista di numeri, ritornare la somma di tutti gli elementi
+somma :: [Int] -> Int
+somma xs = foldl (+) 0 xs 
 
 
--- 2) Che funzioni sono le seguenti?
--- 2.1) length . filter (>= 0)          -- calcolo il numero di elementi non negativi nella lista
--- 2.2) foldr (&&) True . map (>= 0)    --  verifica se tutti i numeri di una lista sono non negativi.
--- 2.3) foldr (+) 0 . map (const 1)
--- 2.4) foldl (\xs x -> x : xs) []      -- Inverte una lista
+prodottoPari :: [Int] -> Int
+prodottoPari xs = foldl (*) 1 (filter even xs)
+
 
 -- 3) Definire le seguenti funzioni della libreria standard senza usare esplicitamente la ricorsione:
 -- 3.1) concat :: [[a]] -> [a] -- concatena tutti gli elementi di una lista di liste
@@ -107,8 +107,8 @@ massimo (x : xs) = foldr max x xs
 
 -- 4.2) occorrenze :: Eq a => a -> [a] -> Int -- numero di occorrenze di un elemento
 occorrenze :: Eq a => a -> [a] -> Int
-occorrenze x =  length . filter (== x )
+occorrenze x xs = length (filter(\y -> y == x) xs)
 
 -- 4.3) membro :: Eq a => a -> [a] -> Bool -- true se l'elemento è presente (stop immediato se trovato)
 membro :: Eq a => a -> [a] -> Bool
-membro x =  null . filter (== x )
+membro x xs  =  elem x xs
