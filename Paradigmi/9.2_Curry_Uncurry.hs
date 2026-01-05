@@ -47,7 +47,9 @@ mediaFloatUncurry :: (Float, Float) -> Float
 mediaFloatUncurry (a,b) = uncurry mediaFloat (a,b)
 
 -- 3. Data la funzione max :: Ord a => a -> a -> a, usala con uncurry per trovare il massimo in una lista di coppie di numeri.
+massimiDalleCoppie :: Ord a => [(a, a)] -> [a]
+massimiDalleCoppie xs = map (uncurry max ) xs
 
 -- 4. Scrivi una funzione che prende una tripla (Int, Int, Int) e restituisce la somma dei tre numeri. Riesci a "currificare" questa funzione? (Suggerimento: guarda la firma di curry)
-
--- 5. Spiega con parole tue la differenza tra curry e uncurry e quando può essere utile usarle.
+sommaTripla :: (Int, Int, Int) -> Int
+sommaTripla (x1,x2,x3) = x1 + x2 + x3
