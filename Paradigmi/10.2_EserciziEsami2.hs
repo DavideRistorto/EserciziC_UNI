@@ -59,4 +59,5 @@ ultimo_multiplo_ric a xs = aux Nothing a xs
         aux ultimo a (x:xs) = if x `mod` a == 0 then aux (Just x) a xs else aux ultimo a xs
 
 conta_palindromi :: [String] -> Int
+conta_palindromi [] = 0
 conta_palindromi (str:xs) = if (str == (reverse str)) then 1 + conta_palindromi xs else conta_palindromi xs
