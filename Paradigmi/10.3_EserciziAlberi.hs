@@ -6,4 +6,4 @@ height (Branch x sx dx) = 1 + max (height sx) (height dx)
 
 size :: Tree a -> Int
 size Leaf = 0
-size (Branch x sx dx) = 1 + size sx + size dx 
+size (Branch x sx dx) = 1 + size sx + size dx  
