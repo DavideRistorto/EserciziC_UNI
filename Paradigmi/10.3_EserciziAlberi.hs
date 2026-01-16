@@ -31,14 +31,11 @@ isBalanced (Branch x sx dx) = if abs (height sx - height dx) > 1 then False else
 
 
 data Treee a = Empty | Node a [Treee a]
+
 elements :: Treee a -> [a]
 elements Empty = []
-elements (Node x xs) = x : concatMap elements xs
+elements (Node x ts) = x : concatMap elements ts
 
-ne :: Treee a -> Bool
-ne Empty = False
-ne (Node _ _) = True
-
-normalize :: Treee a -> Treee a
-normalize Empty = Empty
-normalize (Node x xs) = Node x (filter ne (map normalize xs))
+heightt :: Treee a -> Int
+heightt Empty = 0
+heightt (Node x ts) = 1 + maximum (0 : map heightt ts)
